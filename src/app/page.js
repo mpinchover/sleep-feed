@@ -1,48 +1,47 @@
 "use client";
 import { Box, Flex, Button, Icon } from "@chakra-ui/react";
-import initial_images from "./fake-video-cards";
 import { useRef, useEffect, useState } from "react";
 import { FiVolume2, FiVolumeX } from "react-icons/fi";
+import initial_images from "./fake-video-cards";
 
-const VideoCard = ({ src, isMuted, onToggleMute }) => {
+const VideoCard = ({ src, isMuted, onToggleMute, registerRef }) => {
   const videoRef = useRef(null);
 
-  // Keep the video element in sync with isMuted
+  // Register the video ref with parent
   useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.muted = isMuted;
+    if (registerRef && videoRef.current) {
+      registerRef(videoRef.current);
     }
-  }, [isMuted]);
+  }, [registerRef]);
 
   return (
     <Flex
       justifyContent="center"
       alignItems="center"
       flexDirection="column"
-      border="solid 1px yellow"
       height="100vh"
-      // border="solid 1px green"
       scrollSnapAlign="start"
       scrollSnapStop="always"
       position="relative"
-      // sx={{ scrollSnapAlign: "start" }}
+      // border="1px solid yellow"
     >
       <Box
         borderRadius="10px"
-        border="solid 1px blue"
+        // border="solid 1px blue"
         width="350px"
         overflow="hidden"
         position="relative"
       >
         <video
+          ref={videoRef}
           style={{ objectFit: "cover", display: "block" }}
           src={src}
           height="100%"
           width="100%"
-          autoPlay
           muted={isMuted}
           loop
           playsInline
+          preload="metadata"
           onError={(e) => console.error("Video failed to load", e)}
         />
 
@@ -50,8 +49,8 @@ const VideoCard = ({ src, isMuted, onToggleMute }) => {
           position="absolute"
           bottom="20px"
           right="20px"
-          padding="1px"
-          borderRadius="md"
+          padding="6px"
+          borderRadius="full"
           bg="rgba(0, 0, 0, 0.5)"
           zIndex="10"
         >
@@ -59,24 +58,15 @@ const VideoCard = ({ src, isMuted, onToggleMute }) => {
             onClick={onToggleMute}
             variant="ghost"
             p={0}
-            m="0"
-            pt={0}
-            py={0}
-            padding={0}
-            paddingTop={0}
-            paddingY={0}
+            m={0}
             // minW="auto"
-            // bg="transparent"
-            // lineHeight={1}
-            paddingInline={0}
-            gap={0}
-            // _hover={{ bg: "transparent" }}
-            // _active={{ bg: "transparent" }}
+            bg="transparent"
+            _hover={{ bg: "transparent" }}
+            _active={{ bg: "transparent" }}
           >
             <Icon
               as={isMuted ? FiVolumeX : FiVolume2}
               color="white"
-              // boxSize={6}
               fontSize="10px"
             />
           </Button>
@@ -88,35 +78,78 @@ const VideoCard = ({ src, isMuted, onToggleMute }) => {
 
 const Home = () => {
   const [isMuted, setIsMuted] = useState(true);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const videoRefs = useRef([]);
+  const observer = useRef(null);
 
-  const toggleMute = () => {
-    setIsMuted((prev) => !prev);
-  };
+  const toggleMute = () => setIsMuted((prev) => !prev);
+
+  // Set up IntersectionObserver to detect visible video
+  useEffect(() => {
+    const handleIntersect = (entries) => {
+      entries.forEach((entry) => {
+        const index = videoRefs.current.indexOf(entry.target);
+        if (entry.isIntersecting) {
+          setActiveIndex(index);
+        }
+      });
+    };
+
+    observer.current = new IntersectionObserver(handleIntersect, {
+      threshold: 0.7, // 70% visible
+    });
+
+    videoRefs.current.forEach((video) => {
+      if (video) observer.current.observe(video);
+    });
+
+    return () => {
+      videoRefs.current.forEach((video) => {
+        if (video) observer.current.unobserve(video);
+      });
+    };
+  }, []);
+
+  // Manage video playback
+  useEffect(() => {
+    videoRefs.current.forEach((video, index) => {
+      if (!video) return;
+
+      if (index === activeIndex) {
+        video.muted = isMuted;
+        const playPromise = video.play();
+        if (playPromise !== undefined) {
+          playPromise.catch((e) =>
+            console.warn("Play interrupted:", e.message)
+          );
+        }
+      } else {
+        video.pause();
+      }
+    });
+  }, [activeIndex, isMuted]);
 
   return (
     <Box
-      // direction="column"
-      // alignItems="center"
-      overflowY="scroll"
-      // minHeight="100vh"
-      scrollSnapType="y mandatory"
-      overscrollBehavior={"contain"}
-      // scrollSnapPointsY="repeat(100vh)"
-      // scrollSnapMarginY="10"
       height="100vh"
-      // sx={{
-      //   scrollSnapType: "y mandatory",
-      //   scrollBehavior: "smooth",
-      // }}
+      overflowY="scroll"
+      scrollSnapType="y mandatory"
+      overscrollBehavior="contain"
+      sx={{
+        scrollBehavior: "smooth",
+      }}
     >
-      {initial_images.map((video, index) => (
-        <VideoCard
-          key={index}
-          src={video.src}
-          isMuted={isMuted}
-          onToggleMute={toggleMute}
-        />
-      ))}
+      {initial_images
+        .filter((item) => item.card_type === "video")
+        .map((video, index) => (
+          <VideoCard
+            key={index}
+            src={video.src}
+            isMuted={isMuted}
+            onToggleMute={toggleMute}
+            registerRef={(el) => (videoRefs.current[index] = el)}
+          />
+        ))}
     </Box>
   );
 };
