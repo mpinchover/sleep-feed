@@ -14,7 +14,7 @@ import initial_images from "./fake-video-cards";
 
 const VideoCard = ({ src, isMuted, onToggleMute, registerRef }) => {
   const videoRef = useRef(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Register the video ref with parent
   useEffect(() => {
@@ -29,6 +29,14 @@ const VideoCard = ({ src, isMuted, onToggleMute, registerRef }) => {
     }
   }, []);
 
+  const handleOnWaiting = () => {
+    if (videoRef.current?.readyState < 3) {
+      setIsLoading(true);
+      // videoRef.current.load();
+    }
+  };
+
+  console.log(videoRef.current?.readyState);
   return (
     <Flex
       justifyContent="center"
@@ -76,10 +84,9 @@ const VideoCard = ({ src, isMuted, onToggleMute, registerRef }) => {
           playsInline
           preload="auto"
           onError={(e) => console.error("Video failed to load", e)}
-          onLoadedData={() => setIsLoading(false)}
-          onWaiting={() => setIsLoading(true)}
+          // onWaiting={handleOnWaiting}
+          onPlaying={() => setIsLoading(false)} // ← More reliable than onLoadedData
         />
-
         <Box
           position="absolute"
           bottom="20px"
