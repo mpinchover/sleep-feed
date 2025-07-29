@@ -188,7 +188,7 @@ const Sidebar = () => {
         <Text display={{ base: "none", md: "inline-block" }}> Account</Text>
       </Button>
       <Button variant="ghost" leftIcon={<Icon as={FiLogOut} boxSize={5} />}>
-        <Icon as={FiLogOut} boxSize={5} color="white" />
+        <Icon as={FiUser} boxSize={5} color="white" />
         <Text display={{ base: "none", md: "inline-block" }}>Log out</Text>
       </Button>
     </VStack>
