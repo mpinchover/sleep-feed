@@ -1,7 +1,7 @@
 "use client";
-import { Box, Flex, Button, Icon } from "@chakra-ui/react";
+import { Box, Flex, Button, Icon, VStack } from "@chakra-ui/react";
 import { useRef, useEffect, useState } from "react";
-import { FiVolume2, FiVolumeX } from "react-icons/fi";
+import { FiVolume2, FiVolumeX, FiUser, FiLogOut } from "react-icons/fi";
 import initial_images from "./fake-video-cards";
 
 const VideoCard = ({ src, isMuted, onToggleMute, registerRef }) => {
@@ -76,6 +76,33 @@ const VideoCard = ({ src, isMuted, onToggleMute, registerRef }) => {
   );
 };
 
+const Sidebar = () => {
+  return (
+    <VStack
+      top="20px"
+      align="start"
+      width="200px"
+      zIndex={20}
+      // border="1px solid red"
+      position="fixed"
+      padding="10px"
+      spacing={4}
+      // backgroundColor={"white"}
+    >
+      <Button
+        variant="ghost"
+        leftIcon={<Icon as={FiUser} boxSize={5} color="red" />}
+      >
+        <Icon as={FiUser} boxSize={5} color="white" />
+        Account
+      </Button>
+      <Button variant="ghost" leftIcon={<Icon as={FiLogOut} boxSize={5} />}>
+        <Icon as={FiLogOut} boxSize={5} color="white" /> Log out
+      </Button>
+    </VStack>
+  );
+};
+
 const Home = () => {
   const [isMuted, setIsMuted] = useState(true);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -138,7 +165,9 @@ const Home = () => {
       sx={{
         scrollBehavior: "smooth",
       }}
+      position="relative"
     >
+      <Sidebar />
       {initial_images
         .filter((item) => item.card_type === "video")
         .map((video, index) => (
