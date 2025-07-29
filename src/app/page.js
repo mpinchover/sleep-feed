@@ -12,17 +12,35 @@ import {
 } from "@chakra-ui/react";
 import { useRef, useEffect, useState, useMemo } from "react";
 import { FiVolume2, FiVolumeX, FiUser, FiLogOut } from "react-icons/fi";
+import { RiArrowDownDoubleLine } from "react-icons/ri";
+import { FaAngleDoubleDown } from "react-icons/fa";
+
 import initial_videos from "./fake-video-cards";
 
-const VideoCard = ({ src, isMuted, onToggleMute, registerRef }) => {
+const VideoCard = ({
+  src,
+  isMuted,
+  onToggleMute,
+  registerRef,
+  shouldShowSwipeDownIcons,
+}) => {
   const videoRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [startShowIcons, setStartShowIcons] = useState(false);
 
   // Register the video ref with parent
   useEffect(() => {
     if (registerRef && videoRef.current) {
       registerRef(videoRef.current);
     }
+
+    const setElapsedTime = setTimeout(() => {
+      setStartShowIcons(true);
+    }, 4000);
+
+    return () => {
+      clearTimeout(setElapsedTime);
+    };
   }, [registerRef]);
 
   useEffect(() => {
@@ -58,8 +76,7 @@ const VideoCard = ({ src, isMuted, onToggleMute, registerRef }) => {
               }}
               height="100%"
               width="100%"
-            />{" "}
-            // ⬅️ placeholder
+            />
             <video
               ref={videoRef}
               style={{ objectFit: "cover", display: "block" }}
@@ -75,6 +92,36 @@ const VideoCard = ({ src, isMuted, onToggleMute, registerRef }) => {
             />
           </>
         </AspectRatio>
+        {shouldShowSwipeDownIcons && startShowIcons && (
+          <Box
+            position="absolute"
+            top="50%"
+            // left="100%"
+            right="30px"
+            transform="translate(-0%, -50%)"
+            bg="rgba(0, 0, 0, 0.5)"
+            padding="8px"
+            borderRadius="md"
+            zIndex="20"
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+          >
+            <Icon
+              animation="bounce 1s infinite"
+              as={RiArrowDownDoubleLine}
+              boxSize={6}
+              color="white"
+              mb={1}
+            />
+            <Icon
+              animation="bounce 1s infinite"
+              as={RiArrowDownDoubleLine}
+              boxSize={6}
+              color="white"
+            />
+          </Box>
+        )}
         <Box
           position="absolute"
           bottom="20px"
@@ -257,6 +304,7 @@ const Home = () => {
         .filter((item) => item.card_type === "video")
         .map((video, index) => (
           <VideoCard
+            shouldShowSwipeDownIcons={index === 0}
             key={video.uuid}
             src={video.src}
             isMuted={isMuted}
