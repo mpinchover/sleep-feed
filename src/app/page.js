@@ -7,6 +7,8 @@ import {
   VStack,
   Text,
   Spinner,
+  AspectRatio,
+  Skeleton,
 } from "@chakra-ui/react";
 import { useRef, useEffect, useState } from "react";
 import { FiVolume2, FiVolumeX, FiUser, FiLogOut } from "react-icons/fi";
@@ -36,7 +38,7 @@ const VideoCard = ({ src, isMuted, onToggleMute, registerRef }) => {
     }
   };
 
-  console.log(videoRef.current?.readyState);
+  // console.log(videoRef.current?.readsyState);
   return (
     <Flex
       justifyContent="center"
@@ -54,39 +56,29 @@ const VideoCard = ({ src, isMuted, onToggleMute, registerRef }) => {
         width="350px"
         overflow="hidden"
         position="relative"
+        // height="100%"
       >
-        {isLoading && (
-          <Flex
-            position="absolute"
-            top={0}
-            left={0}
-            width="100%"
-            height="100%"
-            justifyContent="center"
-            alignItems="center"
-            background="rgba(0, 0, 0, 0.5)"
-            zIndex={10}
-          >
-            <Spinner color="white" size="lg" />
-            <Text ml={2} color="white">
-              Loading...
-            </Text>
-          </Flex>
-        )}
-        <video
-          ref={videoRef}
-          style={{ objectFit: "cover", display: "block" }}
-          src={src}
-          height="100%"
-          width="100%"
-          muted={isMuted}
-          loop
-          playsInline
-          preload="auto"
-          onError={(e) => console.error("Video failed to load", e)}
-          // onWaiting={handleOnWaiting}
-          onPlaying={() => setIsLoading(false)} // ← More reliable than onLoadedData
-        />
+        <AspectRatio ratio={9 / 16} width="100%">
+          <>
+            {isLoading && (
+              <Skeleton height="100%" width="100%" /> // ⬅️ placeholder
+            )}
+            <video
+              ref={videoRef}
+              style={{ objectFit: "cover", display: "block" }}
+              src={src}
+              height="100%"
+              width="100%"
+              muted={isMuted}
+              loop
+              playsInline
+              preload="auto"
+              onError={(e) => console.error("Video failed to load", e)}
+              // onWaiting={handleOnWaiting}
+              onPlaying={() => setIsLoading(false)} // ← More reliable than onLoadedData
+            />
+          </>
+        </AspectRatio>
         <Box
           position="absolute"
           bottom="20px"
@@ -118,16 +110,19 @@ const VideoCard = ({ src, isMuted, onToggleMute, registerRef }) => {
   );
 };
 
-const LoadingCard = () => (
+const LoadingCard = ({ registerRef }) => (
   <Flex
+    ref={registerRef}
     justifyContent="center"
     alignItems="center"
-    height="100dvh"
+    // height="100dvh"
     scrollSnapAlign="start"
     scrollSnapStop="always"
+    padding="20px"
   >
-    <Text fontSize="lg" color="gray.500">
-      Loading...
+    <Spinner size="lg" />
+    <Text ml={2} color="gray.500">
+      Loading more...
     </Text>
   </Flex>
 );
@@ -163,8 +158,12 @@ const Sidebar = () => {
 const Home = () => {
   const [isMuted, setIsMuted] = useState(true);
   const [activeIndex, setActiveIndex] = useState(0);
-  const videoRefs = useRef([]);
+  const videoRefs = useRef([initial_images.slice(0, 10)]);
   const observer = useRef(null);
+  const loadingRef = useRef(null);
+  const [videos, setVideos] = useState(initial_images.slice(0, 10));
+
+  const paginationIndex = useRef(0);
 
   const toggleMute = () => setIsMuted((prev) => !prev);
 
@@ -172,6 +171,31 @@ const Home = () => {
   useEffect(() => {
     const handleIntersect = (entries) => {
       entries.forEach((entry) => {
+        if (entry.target === loadingRef.current) {
+          console.log("Reached loading card");
+
+          paginationIndex.current += 1;
+          const startIndex = paginationIndex.current * 10;
+          const endIndex = startIndex + 10;
+
+          setVideos((prev) => [
+            ...prev,
+            ...initial_images.slice(startIndex, endIndex),
+          ]);
+          // videoRefs;
+        }
+        // if (entry.target === loadingRef.current) {
+        //   console.log("Reached loading card");
+
+        //   setTimeout(() => {
+        //     videoRefs.current[videoRefs.current.length - 1]?.scrollIntoView({
+        //       behavior: "smooth",
+        //       block: "start",
+        //     });
+        //   }, 1200);
+        //   return;
+        // }
+
         const index = videoRefs.current.indexOf(entry.target);
         if (entry.isIntersecting) {
           setActiveIndex(index);
@@ -181,18 +205,22 @@ const Home = () => {
 
     observer.current = new IntersectionObserver(handleIntersect, {
       threshold: 0.7, // 70% visible
+      // rootMargin: "500px 0px",
     });
 
     videoRefs.current.forEach((video) => {
       if (video) observer.current.observe(video);
     });
 
+    // if (loadingRef.current) observer.current.observe(loadingRef.current);
+
     return () => {
-      videoRefs.current.forEach((video) => {
-        if (video) observer.current.unobserve(video);
-      });
+      observer.current?.disconnect();
+      clearTimeout(observerTimeout);
     };
   }, []);
+
+  console.log("VIDEOS LENGTH IS ", videos.length);
 
   // Manage video playback
   useEffect(() => {
@@ -229,7 +257,7 @@ const Home = () => {
       position="relative"
     >
       <Sidebar />
-      {initial_images
+      {videos
         .filter((item) => item.card_type === "video")
         .map((video, index) => (
           <VideoCard
@@ -241,7 +269,7 @@ const Home = () => {
           />
         ))}
 
-      <LoadingCard />
+      <LoadingCard registerRef={(el) => (loadingRef.current = el)} />
     </Box>
   );
 };
