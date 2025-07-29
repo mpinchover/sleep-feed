@@ -23,7 +23,8 @@ const shuffleArray = (array) => {
   return arr;
 };
 
-const initial_videos = shuffleArray(initial_images);
+// const initial_videos = shuffleArray(initial_images);
+const initial_videos = initial_images;
 
 const VideoCard = ({ src, isMuted, onToggleMute, registerRef }) => {
   const videoRef = useRef(null);
@@ -48,6 +49,8 @@ const VideoCard = ({ src, isMuted, onToggleMute, registerRef }) => {
       // videoRef.current.load();
     }
   };
+
+  console.log("Loading video ", src);
 
   // console.log(videoRef.current?.readsyState);
   return (
