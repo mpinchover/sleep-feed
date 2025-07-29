@@ -19,7 +19,7 @@ const VideoCard = ({ src, isMuted, onToggleMute, registerRef }) => {
       justifyContent="center"
       alignItems="center"
       flexDirection="column"
-      height="100vh"
+      height="100dvh"
       scrollSnapAlign="start"
       scrollSnapStop="always"
       position="relative"
@@ -75,6 +75,20 @@ const VideoCard = ({ src, isMuted, onToggleMute, registerRef }) => {
     </Flex>
   );
 };
+
+const LoadingCard = () => (
+  <Flex
+    justifyContent="center"
+    alignItems="center"
+    height="100dvh"
+    scrollSnapAlign="start"
+    scrollSnapStop="always"
+  >
+    <Text fontSize="lg" color="gray.500">
+      Loading...
+    </Text>
+  </Flex>
+);
 
 const Sidebar = () => {
   return (
@@ -157,9 +171,13 @@ const Home = () => {
     });
   }, [activeIndex, isMuted]);
 
+  const loadMoreVideos = () => {
+    // imagine this function loads the next batch of videos
+  };
+
   return (
     <Box
-      height="100vh"
+      height="100dvh"
       overflowY="scroll"
       scrollSnapType="y mandatory"
       overscrollBehavior="contain"
@@ -180,6 +198,8 @@ const Home = () => {
             registerRef={(el) => (videoRefs.current[index] = el)}
           />
         ))}
+
+      <LoadingCard />
     </Box>
   );
 };
