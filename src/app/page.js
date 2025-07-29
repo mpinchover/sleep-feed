@@ -60,8 +60,15 @@ const VideoCard = ({ src, isMuted, onToggleMute, registerRef }) => {
       >
         <AspectRatio ratio={9 / 16} width="100%">
           <>
-            {isLoading && (
-              <Skeleton height="100%" width="100%" /> // ⬅️ placeholder
+            {true && (
+              <Skeleton
+                css={{
+                  "--start-color": "colors.pink.500",
+                  "--end-color": "colors.orange.500",
+                }}
+                height="100%"
+                width="100%"
+              /> // ⬅️ placeholder
             )}
             <video
               ref={videoRef}
@@ -177,10 +184,11 @@ const Home = () => {
           if (lastVideoBeforeLoading.current) {
             console.log("Should scroll back");
             setTimeout(() => {
+              console.log("SCROLLING BACK");
               lastVideoBeforeLoading.current.scrollIntoView({
                 behavior: "smooth",
               });
-            }, 250);
+            }, 500);
           }
 
           if (isFetchingNextBatchOfVideos.current) {
