@@ -14,6 +14,17 @@ import { useRef, useEffect, useState } from "react";
 import { FiVolume2, FiVolumeX, FiUser, FiLogOut } from "react-icons/fi";
 import initial_images from "./fake-video-cards";
 
+const shuffleArray = (array) => {
+  const arr = [...array]; // clone to avoid mutating original
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+};
+
+const initial_videos = shuffleArray(initial_images);
+
 const VideoCard = ({ src, isMuted, onToggleMute, registerRef }) => {
   const videoRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -125,7 +136,8 @@ const LoadingCard = ({ registerRef }) => (
     // height="100dvh"
     scrollSnapAlign="start"
     scrollSnapStop="always"
-    padding="20px"
+    paddingY="100px"
+    paddingX="20px"
   >
     <Spinner size="lg" />
     <Text ml={2} color="gray.500">
@@ -168,7 +180,7 @@ const Home = () => {
   const videoRefs = useRef([]);
   const observer = useRef(null);
   const loadingRef = useRef(null);
-  const [videos, setVideos] = useState(initial_images.slice(0, 5));
+  const [videos, setVideos] = useState(initial_videos.slice(0, 5));
   const lastVideoBeforeLoading = useRef(null);
   const isFetchingNextBatchOfVideos = useRef(false);
 
@@ -187,8 +199,9 @@ const Home = () => {
               console.log("SCROLLING BACK");
               lastVideoBeforeLoading.current.scrollIntoView({
                 behavior: "smooth",
+                block: "start",
               });
-            }, 500);
+            }, 150);
           }
 
           if (isFetchingNextBatchOfVideos.current) {
@@ -202,7 +215,7 @@ const Home = () => {
           const startIndex = paginationIndex.current * 10;
           const endIndex = startIndex + 10;
 
-          const newVideos = initial_images.slice(startIndex, endIndex);
+          const newVideos = initial_videos.slice(startIndex, endIndex);
           setTimeout(() => {
             setVideos((prev) => [...prev, ...newVideos]);
             isFetchingNextBatchOfVideos.current = false;
