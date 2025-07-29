@@ -275,13 +275,27 @@ const Home = () => {
       observer.current.observe(video);
 
       if (index === activeIndex) {
-        video.muted = isMuted;
+        video.muted = true;
         const playPromise = video.play();
         if (playPromise !== undefined) {
-          playPromise.catch((e) =>
-            console.warn("Play interrupted:", e.message)
-          );
+          playPromise
+            .then(() => {
+              if (!isMuted) {
+                video.muted = false;
+              }
+            })
+            .catch((e) => {
+              console.warn("Play interrupted:", e.message);
+            });
         }
+
+        // video.muted = isMuted;
+        // const playPromise = video.play();
+        // if (playPromise !== undefined) {
+        //   playPromise.catch((e) =>
+        //     console.warn("Play interrupted:", e.message)
+        //   );
+        // }
       } else {
         video.pause();
       }
