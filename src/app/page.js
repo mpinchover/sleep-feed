@@ -171,30 +171,22 @@ const Home = () => {
   useEffect(() => {
     const handleIntersect = (entries) => {
       entries.forEach((entry) => {
-        if (entry.target === loadingRef.current) {
+        if (entry.target === loadingRef.current && entry.isIntersecting) {
           console.log("Reached loading card");
 
           paginationIndex.current += 1;
           const startIndex = paginationIndex.current * 10;
           const endIndex = startIndex + 10;
 
-          setVideos((prev) => [
-            ...prev,
-            ...initial_images.slice(startIndex, endIndex),
-          ]);
-          // videoRefs;
-        }
-        // if (entry.target === loadingRef.current) {
-        //   console.log("Reached loading card");
+          console.log(initial_images.slice(startIndex, endIndex));
 
-        //   setTimeout(() => {
-        //     videoRefs.current[videoRefs.current.length - 1]?.scrollIntoView({
-        //       behavior: "smooth",
-        //       block: "start",
-        //     });
-        //   }, 1200);
-        //   return;
-        // }
+          setTimeout(() => {
+            setVideos((prev) => [
+              ...prev,
+              ...initial_images.slice(startIndex, endIndex),
+            ]);
+          }, 3000);
+        }
 
         const index = videoRefs.current.indexOf(entry.target);
         if (entry.isIntersecting) {
@@ -204,15 +196,14 @@ const Home = () => {
     };
 
     observer.current = new IntersectionObserver(handleIntersect, {
-      threshold: 0.7, // 70% visible
-      // rootMargin: "500px 0px",
+      threshold: 0.7, // 70% visible,
     });
 
     videoRefs.current.forEach((video) => {
       if (video) observer.current.observe(video);
     });
 
-    // if (loadingRef.current) observer.current.observe(loadingRef.current);
+    if (loadingRef.current) observer.current.observe(loadingRef.current);
 
     return () => {
       observer.current?.disconnect();
@@ -261,7 +252,7 @@ const Home = () => {
         .filter((item) => item.card_type === "video")
         .map((video, index) => (
           <VideoCard
-            key={index}
+            key={video.uuid}
             src={video.src}
             isMuted={isMuted}
             onToggleMute={toggleMute}
