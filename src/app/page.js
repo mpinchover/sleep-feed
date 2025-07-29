@@ -23,10 +23,19 @@ const VideoCard = ({
   onToggleMute,
   registerRef,
   shouldShowSwipeDownIcons,
+  videoRefs,
+  activeIndex,
 }) => {
   const videoRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
   const [startShowIcons, setStartShowIcons] = useState(false);
+
+  const scrollToNext = () => {
+    const next = videoRefs?.current?.[activeIndex + 1];
+    if (next) {
+      next.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
 
   // Register the video ref with parent
   useEffect(() => {
@@ -94,6 +103,8 @@ const VideoCard = ({
         </AspectRatio>
         {shouldShowSwipeDownIcons && startShowIcons && (
           <Box
+            cursor={"pointer"}
+            onClick={scrollToNext}
             position="absolute"
             top="50%"
             // left="100%"
@@ -108,14 +119,14 @@ const VideoCard = ({
             alignItems="center"
           >
             <Icon
-              animation="bounce 1s infinite"
+              animation="fade-out 1s infinite"
               as={RiArrowDownDoubleLine}
               boxSize={6}
               color="white"
               mb={1}
             />
             <Icon
-              animation="bounce 1s infinite"
+              animation="fade-in 1s infinite"
               as={RiArrowDownDoubleLine}
               boxSize={6}
               color="white"
@@ -321,6 +332,8 @@ const Home = () => {
         .filter((item) => item.card_type === "video")
         .map((video, index) => (
           <VideoCard
+            videoRefs={videoRefs}
+            activeIndex={activeIndex}
             shouldShowSwipeDownIcons={index === 0}
             key={video.uuid}
             src={video.src}
