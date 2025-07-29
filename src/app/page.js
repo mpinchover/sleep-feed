@@ -162,6 +162,7 @@ const Home = () => {
   const observer = useRef(null);
   const loadingRef = useRef(null);
   const [videos, setVideos] = useState(initial_images.slice(0, 10));
+  const lastVideoBeforeLoading = useRef(null);
 
   const paginationIndex = useRef(0);
 
@@ -173,6 +174,15 @@ const Home = () => {
       entries.forEach((entry) => {
         if (entry.target === loadingRef.current && entry.isIntersecting) {
           console.log("Reached loading card");
+
+          if (lastVideoBeforeLoading.current) {
+            console.log("Should scroll back");
+            setTimeout(() => {
+              lastVideoBeforeLoading.current.scrollIntoView({
+                behavior: "smooth",
+              });
+            }, 250);
+          }
 
           paginationIndex.current += 1;
           const startIndex = paginationIndex.current * 10;
@@ -186,11 +196,13 @@ const Home = () => {
               ...initial_images.slice(startIndex, endIndex),
             ]);
           }, 3000);
+          return;
         }
 
         const index = videoRefs.current.indexOf(entry.target);
         if (entry.isIntersecting) {
           setActiveIndex(index);
+          lastVideoBeforeLoading.current = entry.target;
         }
       });
     };
@@ -211,7 +223,7 @@ const Home = () => {
     };
   }, []);
 
-  console.log("VIDEOS LENGTH IS ", videos.length);
+  // console.log("VIDEOS LENGTH IS ", videos.length);
 
   // Manage video playback
   useEffect(() => {
