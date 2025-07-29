@@ -1,407 +1,537 @@
 [
   {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/_final_output (12).mp4",
+    "src": "https://storage.googleapis.com/translation-app-public/videos/00f0bdb7f19c41f98bc04b8b27a35e7c.mp4",
     "card_type": "video",
-    "uuid": "1ccfebdd-0171-4981-8561-e27e4d1a70a4"
+    "uuid": "b31c3f2e-1cc6-49a1-b71d-7e5f1ffeb8c2"
   },
   {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/_final_output (13).mp4",
+    "src": "https://storage.googleapis.com/translation-app-public/videos/025a11f13a7f482cb1d80b5e70b98c13.mp4",
     "card_type": "video",
-    "uuid": "8bbaa1e5-4f50-4450-98d3-f670f849d3f3"
+    "uuid": "41920cb9-1ba9-4270-a2c1-4366d5731115"
   },
   {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/_final_output (14).mp4",
+    "src": "https://storage.googleapis.com/translation-app-public/videos/090a7dbe22334af383c040684915b18a.mp4",
     "card_type": "video",
-    "uuid": "393f8147-8888-4cd8-bf1c-8a5c56061da1"
+    "uuid": "1326b81b-317b-44e9-9ce2-9720972a225b"
   },
   {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/_final_output (22).mp4",
+    "src": "https://storage.googleapis.com/translation-app-public/videos/09a0c7f07c9941e78ab99e128bb73ce1.mp4",
     "card_type": "video",
-    "uuid": "1703daca-2326-4097-910f-38e754fd52dc"
+    "uuid": "c0d6a77b-5ecb-4bfd-9d3f-97549c7e4f53"
   },
   {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/_final_output (23).mp4",
+    "src": "https://storage.googleapis.com/translation-app-public/videos/0a1ae525e99a41c0b35c5539087c6e23.mp4",
     "card_type": "video",
-    "uuid": "7bb3faa2-713e-4f9a-9114-3b35759d6157"
+    "uuid": "c522ccc6-9aa2-402c-806a-601ec2472b10"
   },
   {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/_final_output (24).mp4",
+    "src": "https://storage.googleapis.com/translation-app-public/videos/0d91a36202fc47839ffd23d6dcfd5248.mp4",
     "card_type": "video",
-    "uuid": "99820a2b-d06c-425a-ad30-bd90e5695d9e"
+    "uuid": "747bf34a-d62b-4e1f-9494-f5bcfe7c171d"
   },
   {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/_final_output (25).mp4",
+    "src": "https://storage.googleapis.com/translation-app-public/videos/0e202e2e60c34f3da184f82febf63a02.mp4",
     "card_type": "video",
-    "uuid": "4c36dfca-8752-4f46-9561-30f02c8a5c5e"
+    "uuid": "536272ae-4081-4af4-8eac-f8245d2d948d"
   },
   {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/_final_output (26).mp4",
+    "src": "https://storage.googleapis.com/translation-app-public/videos/13240819f30a44aa8e29376dff211cbb.mp4",
     "card_type": "video",
-    "uuid": "9350cd35-0eae-4441-acf8-115daabed19f"
+    "uuid": "626feb38-4c05-44f9-aece-472b8bf0912b"
   },
   {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (1).mp4",
+    "src": "https://storage.googleapis.com/translation-app-public/videos/1478f6ffdf5c486681ce514c1fd36ade.mp4",
     "card_type": "video",
-    "uuid": "9f1779b0-3c36-442d-99ac-c278ec6fc8e6"
+    "uuid": "08354ead-8354-4c12-b4e5-408da32e7f79"
   },
   {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (10).mp4",
+    "src": "https://storage.googleapis.com/translation-app-public/videos/154ddc0e1329497a883a6ecfe2a35344.mp4",
     "card_type": "video",
-    "uuid": "19acace2-bd96-4bdf-bc0e-a1a32fc8d290"
+    "uuid": "cb5de7fa-ec09-4f10-98ac-dfe352a33f5f"
   },
   {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (11).mp4",
+    "src": "https://storage.googleapis.com/translation-app-public/videos/157793ef84dc46218baf2b4067ceccd2.mp4",
     "card_type": "video",
-    "uuid": "8b5eb056-b5f4-4d3f-a481-a95e0d4aa20f"
+    "uuid": "892222a7-8726-46fc-8a81-1dc389c5ef16"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/15f252274a9b44ed86dd6bcc6456bb7e.mp4",
+    "card_type": "video",
+    "uuid": "77db252e-6a35-4939-b531-ac70253114f5"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/1e0261ad8ef64c9383a885ad165da66b.mp4",
+    "card_type": "video",
+    "uuid": "a0ef70da-04c3-4d6f-9ccf-ad727ae107d5"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/20369b6e77754a16a767364ed5208c12.mp4",
+    "card_type": "video",
+    "uuid": "a1573f38-83ae-4c54-8ab9-b5c8dff24c55"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/206380cc0c74463898778000138a1dba.mp4",
+    "card_type": "video",
+    "uuid": "9147174a-f132-47ce-b8b7-3d87c3ac0994"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/2286b31a7dc84961bf9a67578b8b323c.mp4",
+    "card_type": "video",
+    "uuid": "ca0d706c-ecd7-44fe-a2aa-a0150b5d48ab"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/2765b15b08b4417aa3fef3f2658fc0dd.mp4",
+    "card_type": "video",
+    "uuid": "7d6ad691-6458-4125-a342-36d6ccb8e83a"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/27c0d3363cc740bdb8f35dfa33dde62b.mp4",
+    "card_type": "video",
+    "uuid": "53b92d4f-1503-4c2a-8b9b-55b6d77a8878"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/2aa40292d6a841a198b925257483bf7e.mp4",
+    "card_type": "video",
+    "uuid": "9c9857a4-5a7a-4f9c-8b89-9e6279833b91"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/2d333d52702f47f485c1a3cf84429763.mp4",
+    "card_type": "video",
+    "uuid": "3915aa90-ead1-4948-af14-57085f7ba785"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/2e71bc61bdbe4f1e9d053891c8e2f659.mp4",
+    "card_type": "video",
+    "uuid": "72f19985-2eb9-4923-9e47-926e33198188"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/2f81bcda07c84812805a8518793d7f4c.mp4",
+    "card_type": "video",
+    "uuid": "92dcd93b-ee4e-4dc4-99e3-5aaf90b21d8e"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/3061501de88f4a02855626b658e941f5.mp4",
+    "card_type": "video",
+    "uuid": "54e2dc2e-e468-40dd-a97b-be10306cb2ec"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/36fbe598138f4ce68c01286ecdcb1a4a.mp4",
+    "card_type": "video",
+    "uuid": "70c96534-aa54-45e5-a417-00639858f367"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/37594ebdebde492e8c495e4feb4ecdcd.mp4",
+    "card_type": "video",
+    "uuid": "a0192ac3-17f2-4387-b7fd-ee050286ddd4"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/4942ba5904f04689bd69f15f416031d9.mp4",
+    "card_type": "video",
+    "uuid": "bb3c1048-eb51-4d38-a5c1-cc90016ca99c"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/4abd1f349eee449e98fd21178456e3cd.mp4",
+    "card_type": "video",
+    "uuid": "e0311639-ca7c-4f04-a54b-dba54f297512"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/4c540bd18c104d609945245c914e8722.mp4",
+    "card_type": "video",
+    "uuid": "3301aa6f-e492-4055-8ea3-606f6699c8f4"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/4d69cfa05c9e40de8b59151dbc770ebc.mp4",
+    "card_type": "video",
+    "uuid": "2195ca8e-7e05-41f7-bc04-f8b3a231b392"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/5385a12217db4df4a253c25c101abee2.mp4",
+    "card_type": "video",
+    "uuid": "ebe06115-6137-41bc-bfed-a2c094e71638"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/548d97ca2d6843b2a8575dd998e4a89f.mp4",
+    "card_type": "video",
+    "uuid": "04d2ca61-9742-40ec-844e-5e71823be5a1"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/55e8bae8f19240be9b3611710e3d669a.mp4",
+    "card_type": "video",
+    "uuid": "0fc16344-4ba1-4cff-ad50-fbadec0dbffd"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/58a87bf300544f96a7a661fec075cc9d.mp4",
+    "card_type": "video",
+    "uuid": "e671a1cf-f1ce-4c7e-b20e-3f8f7609ab25"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/5a3e0fefbfd84728b7f0f12a8d8e5998.mp4",
+    "card_type": "video",
+    "uuid": "2dfc1b8e-b358-4e4d-ad6c-e65a65dd568c"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/60f840b8fa344442908b9eb8f09fdea9.mp4",
+    "card_type": "video",
+    "uuid": "8fb7939e-dd42-4329-8ec5-9df5fbf01b1b"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/61ee212f7263483dae883720e5f4de4a.mp4",
+    "card_type": "video",
+    "uuid": "9777d63e-5a8d-4571-8cc0-d4f7cc3172d3"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/62923a060f63433a877eb56e451ade2e.mp4",
+    "card_type": "video",
+    "uuid": "41ae291f-0547-465d-b6a3-7f027b44472e"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/675da94c30f344cabaa8171bde91e6e6.mp4",
+    "card_type": "video",
+    "uuid": "f6fd2ea6-c8a1-4c0e-92d5-955d8c323581"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/6ab4e603f09249fb80aaef47273e2dac.mp4",
+    "card_type": "video",
+    "uuid": "7380b14e-d35a-4c79-b11e-a307827713d2"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/6b86391f390844378566838594c43c78.mp4",
+    "card_type": "video",
+    "uuid": "cf78553c-8043-41c4-8b43-eca1776eee7a"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/6f465c2f105448fe894369e56c020f5d.mp4",
+    "card_type": "video",
+    "uuid": "40d50992-9905-4152-b1a8-43958962f022"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/7128fba215794981bc3214d6b5e253fd.mp4",
+    "card_type": "video",
+    "uuid": "34a6b010-9eb7-401d-a395-4e833c33d076"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/755c4ee93b9a4e1888c758401038face.mp4",
+    "card_type": "video",
+    "uuid": "6c187922-5d0c-480b-80b3-76644afdc2c1"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/75c2593ff2354d0f92afb2277882bf41.mp4",
+    "card_type": "video",
+    "uuid": "c278c6a3-bbff-4981-9de8-813e2d09dbc3"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/75e67112697a40019698e88ada990736.mp4",
+    "card_type": "video",
+    "uuid": "4303ce59-d7f0-49a9-84c3-524e12f6302f"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/7a320f1f2ab64d32bb2779a86456dcac.mp4",
+    "card_type": "video",
+    "uuid": "f4fca22b-9a74-44e7-9e90-71e162655df7"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/7acfe1caefd7402c978d0d1798cbca87.mp4",
+    "card_type": "video",
+    "uuid": "4b3997ff-a54f-49b3-8b9e-a1a3170ebf77"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/80dd096b8e5e4dbfa686b5d532b88763.mp4",
+    "card_type": "video",
+    "uuid": "c3239bb4-52af-470b-93aa-88fb6db18783"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/8205f369132f4ccebf1d0c4f91f5e23a.mp4",
+    "card_type": "video",
+    "uuid": "2b490271-fb10-4115-8dc4-6749ddb49add"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/8571c40bca9647b3a6dd91ab8ddf4f51.mp4",
+    "card_type": "video",
+    "uuid": "d982a26d-6286-44cc-b769-c99a04843596"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/86207cc59d464c6191b1bd3987b0ee80.mp4",
+    "card_type": "video",
+    "uuid": "281509ce-960d-449b-b40f-adf7fba3d32d"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/8871799fef0f4ea59b7cbf61a6242da6.mp4",
+    "card_type": "video",
+    "uuid": "df4a2ea4-1b81-4010-9777-681f8f7c00c1"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/8b39ad4d8af845beb696d28faad4f940.mp4",
+    "card_type": "video",
+    "uuid": "885ade78-5c2d-4f94-9eca-21d104f2857d"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/8fe70397a9034aaf8836244786fddaa8.mp4",
+    "card_type": "video",
+    "uuid": "2ab12b9b-3e62-4bc8-9385-aa58b3c516a6"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/944eae9ca5bd49f392374c771e6e1db8.mp4",
+    "card_type": "video",
+    "uuid": "2bed7b7f-9172-4578-9c64-4ad429eb1c2e"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/9481fcb00c73443aa2029f0f2322d551.mp4",
+    "card_type": "video",
+    "uuid": "07a1f787-6c95-4bd2-b1a5-024264b04eff"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/9881737a0a9547f2bb7cecf0312c8248.mp4",
+    "card_type": "video",
+    "uuid": "b3da6065-8be1-4612-8501-8b5e355d8452"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/9963e0a3b291450d89b333aeb30cec6e.mp4",
+    "card_type": "video",
+    "uuid": "8d7a54da-33a7-4bb2-b4ea-70ab4881bda3"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/99d0cdc3cdaa430f8fbc0fee8a628050.mp4",
+    "card_type": "video",
+    "uuid": "7a6887f1-10ef-415d-b866-51d450b01382"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/99ef41f56f904428a19fb4ef13bec32f.mp4",
+    "card_type": "video",
+    "uuid": "04d1a354-99f0-476f-8c12-9c6e9fdee703"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/9aab8b38f8e14cbbb0d24a714109ae74.mp4",
+    "card_type": "video",
+    "uuid": "7f205a91-64ad-4fa1-bcb3-3bc1748ac24e"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/9e226a75520249c4b9ca85c4ea15836e.mp4",
+    "card_type": "video",
+    "uuid": "def339af-7828-4555-8872-8fc9ac855af8"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/9fba68c2fa0d48fc85925df456c710a0.mp4",
+    "card_type": "video",
+    "uuid": "a8968ef4-b0c6-4ce9-be7e-fbb4b721b76e"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/a65b68eb51404190a83a861e4650b22d.mp4",
+    "card_type": "video",
+    "uuid": "8371776e-6b23-485a-832f-811d658d63e2"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/a884ae0f5276477ebf4b6bd9544a52bd.mp4",
+    "card_type": "video",
+    "uuid": "bd1044f6-fd6b-4212-a84c-abea98b20d48"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/af729448615541688717b61074a83e61.mp4",
+    "card_type": "video",
+    "uuid": "a8e3228e-3b17-4484-b2d8-9d4b0e1f4be0"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/b0cd2967303343dbb5c7eafdd20ee106.mp4",
+    "card_type": "video",
+    "uuid": "6a86f4b2-3bde-4aeb-89c0-0956a8268cf5"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/bb262fbbaf0844e0934cd3f427a9df44.mp4",
+    "card_type": "video",
+    "uuid": "e2378161-7987-4b75-a03e-50e1a770a6c5"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/bec3f21a16f34547845b13e652924b05.mp4",
+    "card_type": "video",
+    "uuid": "f011a1af-08c1-4787-8c69-edc17eb94df1"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/bf12a5f4a5774859906eac110c2a5174.mp4",
+    "card_type": "video",
+    "uuid": "6b9ff451-06be-43d5-9c31-9baf9d24c3b8"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/c09ff8f3f176465883e098f494ca8920.mp4",
+    "card_type": "video",
+    "uuid": "07060005-995a-4538-8dfc-f88a0f5c83bc"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/c124513065c54bdfaa9497521423e330.mp4",
+    "card_type": "video",
+    "uuid": "c8243955-8f77-4047-9aaf-f6ad442e65b0"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/c14b5becdeb64f99a48f16a5f46b6d0f.mp4",
+    "card_type": "video",
+    "uuid": "151818ed-476d-481e-af07-d4af8ee3a976"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/c7e207ca99bc438fa58892aba37deeef.mp4",
+    "card_type": "video",
+    "uuid": "2619c6aa-6d98-41f3-aafc-01140dcee1cc"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/c90f87182627468abe897bb914e45bd7.mp4",
+    "card_type": "video",
+    "uuid": "70230514-62da-4817-8688-8fcd9e840601"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/c926c4b2fd7b437faa39a1e2b66873f7.mp4",
+    "card_type": "video",
+    "uuid": "7959d0aa-dcaa-4213-8354-2841fa6931a0"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/cda8013cfe8c453e84cd2039f968534f.mp4",
+    "card_type": "video",
+    "uuid": "c8259504-7735-4eda-b474-77a8b252750c"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/ce9d03a4faae4f31b54886f8ee4694ff.mp4",
+    "card_type": "video",
+    "uuid": "8dcbdf4c-7680-47c3-9e7d-0659d538e5e4"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/cea8ba5c27d3430d95f1551a36d289f4.mp4",
+    "card_type": "video",
+    "uuid": "bd412508-27ac-4fb8-b0a4-ff3abed51f3b"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/d7f48d6811774773b28e088087e6b88a.mp4",
+    "card_type": "video",
+    "uuid": "4178339a-d014-42e3-8589-95e926a6f735"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/e1f57b1c6f444a6791741ca59eb3e063.mp4",
+    "card_type": "video",
+    "uuid": "0c35e2cc-5cdd-4b10-8d01-4dab3a4c0c64"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/ee05f587e9b1410fb7b9cda2ac55cace.mp4",
+    "card_type": "video",
+    "uuid": "87dfa5ab-0985-49bd-be8c-bb03d880211e"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/eec55a5727e241dabd9c48b6efab5378.mp4",
+    "card_type": "video",
+    "uuid": "98f297e3-c02c-4b62-bc1a-28aa2e09c386"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/f012ad3a7901484094677ad4494cfb67.mp4",
+    "card_type": "video",
+    "uuid": "4c04d61e-486d-4f5f-985c-24943191ff6f"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/f2b4216a07f949eca60be5abe0527b25.mp4",
+    "card_type": "video",
+    "uuid": "0060df82-a64d-4b06-a8d9-44f6f00aff2d"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/f51c1a99792548439ad772aa0b499f6b.mp4",
+    "card_type": "video",
+    "uuid": "1ecbb93e-cd9b-4d0f-a694-1db0174db2ab"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/f7d2dbb3b0c145a5babe4ded708f7473.mp4",
+    "card_type": "video",
+    "uuid": "fd436f45-fa17-4062-9467-5ce2fcd0628e"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/f98a2a292c6541f2a9c3071d9d7f9965.mp4",
+    "card_type": "video",
+    "uuid": "93094678-05e4-42b7-af1e-000d2d9c6336"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/f9e9762de95646c4bfe00b7b1fe725ce.mp4",
+    "card_type": "video",
+    "uuid": "5cd4a0fd-2c93-408c-a216-7093c5f5b058"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/fbfe087679924d23896467423beee999.mp4",
+    "card_type": "video",
+    "uuid": "d0eba977-577c-42da-949b-4f936646e41e"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/fd66c63ec5934cfd93955593714b32c3.mp4",
+    "card_type": "video",
+    "uuid": "8a72d923-8d04-46c6-bc6c-ad806d162304"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/fd6dbef751044361a1e2c42ea2a843a3.mp4",
+    "card_type": "video",
+    "uuid": "1cacacfd-657e-48e4-857b-a5bd95583f8f"
+  },
+  {
+    "src": "https://storage.googleapis.com/translation-app-public/videos/fee95df2e26d423c85d12fbe5b0a1414.mp4",
+    "card_type": "video",
+    "uuid": "a3365f80-99c7-4ca9-9868-f2452516fee2"
   },
   {
     "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (12).mp4",
     "card_type": "video",
-    "uuid": "5ac9cf92-0954-45ec-9d80-3ec3ce4c4d10"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (12)_.mp4",
-    "card_type": "video",
-    "uuid": "7dfdf032-b5a4-4b93-92c6-526b3c3fce3c"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (12)_0.mp4",
-    "card_type": "video",
-    "uuid": "c609f90c-357f-4bdb-91b4-b5a12ccbd963"
+    "uuid": "e3bf457c-0b25-4f18-a1f2-75f751363035"
   },
   {
     "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (13).mp4",
     "card_type": "video",
-    "uuid": "584c928d-c68b-4aec-8bb1-4d1d1f90aae3"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (13)_0.mp4",
-    "card_type": "video",
-    "uuid": "fd872a95-89b0-4c1f-a0d2-6e3d6ccf37ef"
+    "uuid": "90b7cf90-ba39-4989-9634-095c1903442a"
   },
   {
     "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (14).mp4",
     "card_type": "video",
-    "uuid": "7b421442-71f8-4470-8658-5d104d2c98f9"
+    "uuid": "dd642a60-b7d5-4fc2-85f6-8cea6d80982e"
   },
   {
     "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (15).mp4",
     "card_type": "video",
-    "uuid": "add1b39a-f613-4b06-8dcb-7f6696c1bbb2"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (15)_0.mp4",
-    "card_type": "video",
-    "uuid": "9b70a466-ab8a-46d9-86c4-fd16b2051eac"
+    "uuid": "6228c655-3c58-4843-b059-f526ed55387a"
   },
   {
     "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (16).mp4",
     "card_type": "video",
-    "uuid": "9ab95d89-c841-4cc0-bf24-a68b9e6e43b7"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (16)_0.mp4",
-    "card_type": "video",
-    "uuid": "b169ce50-a7ab-4ac0-9355-cab9d5190a20"
+    "uuid": "85437902-3ec6-4ad9-a4e0-e4b0794ec665"
   },
   {
     "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (17).mp4",
     "card_type": "video",
-    "uuid": "f76d3b40-696a-4c2f-b1a0-176cff67f3b9"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (17)_0.mp4",
-    "card_type": "video",
-    "uuid": "424300cf-170d-47c8-8bad-d9fc4ea1f439"
+    "uuid": "ea1874bd-21da-4afa-a97b-cff9cebc1077"
   },
   {
     "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (18).mp4",
     "card_type": "video",
-    "uuid": "766a205d-e01a-4044-8236-c817530ebdcc"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (18)_0.mp4",
-    "card_type": "video",
-    "uuid": "b62fce82-b31c-4a30-8a8b-9d9a376283d1"
+    "uuid": "0fc89f9f-85de-4038-a235-72c37002bbc4"
   },
   {
     "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (19).mp4",
     "card_type": "video",
-    "uuid": "2a1aed1c-afbc-4dc9-98d6-f1cd205fd49f"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (19)_0.mp4",
-    "card_type": "video",
-    "uuid": "8801f0ed-7897-473d-901a-bed0f58351ec"
+    "uuid": "b265ecd5-a213-4d28-b73f-0cf09c6dd9b3"
   },
   {
     "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (20).mp4",
     "card_type": "video",
-    "uuid": "37a17624-3c12-460c-8372-9202ae5f2673"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (20)_0.mp4",
-    "card_type": "video",
-    "uuid": "05fb55e2-a66f-4984-b6f6-9f10c1c7538a"
+    "uuid": "0602bb34-de6d-407b-af95-6dc6b6874e23"
   },
   {
     "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (21).mp4",
     "card_type": "video",
-    "uuid": "bcd4ea3f-2c88-4ce5-9c25-6c72739df787"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (21)_0.mp4",
-    "card_type": "video",
-    "uuid": "5ae7c089-0c0d-45d3-82a1-9feefcbbd54d"
+    "uuid": "ff226333-3a64-4044-a368-35b84e6ba455"
   },
   {
     "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (22).mp4",
     "card_type": "video",
-    "uuid": "eb2566ad-03ef-4255-81c8-325cc530d6b1"
+    "uuid": "b2e012a4-40f0-4b30-939c-5ac5ac0b75c3"
   },
   {
     "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (23).mp4",
     "card_type": "video",
-    "uuid": "8c7cdbd0-88a2-4148-8ddc-2ca4008a0346"
+    "uuid": "ebba97db-4310-41fb-923a-d0ab516f5827"
   },
   {
     "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (24).mp4",
     "card_type": "video",
-    "uuid": "d019eacd-afb1-40ce-9109-3325f4c3a882"
+    "uuid": "ccb5c1d0-c01a-4c68-9889-10d535712d0c"
   },
   {
     "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (25).mp4",
     "card_type": "video",
-    "uuid": "10223b2a-8205-4692-8224-abc24941765a"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (26).mp4",
-    "card_type": "video",
-    "uuid": "28d6d871-dfe1-452a-a1cc-2d77769a75e4"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (27).mp4",
-    "card_type": "video",
-    "uuid": "6689489a-0255-4185-bd7a-a2c0c5e413a7"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (28).mp4",
-    "card_type": "video",
-    "uuid": "0a00573b-a74b-4637-a87d-de15951ddc2d"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (29).mp4",
-    "card_type": "video",
-    "uuid": "c4b30451-81b2-44c9-b8ee-f0e24916ba8b"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (3).mp4",
-    "card_type": "video",
-    "uuid": "b8ed916d-1d5a-4107-9f71-510ae4c674f6"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (30).mp4",
-    "card_type": "video",
-    "uuid": "956b8ca6-1d2d-4b7c-81ac-adf04a34152b"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (31).mp4",
-    "card_type": "video",
-    "uuid": "defd9abb-a7ad-452a-96bc-5b027ad1c5f2"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (32).mp4",
-    "card_type": "video",
-    "uuid": "02c90cef-af67-4559-bf50-1c67e1171a4e"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (33).mp4",
-    "card_type": "video",
-    "uuid": "25761f28-727d-437d-a740-e11779746a2d"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (34).mp4",
-    "card_type": "video",
-    "uuid": "e53c476e-e19e-47d0-a732-d381bf86ecd2"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (35).mp4",
-    "card_type": "video",
-    "uuid": "00a75390-c8ad-4d49-afed-dd1e5908cb2b"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (36).mp4",
-    "card_type": "video",
-    "uuid": "13d1471e-2435-410c-baec-1e404958326c"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (37).mp4",
-    "card_type": "video",
-    "uuid": "2566d662-00ec-4266-b822-35a32970650d"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (38).mp4",
-    "card_type": "video",
-    "uuid": "bba68732-bdbf-42b2-991c-9b2feeca0a6b"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (39).mp4",
-    "card_type": "video",
-    "uuid": "acb1627e-65d1-40ad-abd2-4bed32bf37fa"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (4).mp4",
-    "card_type": "video",
-    "uuid": "f6955f0d-340b-420b-810e-8a5c0db2c0b9"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (40).mp4",
-    "card_type": "video",
-    "uuid": "04aa0d41-16a0-45fa-937d-7fb008caf769"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (41).mp4",
-    "card_type": "video",
-    "uuid": "740583b3-5c2f-4229-a9c8-face2ccb57af"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (42).mp4",
-    "card_type": "video",
-    "uuid": "ddafc708-b44c-45a6-bd27-de8d7a296ef6"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (43).mp4",
-    "card_type": "video",
-    "uuid": "43f53507-e24d-4ae9-9d4e-d5d3b971fb92"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (44).mp4",
-    "card_type": "video",
-    "uuid": "f0e1ef10-99c8-448f-a63f-ce1e96ff053c"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (45).mp4",
-    "card_type": "video",
-    "uuid": "374f76e3-ee19-49dd-bc9d-456c82eec40d"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (46).mp4",
-    "card_type": "video",
-    "uuid": "e0a75585-cdff-400f-97ed-74254cf04d35"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (5).mp4",
-    "card_type": "video",
-    "uuid": "b43fd20c-74d4-45ee-a474-02ceb36cc446"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (6).mp4",
-    "card_type": "video",
-    "uuid": "8c978bcd-888d-4ab4-8dfd-dad6f65f4874"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (7).mp4",
-    "card_type": "video",
-    "uuid": "11fc105c-95a2-45a6-9537-77e324605c4d"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (8).mp4",
-    "card_type": "video",
-    "uuid": "c77c669e-615c-4a5d-b8a3-68055d97a4c5"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output (9).mp4",
-    "card_type": "video",
-    "uuid": "1f05d9d9-89ac-47b5-9576-f41710ee1763"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output(1).mp4",
-    "card_type": "video",
-    "uuid": "fd7ab32f-72f1-48f1-9bcb-52d94eab1cf3"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output(10).mp4",
-    "card_type": "video",
-    "uuid": "40a01011-cd4c-45f9-803c-ff94c91e8975"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output(11).mp4",
-    "card_type": "video",
-    "uuid": "0c30c480-2f49-412f-8434-5da2472cb0d9"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output(12).mp4",
-    "card_type": "video",
-    "uuid": "e33fd0a3-10ca-492a-904e-c11251ac0ab0"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output(13).mp4",
-    "card_type": "video",
-    "uuid": "7b3e7e28-3f47-4e9c-a1af-26dffd19bb6a"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output(14).mp4",
-    "card_type": "video",
-    "uuid": "9b9d2419-8cd1-4081-8d92-5e870d4d03fe"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output(15).mp4",
-    "card_type": "video",
-    "uuid": "6740b449-3f3e-437f-8166-abba07e95126"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output(16).mp4",
-    "card_type": "video",
-    "uuid": "5c1b2f71-3c7e-40a6-8c98-04318a2b3cb2"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output(2).mp4",
-    "card_type": "video",
-    "uuid": "d6103680-bbb6-4c58-b5b9-1b22d216d78a"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output(3).mp4",
-    "card_type": "video",
-    "uuid": "008e0413-cb29-402b-b883-d8db52957230"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output(4).mp4",
-    "card_type": "video",
-    "uuid": "1fcfe1c4-56d3-4fd9-8615-4662048b55c7"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output(5).mp4",
-    "card_type": "video",
-    "uuid": "a1e077d3-fa91-4942-9001-3699067aa57b"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output(6).mp4",
-    "card_type": "video",
-    "uuid": "e0cadae3-79d0-4779-9205-1c93a8523b5b"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output(7).mp4",
-    "card_type": "video",
-    "uuid": "aa61225f-8d9b-4edc-95ee-3db6c4b31540"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output(8).mp4",
-    "card_type": "video",
-    "uuid": "d3b17b14-888e-4af0-b24f-6b726bce4ec0"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output(9).mp4",
-    "card_type": "video",
-    "uuid": "64fa630b-93af-4140-8670-4633069bc35f"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/final_output.mp4",
-    "card_type": "video",
-    "uuid": "974c5a42-f7c0-4f8c-a9a8-a2fd81c224c0"
-  },
-  {
-    "src": "https://storage.googleapis.com/translation-app-public/videos/new_final_output (12).mp4",
-    "card_type": "video",
-    "uuid": "5be927e6-34a1-4cd4-a1ea-4a22699c8789"
+    "uuid": "66e220f5-75d0-483f-8191-101974d16bc5"
   }
 ]

@@ -10,7 +10,7 @@ import {
   AspectRatio,
   Skeleton,
 } from "@chakra-ui/react";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useMemo } from "react";
 import { FiVolume2, FiVolumeX, FiUser, FiLogOut } from "react-icons/fi";
 import initial_images from "./fake-video-cards";
 
@@ -180,6 +180,8 @@ const Home = () => {
   const videoRefs = useRef([]);
   const observer = useRef(null);
   const loadingRef = useRef(null);
+
+  // const initialVideos = useMemo(() => shuffleArray(initial_images), []);
   const [videos, setVideos] = useState(initial_videos.slice(0, 5));
   const lastVideoBeforeLoading = useRef(null);
   const isFetchingNextBatchOfVideos = useRef(false);
