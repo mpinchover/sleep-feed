@@ -1,5 +1,5 @@
 "use client";
-import { Box, Flex, Button, Icon, VStack } from "@chakra-ui/react";
+import { Box, Flex, Button, Icon, VStack, Text } from "@chakra-ui/react";
 import { useRef, useEffect, useState } from "react";
 import { FiVolume2, FiVolumeX, FiUser, FiLogOut } from "react-icons/fi";
 import initial_images from "./fake-video-cards";
@@ -94,10 +94,11 @@ const Sidebar = () => {
         leftIcon={<Icon as={FiUser} boxSize={5} color="red" />}
       >
         <Icon as={FiUser} boxSize={5} color="white" />
-        Account
+        <Text display={{ base: "none", md: "inline-block" }}> Account</Text>
       </Button>
       <Button variant="ghost" leftIcon={<Icon as={FiLogOut} boxSize={5} />}>
-        <Icon as={FiLogOut} boxSize={5} color="white" /> Log out
+        <Icon as={FiLogOut} boxSize={5} color="white" />
+        <Text display={{ base: "none", md: "inline-block" }}>Log out</Text>
       </Button>
     </VStack>
   );
