@@ -163,6 +163,7 @@ const Home = () => {
   const loadingRef = useRef(null);
   const [videos, setVideos] = useState(initial_images.slice(0, 5));
   const lastVideoBeforeLoading = useRef(null);
+  const isFetchingNextBatchOfVideos = useRef(false);
 
   const paginationIndex = useRef(0);
 
@@ -173,8 +174,6 @@ const Home = () => {
     const handleIntersect = (entries) => {
       entries.forEach((entry) => {
         if (entry.target === loadingRef.current && entry.isIntersecting) {
-          console.log("Reached loading card");
-
           if (lastVideoBeforeLoading.current) {
             console.log("Should scroll back");
             setTimeout(() => {
@@ -184,6 +183,13 @@ const Home = () => {
             }, 250);
           }
 
+          if (isFetchingNextBatchOfVideos.current) {
+            return;
+          }
+
+          isFetchingNextBatchOfVideos.current = true;
+          console.log("Reached loading card");
+
           paginationIndex.current += 1;
           const startIndex = paginationIndex.current * 10;
           const endIndex = startIndex + 10;
@@ -191,7 +197,9 @@ const Home = () => {
           const newVideos = initial_images.slice(startIndex, endIndex);
           setTimeout(() => {
             setVideos((prev) => [...prev, ...newVideos]);
+            isFetchingNextBatchOfVideos.current = false;
           }, 3000);
+
           return;
         }
 
