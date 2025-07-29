@@ -238,6 +238,8 @@ const Home = () => {
 
           const newVideos = initial_videos.slice(startIndex, endIndex);
           setTimeout(() => {
+            // do this only on mobile
+            setIsMuted(true);
             setVideos((prev) => [...prev, ...newVideos]);
             isFetchingNextBatchOfVideos.current = false;
           }, 3000);
@@ -275,11 +277,7 @@ const Home = () => {
       observer.current.observe(video);
 
       if (index === activeIndex) {
-        if (index < 5) {
-          video.muted = isMuted;
-        } else {
-          video.muted = true;
-        }
+        video.muted = isMuted;
 
         const playPromise = video.play();
         if (playPromise !== undefined) {
