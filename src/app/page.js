@@ -248,12 +248,15 @@ const Home = () => {
           const endIndex = startIndex + 10;
 
           const newVideos = initial_videos.slice(startIndex, endIndex);
+
           setTimeout(() => {
             // do this only on mobile
             setIsMuted(true);
+
+            const indexToScrollTo = videos.length;
             setVideos((prev) => [...prev, ...newVideos]);
             isFetchingNextBatchOfVideos.current = false;
-          }, 3000);
+          }, 1500);
 
           return;
         }
