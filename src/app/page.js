@@ -158,10 +158,10 @@ const Sidebar = () => {
 const Home = () => {
   const [isMuted, setIsMuted] = useState(true);
   const [activeIndex, setActiveIndex] = useState(0);
-  const videoRefs = useRef([initial_images.slice(0, 10)]);
+  const videoRefs = useRef([]);
   const observer = useRef(null);
   const loadingRef = useRef(null);
-  const [videos, setVideos] = useState(initial_images.slice(0, 10));
+  const [videos, setVideos] = useState(initial_images.slice(0, 5));
   const lastVideoBeforeLoading = useRef(null);
 
   const paginationIndex = useRef(0);
@@ -188,13 +188,9 @@ const Home = () => {
           const startIndex = paginationIndex.current * 10;
           const endIndex = startIndex + 10;
 
-          console.log(initial_images.slice(startIndex, endIndex));
-
+          const newVideos = initial_images.slice(startIndex, endIndex);
           setTimeout(() => {
-            setVideos((prev) => [
-              ...prev,
-              ...initial_images.slice(startIndex, endIndex),
-            ]);
+            setVideos((prev) => [...prev, ...newVideos]);
           }, 3000);
           return;
         }
@@ -211,10 +207,6 @@ const Home = () => {
       threshold: 0.7, // 70% visible,
     });
 
-    videoRefs.current.forEach((video) => {
-      if (video) observer.current.observe(video);
-    });
-
     if (loadingRef.current) observer.current.observe(loadingRef.current);
 
     return () => {
@@ -227,8 +219,17 @@ const Home = () => {
 
   // Manage video playback
   useEffect(() => {
+    // the number of lengths if correct
+    // console.log(console.log("video refs length is ", videoRefs.current.length));
     videoRefs.current.forEach((video, index) => {
-      if (!video) return;
+      if (!video) {
+        return;
+      }
+
+      observer.current.observe(video);
+
+      // console.log("Index is ", index);
+      // console.log("Active index is ", activeIndex);
 
       if (index === activeIndex) {
         video.muted = isMuted;
@@ -242,7 +243,7 @@ const Home = () => {
         video.pause();
       }
     });
-  }, [activeIndex, isMuted]);
+  }, [activeIndex, isMuted, videos]);
 
   const loadMoreVideos = () => {
     // imagine this function loads the next batch of videos
