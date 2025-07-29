@@ -12,19 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { useRef, useEffect, useState, useMemo } from "react";
 import { FiVolume2, FiVolumeX, FiUser, FiLogOut } from "react-icons/fi";
-import initial_images from "./fake-video-cards";
-
-const shuffleArray = (array) => {
-  const arr = [...array]; // clone to avoid mutating original
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-  return arr;
-};
-
-// const initial_videos = shuffleArray(initial_images);
-const initial_videos = initial_images;
+import initial_videos from "./fake-video-cards";
 
 const VideoCard = ({ src, isMuted, onToggleMute, registerRef }) => {
   const videoRef = useRef(null);
@@ -43,16 +31,8 @@ const VideoCard = ({ src, isMuted, onToggleMute, registerRef }) => {
     }
   }, []);
 
-  const handleOnWaiting = () => {
-    if (videoRef.current?.readyState < 3) {
-      setIsLoading(true);
-      // videoRef.current.load();
-    }
-  };
-
   console.log("Loading video ", src);
 
-  // console.log(videoRef.current?.readsyState);
   return (
     <Flex
       justifyContent="center"
@@ -62,28 +42,24 @@ const VideoCard = ({ src, isMuted, onToggleMute, registerRef }) => {
       scrollSnapAlign="start"
       scrollSnapStop="always"
       position="relative"
-      // border="1px solid yellow"
     >
       <Box
         borderRadius="10px"
-        // border="solid 1px blue"
         width="350px"
         overflow="hidden"
         position="relative"
-        // height="100%"
       >
         <AspectRatio ratio={9 / 16} width="100%">
           <>
-            {true && (
-              <Skeleton
-                css={{
-                  "--start-color": "colors.pink.500",
-                  "--end-color": "colors.orange.500",
-                }}
-                height="100%"
-                width="100%"
-              /> // ⬅️ placeholder
-            )}
+            <Skeleton
+              css={{
+                "--start-color": "colors.pink.500",
+                "--end-color": "colors.orange.500",
+              }}
+              height="100%"
+              width="100%"
+            />{" "}
+            // ⬅️ placeholder
             <video
               ref={videoRef}
               style={{ objectFit: "cover", display: "block" }}
@@ -95,7 +71,6 @@ const VideoCard = ({ src, isMuted, onToggleMute, registerRef }) => {
               playsInline
               preload="auto"
               onError={(e) => console.error("Video failed to load", e)}
-              // onWaiting={handleOnWaiting}
               onPlaying={() => setIsLoading(false)} // ← More reliable than onLoadedData
             />
           </>
@@ -114,7 +89,6 @@ const VideoCard = ({ src, isMuted, onToggleMute, registerRef }) => {
             variant="ghost"
             p={0}
             m={0}
-            // minW="auto"
             bg="transparent"
             _hover={{ bg: "transparent" }}
             _active={{ bg: "transparent" }}
@@ -136,7 +110,6 @@ const LoadingCard = ({ registerRef }) => (
     ref={registerRef}
     justifyContent="center"
     alignItems="center"
-    // height="100dvh"
     scrollSnapAlign="start"
     scrollSnapStop="always"
     paddingY="100px"
@@ -156,11 +129,9 @@ const Sidebar = () => {
       align="start"
       width="200px"
       zIndex={20}
-      // border="1px solid red"
       position="fixed"
       padding="10px"
       spacing={4}
-      // backgroundColor={"white"}
     >
       <Button
         variant="ghost"
@@ -184,7 +155,6 @@ const Home = () => {
   const observer = useRef(null);
   const loadingRef = useRef(null);
 
-  // const initialVideos = useMemo(() => shuffleArray(initial_images), []);
   const [videos, setVideos] = useState(initial_videos.slice(0, 5));
   const lastVideoBeforeLoading = useRef(null);
   const isFetchingNextBatchOfVideos = useRef(false);
@@ -214,7 +184,6 @@ const Home = () => {
           }
 
           isFetchingNextBatchOfVideos.current = true;
-          console.log("Reached loading card");
 
           paginationIndex.current += 1;
           const startIndex = paginationIndex.current * 10;
@@ -249,21 +218,14 @@ const Home = () => {
     };
   }, []);
 
-  // console.log("VIDEOS LENGTH IS ", videos.length);
-
   // Manage video playback
   useEffect(() => {
-    // the number of lengths if correct
-    // console.log(console.log("video refs length is ", videoRefs.current.length));
     videoRefs.current.forEach((video, index) => {
       if (!video) {
         return;
       }
 
       observer.current.observe(video);
-
-      // console.log("Index is ", index);
-      // console.log("Active index is ", activeIndex);
 
       if (index === activeIndex) {
         video.muted = isMuted;
@@ -278,10 +240,6 @@ const Home = () => {
       }
     });
   }, [activeIndex, isMuted, videos]);
-
-  const loadMoreVideos = () => {
-    // imagine this function loads the next batch of videos
-  };
 
   return (
     <Box
