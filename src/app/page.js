@@ -1,11 +1,20 @@
 "use client";
-import { Box, Flex, Button, Icon, VStack, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Button,
+  Icon,
+  VStack,
+  Text,
+  Spinner,
+} from "@chakra-ui/react";
 import { useRef, useEffect, useState } from "react";
 import { FiVolume2, FiVolumeX, FiUser, FiLogOut } from "react-icons/fi";
 import initial_images from "./fake-video-cards";
 
 const VideoCard = ({ src, isMuted, onToggleMute, registerRef }) => {
   const videoRef = useRef(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Register the video ref with parent
   useEffect(() => {
@@ -13,6 +22,12 @@ const VideoCard = ({ src, isMuted, onToggleMute, registerRef }) => {
       registerRef(videoRef.current);
     }
   }, [registerRef]);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.load(); // force preload
+    }
+  }, []);
 
   return (
     <Flex
@@ -32,6 +47,24 @@ const VideoCard = ({ src, isMuted, onToggleMute, registerRef }) => {
         overflow="hidden"
         position="relative"
       >
+        {isLoading && (
+          <Flex
+            position="absolute"
+            top={0}
+            left={0}
+            width="100%"
+            height="100%"
+            justifyContent="center"
+            alignItems="center"
+            background="rgba(0, 0, 0, 0.5)"
+            zIndex={10}
+          >
+            <Spinner color="white" size="lg" />
+            <Text ml={2} color="white">
+              Loading...
+            </Text>
+          </Flex>
+        )}
         <video
           ref={videoRef}
           style={{ objectFit: "cover", display: "block" }}
@@ -41,8 +74,10 @@ const VideoCard = ({ src, isMuted, onToggleMute, registerRef }) => {
           muted={isMuted}
           loop
           playsInline
-          preload="metadata"
+          preload="auto"
           onError={(e) => console.error("Video failed to load", e)}
+          onLoadedData={() => setIsLoading(false)}
+          onWaiting={() => setIsLoading(true)}
         />
 
         <Box
