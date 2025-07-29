@@ -188,7 +188,7 @@ const Sidebar = () => {
         <Text display={{ base: "none", md: "inline-block" }}> Account</Text>
       </Button>
       <Button variant="ghost" leftIcon={<Icon as={FiLogOut} boxSize={5} />}>
-        <Icon as={FiUser} boxSize={5} color="white" />
+        <Icon as={FiLogOut} boxSize={5} color="white" />
         <Text display={{ base: "none", md: "inline-block" }}>Log out</Text>
       </Button>
     </VStack>
@@ -275,15 +275,20 @@ const Home = () => {
       observer.current.observe(video);
 
       if (index === activeIndex) {
-        video.muted = true;
+        if (index < 5) {
+          video.muted = isMuted;
+        } else {
+          video.muted = true;
+        }
+
         const playPromise = video.play();
         if (playPromise !== undefined) {
           playPromise
-            .then(() => {
-              if (!isMuted) {
-                video.muted = false;
-              }
-            })
+            // .then(() => {
+            //   if (!isMuted) {
+            //     video.muted = false;
+            //   }
+            // })
             .catch((e) => {
               console.warn("Play interrupted:", e.message);
             });
