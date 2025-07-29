@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { useRef, useEffect, useState, useMemo } from "react";
 import { FiVolume2, FiVolumeX, FiUser, FiLogOut } from "react-icons/fi";
-import { RiArrowDownDoubleLine } from "react-icons/ri";
+import { RiArrowUpDoubleLine } from "react-icons/ri";
 import { FaAngleDoubleDown } from "react-icons/fa";
 
 import initial_videos from "./fake-video-cards";
@@ -119,15 +119,15 @@ const VideoCard = ({
             alignItems="center"
           >
             <Icon
-              animation="fade-out 1s infinite"
-              as={RiArrowDownDoubleLine}
+              animation="fade-in 1s infinite"
+              as={RiArrowUpDoubleLine}
               boxSize={6}
               color="white"
               mb={1}
             />
             <Icon
-              animation="fade-in 1s infinite"
-              as={RiArrowDownDoubleLine}
+              animation="fade-out 1s infinite"
+              as={RiArrowUpDoubleLine}
               boxSize={6}
               color="white"
             />
