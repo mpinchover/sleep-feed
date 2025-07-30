@@ -25,10 +25,13 @@ const VideoCard = ({
   shouldShowSwipeDownIcons,
   videoRefs,
   activeIndex,
+  handleToggleUserIcons,
+  showUserIcons,
 }) => {
   const videoRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
   const [startShowIcons, setStartShowIcons] = useState(false);
+  // const [showUserIcons, setShowUserIcons] = useState(false);
 
   const scrollToNext = () => {
     const next = videoRefs?.current?.[activeIndex + 1];
@@ -75,6 +78,7 @@ const VideoCard = ({
         width="350px"
         overflow="hidden"
         position="relative"
+        onClick={handleToggleUserIcons}
       >
         <AspectRatio ratio={9 / 16} width="100%">
           <>
@@ -106,13 +110,13 @@ const VideoCard = ({
             cursor={"pointer"}
             onClick={scrollToNext}
             position="absolute"
-            top="50%"
-            // left="100%"
-            right="30px"
-            transform="translate(-0%, -50%)"
-            bg="rgba(0, 0, 0, 0.5)"
+            bottom="30px"
+            left="50%"
+            // right="30px"
+            transform="translate(-50%, -0%)"
+            bg="rgba(0, 0, 0, 0.3)"
             padding="8px"
-            borderRadius="md"
+            borderRadius="full"
             zIndex="20"
             display="flex"
             flexDirection="column"
@@ -121,43 +125,53 @@ const VideoCard = ({
             <Icon
               animation="fade-in 1s infinite"
               as={RiArrowUpDoubleLine}
-              boxSize={6}
-              color="white"
+              boxSize={12}
+              color="rgba(255, 255, 255, 0.7)"
               mb={1}
             />
             <Icon
               animation="fade-out 1s infinite"
               as={RiArrowUpDoubleLine}
-              boxSize={6}
-              color="white"
+              boxSize={12}
+              color="rgba(255, 255, 255, 0.3)"
             />
           </Box>
         )}
-        <Box
-          position="absolute"
-          bottom="20px"
-          right="20px"
-          padding="6px"
-          borderRadius="full"
-          bg="rgba(0, 0, 0, 0.5)"
-          zIndex="10"
-        >
-          <Button
-            onClick={onToggleMute}
-            variant="ghost"
-            p={0}
-            m={0}
-            bg="transparent"
-            _hover={{ bg: "transparent" }}
-            _active={{ bg: "transparent" }}
+        {showUserIcons && (
+          <VStack
+            position="absolute"
+            bottom="30px"
+            right="20px"
+            padding="6px"
+            borderRadius="full"
+            bg="rgba(0, 0, 0, 0.3)"
+            zIndex="10"
           >
-            <Icon
-              as={isMuted ? FiVolumeX : FiVolume2}
-              color="white"
-              fontSize="10px"
-            />
-          </Button>
-        </Box>
+            <Button
+              onClick={onToggleMute}
+              variant="ghost"
+              p={0}
+              m={0}
+              bg="transparent"
+              _hover={{ bg: "transparent" }}
+              _active={{ bg: "transparent" }}
+            >
+              <Icon
+                as={isMuted ? FiVolumeX : FiVolume2}
+                color="rgba(255, 255, 255, 0.5)"
+                fontSize="10px"
+              />
+            </Button>
+
+            <Button
+              _hover={{ bg: "transparent" }}
+              _active={{ bg: "transparent" }}
+              variant="ghost"
+            >
+              <Icon as={FiUser} boxSize={5} color="rgba(255, 255, 255, 0.5)" />
+            </Button>
+          </VStack>
+        )}
       </Box>
     </Flex>
   );
@@ -198,10 +212,10 @@ const Sidebar = () => {
         <Icon as={FiUser} boxSize={5} color="white" />
         <Text display={{ base: "none", md: "inline-block" }}> Account</Text>
       </Button>
-      <Button variant="ghost" leftIcon={<Icon as={FiLogOut} boxSize={5} />}>
+      {/* <Button variant="ghost" leftIcon={<Icon as={FiLogOut} boxSize={5} />}>
         <Icon as={FiLogOut} boxSize={5} color="white" />
         <Text display={{ base: "none", md: "inline-block" }}>Log out</Text>
-      </Button>
+      </Button> */}
     </VStack>
   );
 };
@@ -216,10 +230,15 @@ const Home = () => {
   const [videos, setVideos] = useState(initial_videos.slice(0, 5));
   const lastVideoBeforeLoading = useRef(null);
   const isFetchingNextBatchOfVideos = useRef(false);
+  const [showUserIcons, setShowUserIcons] = useState(false);
 
   const paginationIndex = useRef(0);
 
   const toggleMute = () => setIsMuted((prev) => !prev);
+
+  const handleToggleUserIcons = () => {
+    setShowUserIcons((prev) => !prev);
+  };
 
   // Set up IntersectionObserver to detect visible video
   useEffect(() => {
@@ -295,24 +314,10 @@ const Home = () => {
 
         const playPromise = video.play();
         if (playPromise !== undefined) {
-          playPromise
-            // .then(() => {
-            //   if (!isMuted) {
-            //     video.muted = false;
-            //   }
-            // })
-            .catch((e) => {
-              console.warn("Play interrupted:", e.message);
-            });
+          playPromise.catch((e) => {
+            console.warn("Play interrupted:", e.message);
+          });
         }
-
-        // video.muted = isMuted;
-        // const playPromise = video.play();
-        // if (playPromise !== undefined) {
-        //   playPromise.catch((e) =>
-        //     console.warn("Play interrupted:", e.message)
-        //   );
-        // }
       } else {
         video.pause();
       }
@@ -330,11 +335,13 @@ const Home = () => {
       }}
       position="relative"
     >
-      <Sidebar />
+      {/* <Sidebar /> */}
       {videos
         .filter((item) => item.card_type === "video")
         .map((video, index) => (
           <VideoCard
+            handleToggleUserIcons={handleToggleUserIcons}
+            showUserIcons={showUserIcons}
             videoRefs={videoRefs}
             activeIndex={activeIndex}
             shouldShowSwipeDownIcons={index === 0}
