@@ -29,7 +29,7 @@ function shuffleArray(array) {
   return array;
 }
 
-const _initial_videos = shuffleArray(initial_videos);
+const _initial_videos = initial_videos; // shuffleArray(initial_videos);
 
 const VideoCard = ({
   src,
@@ -41,6 +41,7 @@ const VideoCard = ({
   activeIndex,
   handleToggleUserIcons,
   showUserIcons,
+  index,
 }) => {
   const videoRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -72,7 +73,7 @@ const VideoCard = ({
 
   useEffect(() => {
     if (videoRef.current) {
-      videoRef.current.load(); // force preload
+      // videoRef.current.load(); // force preload
     }
   }, []);
 
@@ -114,7 +115,7 @@ const VideoCard = ({
               muted={isMuted}
               loop
               playsInline
-              preload="auto"
+              preload={index <= 2 ? "auto" : "none"}
               onError={(e) => console.error("Video failed to load", e)}
               onPlaying={() => setIsLoading(false)} // ← More reliable than onLoadedData
             />
@@ -209,32 +210,6 @@ const LoadingCard = ({ registerRef }) => (
     </Text>
   </Flex>
 );
-
-const Sidebar = () => {
-  return (
-    <VStack
-      top="20px"
-      align="start"
-      width="200px"
-      zIndex={20}
-      position="fixed"
-      padding="10px"
-      spacing={4}
-    >
-      <Button
-        variant="ghost"
-        leftIcon={<Icon as={FiUser} boxSize={5} color="red" />}
-      >
-        <Icon as={FiUser} boxSize={5} color="white" />
-        <Text display={{ base: "none", md: "inline-block" }}> Account</Text>
-      </Button>
-      {/* <Button variant="ghost" leftIcon={<Icon as={FiLogOut} boxSize={5} />}>
-        <Icon as={FiLogOut} boxSize={5} color="white" />
-        <Text display={{ base: "none", md: "inline-block" }}>Log out</Text>
-      </Button> */}
-    </VStack>
-  );
-};
 
 const Home = () => {
   const [isMuted, setIsMuted] = useState(true);
@@ -357,23 +332,21 @@ const Home = () => {
       }}
       position="relative"
     >
-      {/* <Sidebar /> */}
-      {videos
-        .filter((item) => item.card_type === "video")
-        .map((video, index) => (
-          <VideoCard
-            handleToggleUserIcons={handleToggleUserIcons}
-            showUserIcons={showUserIcons}
-            videoRefs={videoRefs}
-            activeIndex={activeIndex}
-            shouldShowSwipeDownIcons={index === 0}
-            key={video.uuid}
-            src={video.src}
-            isMuted={isMuted}
-            onToggleMute={toggleMute}
-            registerRef={(el) => (videoRefs.current[index] = el)}
-          />
-        ))}
+      {videos.map((video, index) => (
+        <VideoCard
+          index={index}
+          handleToggleUserIcons={handleToggleUserIcons}
+          showUserIcons={showUserIcons}
+          videoRefs={videoRefs}
+          activeIndex={activeIndex}
+          shouldShowSwipeDownIcons={index === 0}
+          key={video.uuid}
+          src={video.src}
+          isMuted={isMuted}
+          onToggleMute={toggleMute}
+          registerRef={(el) => (videoRefs.current[index] = el)}
+        />
+      ))}
 
       <LoadingCard registerRef={(el) => (loadingRef.current = el)} />
     </Box>
