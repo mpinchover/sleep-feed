@@ -90,13 +90,21 @@ const VideoCard = ({
       position="relative"
     >
       <Box
-        borderRadius="10px"
-        width="350px"
+        borderRadius={{ base: "none", sm: "10px" }}
+        // width="350px"
+        width={{ base: "100%", sm: "350px" }}
         overflow="hidden"
         position="relative"
+        // border="solid 1px purple"
+        height={{ base: "100%", sm: "auto" }}
         onClick={(e) => handleToggleUserIcons(e, iconContainerRef)}
       >
-        <AspectRatio ratio={9 / 16} width="100%">
+        <AspectRatio
+          height={{ base: "100%", sm: "auto" }}
+          // border="solid 1px red"
+          ratio={9 / 16}
+          width="100%"
+        >
           <>
             <Skeleton
               css={{
