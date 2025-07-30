@@ -243,7 +243,7 @@ const Home = () => {
   const observer = useRef(null);
   const loadingRef = useRef(null);
 
-  const [videos, setVideos] = useState(_initial_videos.slice(0, 10));
+  const [videos, setVideos] = useState(_initial_videos.slice(0, 5));
   const lastVideoBeforeLoading = useRef(null);
   const isFetchingNextBatchOfVideos = useRef(false);
   const [showUserIcons, setShowUserIcons] = useState(true);
@@ -283,8 +283,8 @@ const Home = () => {
           isFetchingNextBatchOfVideos.current = true;
 
           paginationIndex.current += 1;
-          const startIndex = paginationIndex.current * 10;
-          const endIndex = startIndex + 10;
+          const startIndex = paginationIndex.current * 5;
+          const endIndex = startIndex + 5;
 
           const newVideos = _initial_videos.slice(startIndex, endIndex);
 
