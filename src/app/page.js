@@ -15,6 +15,10 @@ import { FiVolume2, FiVolumeX, FiUser, FiLogOut } from "react-icons/fi";
 import { RiArrowUpDoubleLine } from "react-icons/ri";
 import { FaAngleDoubleDown } from "react-icons/fa";
 
+const isMobile =
+  typeof window !== "undefined" &&
+  /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
 import initial_videos from "./fake-video-cards";
 
 const VideoCard = ({
@@ -31,6 +35,7 @@ const VideoCard = ({
   const videoRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
   const [startShowIcons, setStartShowIcons] = useState(false);
+  const iconContainerRef = useRef(null);
   // const [showUserIcons, setShowUserIcons] = useState(false);
 
   const scrollToNext = () => {
@@ -78,7 +83,7 @@ const VideoCard = ({
         width="350px"
         overflow="hidden"
         position="relative"
-        onClick={handleToggleUserIcons}
+        onClick={(e) => handleToggleUserIcons(e, iconContainerRef)}
       >
         <AspectRatio ratio={9 / 16} width="100%">
           <>
@@ -139,6 +144,7 @@ const VideoCard = ({
         )}
         {showUserIcons && (
           <VStack
+            ref={iconContainerRef}
             position="absolute"
             bottom="30px"
             right="20px"
@@ -230,13 +236,17 @@ const Home = () => {
   const [videos, setVideos] = useState(initial_videos.slice(0, 5));
   const lastVideoBeforeLoading = useRef(null);
   const isFetchingNextBatchOfVideos = useRef(false);
-  const [showUserIcons, setShowUserIcons] = useState(false);
+  const [showUserIcons, setShowUserIcons] = useState(true);
 
   const paginationIndex = useRef(0);
 
   const toggleMute = () => setIsMuted((prev) => !prev);
 
-  const handleToggleUserIcons = () => {
+  const handleToggleUserIcons = (e, iconContainerRef) => {
+    if (iconContainerRef.current?.contains(e.target)) {
+      return;
+    }
+
     setShowUserIcons((prev) => !prev);
   };
 
@@ -270,7 +280,9 @@ const Home = () => {
 
           setTimeout(() => {
             // do this only on mobile
-            setIsMuted(true);
+            if (isMobile) {
+              setIsMuted(true);
+            }
 
             const indexToScrollTo = videos.length;
             setVideos((prev) => [...prev, ...newVideos]);
