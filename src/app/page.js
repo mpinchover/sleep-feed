@@ -21,6 +21,16 @@ const isMobile =
 
 import initial_videos from "./fake-video-cards";
 
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]]; // swap
+  }
+  return array;
+}
+
+const _initial_videos = shuffleArray(initial_videos);
+
 const VideoCard = ({
   src,
   isMuted,
@@ -233,7 +243,7 @@ const Home = () => {
   const observer = useRef(null);
   const loadingRef = useRef(null);
 
-  const [videos, setVideos] = useState(initial_videos.slice(0, 5));
+  const [videos, setVideos] = useState(_initial_videos.slice(0, 10));
   const lastVideoBeforeLoading = useRef(null);
   const isFetchingNextBatchOfVideos = useRef(false);
   const [showUserIcons, setShowUserIcons] = useState(true);
@@ -276,7 +286,7 @@ const Home = () => {
           const startIndex = paginationIndex.current * 10;
           const endIndex = startIndex + 10;
 
-          const newVideos = initial_videos.slice(startIndex, endIndex);
+          const newVideos = _initial_videos.slice(startIndex, endIndex);
 
           setTimeout(() => {
             // do this only on mobile
