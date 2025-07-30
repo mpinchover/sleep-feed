@@ -14,20 +14,13 @@ import { useRef, useEffect, useState, useMemo } from "react";
 import { FiVolume2, FiVolumeX, FiUser, FiLogOut } from "react-icons/fi";
 import { RiArrowUpDoubleLine } from "react-icons/ri";
 import { FaAngleDoubleDown } from "react-icons/fa";
+const PRELOAD_RANGE = 3;
 
 const isMobile =
   typeof window !== "undefined" &&
   /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
 import initial_videos from "./fake-video-cards";
-
-function shuffleArray(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]]; // swap
-  }
-  return array;
-}
 
 const _initial_videos = initial_videos; // shuffleArray(initial_videos);
 
@@ -77,6 +70,10 @@ const VideoCard = ({
     }
   }, []);
 
+  const shouldPreload = () => {
+    return Math.abs(index - activeIndex) < PRELOAD_RANGE ? "auto" : "none";
+  };
+
   console.log("Loading video ", src);
 
   return (
@@ -123,7 +120,7 @@ const VideoCard = ({
               muted={isMuted}
               loop
               playsInline
-              preload={index <= 2 ? "auto" : "none"}
+              preload={shouldPreload()}
               onError={(e) => console.error("Video failed to load", e)}
               onPlaying={() => setIsLoading(false)} // ← More reliable than onLoadedData
             />
@@ -226,16 +223,16 @@ const VideoFeed = ({
   handleToggleUserIcons,
   showUserIcons,
   videoRefs,
-  activeIndex = { activeIndex },
+  activeIndex,
 }) => {
   return videos.map((video, index) => {
     return (
       <VideoCard
         index={index}
+        activeIndex={activeIndex}
         handleToggleUserIcons={handleToggleUserIcons}
         showUserIcons={showUserIcons}
         videoRefs={videoRefs}
-        activeIndex={activeIndex}
         shouldShowSwipeDownIcons={index === 0}
         key={video.uuid}
         src={video.src}
@@ -254,7 +251,7 @@ const Home = () => {
   const observer = useRef(null);
   const loadingRef = useRef(null);
 
-  const [videos, setVideos] = useState(_initial_videos.slice(0, 5));
+  const [videos, setVideos] = useState(_initial_videos.slice(0, 10));
   const lastVideoBeforeLoading = useRef(null);
   const isFetchingNextBatchOfVideos = useRef(false);
   const [showUserIcons, setShowUserIcons] = useState(true);
@@ -294,8 +291,8 @@ const Home = () => {
           isFetchingNextBatchOfVideos.current = true;
 
           paginationIndex.current += 1;
-          const startIndex = paginationIndex.current * 5;
-          const endIndex = startIndex + 5;
+          const startIndex = paginationIndex.current * 10;
+          const endIndex = startIndex + 10;
 
           const newVideos = _initial_videos.slice(startIndex, endIndex);
 
@@ -341,6 +338,17 @@ const Home = () => {
       }
 
       observer.current.observe(video);
+
+      // sliding window loading video
+      if (
+        video.readyState < 2 &&
+        Math.abs(index - activeIndex) < PRELOAD_RANGE
+      ) {
+        video.load();
+      }
+
+      // preload(video.src, { as: "video", fetchPriority: "high" });
+      // console.log(video.src);
 
       if (index === activeIndex) {
         video.muted = isMuted;
