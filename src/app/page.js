@@ -308,7 +308,7 @@ const Home = () => {
 
     return () => {
       observer.current?.disconnect();
-      clearTimeout(observerTimeout);
+      // clearTimeout(observerTimeout);
     };
   }, []);
 
