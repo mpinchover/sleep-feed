@@ -219,6 +219,34 @@ const LoadingCard = ({ registerRef }) => (
   </Flex>
 );
 
+const VideoFeed = ({
+  toggleMute,
+  isMuted,
+  videos,
+  handleToggleUserIcons,
+  showUserIcons,
+  videoRefs,
+  activeIndex = { activeIndex },
+}) => {
+  return videos.map((video, index) => {
+    return (
+      <VideoCard
+        index={index}
+        handleToggleUserIcons={handleToggleUserIcons}
+        showUserIcons={showUserIcons}
+        videoRefs={videoRefs}
+        activeIndex={activeIndex}
+        shouldShowSwipeDownIcons={index === 0}
+        key={video.uuid}
+        src={video.src}
+        isMuted={isMuted}
+        onToggleMute={toggleMute}
+        registerRef={(el) => (videoRefs.current[index] = el)}
+      />
+    );
+  });
+};
+
 const Home = () => {
   const [isMuted, setIsMuted] = useState(true);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -340,22 +368,15 @@ const Home = () => {
       }}
       position="relative"
     >
-      {videos.map((video, index) => (
-        <VideoCard
-          index={index}
-          handleToggleUserIcons={handleToggleUserIcons}
-          showUserIcons={showUserIcons}
-          videoRefs={videoRefs}
-          activeIndex={activeIndex}
-          shouldShowSwipeDownIcons={index === 0}
-          key={video.uuid}
-          src={video.src}
-          isMuted={isMuted}
-          onToggleMute={toggleMute}
-          registerRef={(el) => (videoRefs.current[index] = el)}
-        />
-      ))}
-
+      <VideoFeed
+        toggleMute={toggleMute}
+        isMuted={isMuted}
+        videos={videos}
+        activeIndex={activeIndex}
+        handleToggleUserIcons={handleToggleUserIcons}
+        showUserIcons={showUserIcons}
+        videoRefs={videoRefs}
+      />
       <LoadingCard registerRef={(el) => (loadingRef.current = el)} />
     </Box>
   );
