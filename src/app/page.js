@@ -74,7 +74,7 @@ const VideoCard = ({
     return Math.abs(index - activeIndex) < PRELOAD_RANGE ? "auto" : "none";
   };
 
-  console.log("Loading video ", src);
+  if (activeIndex === index) console.log("Loading video ", src);
 
   return (
     <Flex
