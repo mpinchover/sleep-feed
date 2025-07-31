@@ -444,12 +444,15 @@ const Home = () => {
       entries.forEach(async (entry) => {
         if (entry.target === loadingRef.current && entry.isIntersecting) {
           if (lastVideoBeforeLoading.current) {
+            const curVideosLen = videos.length;
             setTimeout(() => {
-              lastVideoBeforeLoading.current.scrollIntoView({
-                behavior: "smooth",
-                block: "start",
-              });
-            }, 50);
+              if (curVideosLen === videos.length) {
+                lastVideoBeforeLoading.current.scrollIntoView({
+                  behavior: "smooth",
+                  block: "start",
+                });
+              }
+            }, 350);
           }
 
           if (isFetchingNextBatchOfVideos.current) {
