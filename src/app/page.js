@@ -74,7 +74,7 @@ const VideoCard = ({
     return Math.abs(index - activeIndex) < PRELOAD_RANGE ? "auto" : "none";
   };
 
-  if (activeIndex === index) console.log("Loading video ", src);
+  // if (activeIndex === index) console.log("Loading video ", src);
 
   return (
     <Flex
@@ -224,24 +224,34 @@ const VideoFeed = ({
   showUserIcons,
   videoRefs,
   activeIndex,
+  loadingRef,
 }) => {
-  return videos.map((video, index) => {
-    return (
-      <VideoCard
-        index={index}
-        activeIndex={activeIndex}
-        handleToggleUserIcons={handleToggleUserIcons}
-        showUserIcons={showUserIcons}
-        videoRefs={videoRefs}
-        shouldShowSwipeDownIcons={index === 0}
-        key={video.uuid}
-        src={video.src}
-        isMuted={isMuted}
-        onToggleMute={toggleMute}
-        registerRef={(el) => (videoRefs.current[index] = el)}
-      />
-    );
-  });
+  if (videos.length === 0) {
+    return <Box>Loading...</Box>;
+  }
+
+  return (
+    <>
+      {videos.map((video, index) => {
+        return (
+          <VideoCard
+            index={index}
+            activeIndex={activeIndex}
+            handleToggleUserIcons={handleToggleUserIcons}
+            showUserIcons={showUserIcons}
+            videoRefs={videoRefs}
+            shouldShowSwipeDownIcons={index === 0}
+            key={video.uuid}
+            src={video.src}
+            isMuted={isMuted}
+            onToggleMute={toggleMute}
+            registerRef={(el) => (videoRefs.current[index] = el)}
+          />
+        );
+      })}
+      <LoadingCard registerRef={(el) => (loadingRef.current = el)} />
+    </>
+  );
 };
 
 const Home = () => {
@@ -251,7 +261,7 @@ const Home = () => {
   const observer = useRef(null);
   const loadingRef = useRef(null);
 
-  const [videos, setVideos] = useState(_initial_videos.slice(0, 10));
+  const [videos, setVideos] = useState([]);
   const lastVideoBeforeLoading = useRef(null);
   const isFetchingNextBatchOfVideos = useRef(false);
   const [showUserIcons, setShowUserIcons] = useState(true);
@@ -267,6 +277,18 @@ const Home = () => {
 
     setShowUserIcons((prev) => !prev);
   };
+
+  const getVideoFeedBatch = async (page) => {
+    const start = page * 10;
+    const end = start + 10;
+    const batchOfVideos = initial_videos.slice(start, end);
+    setVideos((prev) => [...prev, ...batchOfVideos]);
+  };
+
+  useEffect(() => {
+    getVideoFeedBatch(0);
+    paginationIndex.current = 1;
+  }, []);
 
   // Set up IntersectionObserver to detect visible video
   useEffect(() => {
@@ -296,16 +318,16 @@ const Home = () => {
 
           const newVideos = _initial_videos.slice(startIndex, endIndex);
 
-          setTimeout(() => {
-            // do this only on mobile
-            if (isMobile) {
-              setIsMuted(true);
-            }
+          // setTimeout(() => {
+          //   // do this only on mobile
+          //   if (isMobile) {
+          //     setIsMuted(true);
+          //   }
 
-            const indexToScrollTo = videos.length;
-            setVideos((prev) => [...prev, ...newVideos]);
-            isFetchingNextBatchOfVideos.current = false;
-          }, 1500);
+          //   const indexToScrollTo = videos.length;
+          //   setVideos((prev) => [...prev, ...newVideos]);
+          //   isFetchingNextBatchOfVideos.current = false;
+          // }, 1500);
 
           return;
         }
@@ -322,7 +344,10 @@ const Home = () => {
       threshold: 0.7, // 70% visible,
     });
 
-    if (loadingRef.current) observer.current.observe(loadingRef.current);
+    if (loadingRef.current) {
+      observer.current.observe(loadingRef.current);
+      console.log("Observing loadingref");
+    }
 
     return () => {
       observer.current?.disconnect();
@@ -377,6 +402,7 @@ const Home = () => {
       position="relative"
     >
       <VideoFeed
+        loadingRef={loadingRef}
         toggleMute={toggleMute}
         isMuted={isMuted}
         videos={videos}
@@ -385,7 +411,6 @@ const Home = () => {
         showUserIcons={showUserIcons}
         videoRefs={videoRefs}
       />
-      <LoadingCard registerRef={(el) => (loadingRef.current = el)} />
     </Box>
   );
 };
