@@ -23,8 +23,6 @@ const isMobile =
 
 import initial_videos from "./fake-video-cards";
 
-const _initial_videos = initial_videos; // shuffleArray(initial_videos);
-
 const VideoCard = ({
   src,
   isMuted,
@@ -67,7 +65,6 @@ const VideoCard = ({
 
   useEffect(() => {
     if (videoRef.current) {
-      // videoRef.current.load(); // force preload
     }
   }, []);
 
@@ -337,21 +334,6 @@ const Home = () => {
     });
   };
 
-  // const getVideoFeedBatch = async (page) => {
-  //   setTimeout(() => {
-  //     const start = page * 5;
-
-  //     const end = Math.min(initial_videos.length, start + 5);
-  //     const batchOfVideos = initial_videos.slice(start, end);
-
-  //     if (isMobile) {
-  //       setIsMuted(true);
-  //     }
-
-  //     setVideos((prev) => [...prev, ...batchOfVideos]);
-  //   }, 3000);
-  // };
-
   useEffect(() => {
     getVideoFeedBatch(0);
     paginationIndex.current = 1;
@@ -365,9 +347,7 @@ const Home = () => {
       entries.forEach(async (entry) => {
         if (entry.target === loadingRef.current && entry.isIntersecting) {
           if (lastVideoBeforeLoading.current) {
-            // console.log("Should scroll back");
             setTimeout(() => {
-              // console.log("SCROLLING BACK");
               lastVideoBeforeLoading.current.scrollIntoView({
                 behavior: "smooth",
                 block: "start",
@@ -381,26 +361,9 @@ const Home = () => {
 
           isFetchingNextBatchOfVideos.current = true;
 
-          // paginationIndex.current += 1;
-          // const startIndex = paginationIndex.current * 10;
-          // const endIndex = startIndex + 10;
-
           await getVideoFeedBatch(paginationIndex.current);
           paginationIndex.current += 1;
           isFetchingNextBatchOfVideos.current = false;
-
-          // const newVideos = _initial_videos.slice(startIndex, endIndex);
-
-          // setTimeout(() => {
-          //   // do this only on mobile
-          //   if (isMobile) {
-          //     setIsMuted(true);
-          //   }
-
-          //   const indexToScrollTo = videos.length;
-          //   setVideos((prev) => [...prev, ...newVideos]);
-          //   isFetchingNextBatchOfVideos.current = false;
-          // }, 1500);
 
           return;
         }
@@ -426,7 +389,6 @@ const Home = () => {
   useEffect(() => {
     if (loadingRef.current) {
       observer.current.observe(loadingRef.current);
-      // console.log("Observing loadingref");
     }
   }, [videos]);
 
@@ -446,9 +408,6 @@ const Home = () => {
       ) {
         video.load();
       }
-
-      // preload(video.src, { as: "video", fetchPriority: "high" });
-      // console.log(video.src);
 
       if (index === activeIndex) {
         video.muted = isMuted;
