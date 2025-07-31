@@ -15,6 +15,7 @@ import { FiVolume2, FiVolumeX, FiUser, FiLogOut } from "react-icons/fi";
 import { RiArrowUpDoubleLine } from "react-icons/ri";
 import { FaAngleDoubleDown } from "react-icons/fa";
 const PRELOAD_RANGE = 3;
+const BATCH_SIZE = 10;
 
 const isMobile =
   typeof window !== "undefined" &&
@@ -199,6 +200,47 @@ const VideoCard = ({
   );
 };
 
+const InitialLoadingCard = () => {
+  return (
+    <Flex
+      justifyContent="center"
+      alignItems="center"
+      flexDirection="column"
+      height="100dvh"
+      scrollSnapAlign="start"
+      scrollSnapStop="always"
+      position="relative"
+    >
+      <Box
+        borderRadius={{ base: "none", sm: "10px" }}
+        // width="350px"
+        width={{ base: "100%", sm: "350px" }}
+        overflow="hidden"
+        position="relative"
+        // border="solid 1px purple"
+        height={{ base: "100%", sm: "auto" }}
+        // onClick={(e) => handleToggleUserIcons(e, iconContainerRef)}
+      >
+        <AspectRatio
+          height={{ base: "100%", sm: "auto" }}
+          // border="solid 1px red"
+          ratio={9 / 16}
+          width="100%"
+        >
+          <Skeleton
+            css={{
+              "--start-color": "colors.pink.500",
+              "--end-color": "colors.orange.500",
+            }}
+            height="100%"
+            width="100%"
+          />
+        </AspectRatio>
+      </Box>
+    </Flex>
+  );
+};
+
 const LoadingCard = ({ registerRef }) => (
   <Flex
     ref={registerRef}
@@ -227,7 +269,7 @@ const VideoFeed = ({
   loadingRef,
 }) => {
   if (videos.length === 0) {
-    return <Box>Loading...</Box>;
+    return <InitialLoadingCard />;
   }
 
   return (
@@ -278,32 +320,59 @@ const Home = () => {
     setShowUserIcons((prev) => !prev);
   };
 
-  const getVideoFeedBatch = async (page) => {
-    const start = page * 10;
-    const end = start + 10;
-    const batchOfVideos = initial_videos.slice(start, end);
-    setVideos((prev) => [...prev, ...batchOfVideos]);
+  const getVideoFeedBatch = (page) => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const start = page * BATCH_SIZE;
+        const end = Math.min(initial_videos.length, start + BATCH_SIZE);
+        const batchOfVideos = initial_videos.slice(start, end);
+
+        if (isMobile) {
+          setIsMuted(true);
+        }
+
+        setVideos((prev) => [...prev, ...batchOfVideos]);
+        resolve();
+      }, 1500);
+    });
   };
+
+  // const getVideoFeedBatch = async (page) => {
+  //   setTimeout(() => {
+  //     const start = page * 5;
+
+  //     const end = Math.min(initial_videos.length, start + 5);
+  //     const batchOfVideos = initial_videos.slice(start, end);
+
+  //     if (isMobile) {
+  //       setIsMuted(true);
+  //     }
+
+  //     setVideos((prev) => [...prev, ...batchOfVideos]);
+  //   }, 3000);
+  // };
 
   useEffect(() => {
     getVideoFeedBatch(0);
     paginationIndex.current = 1;
   }, []);
 
+  console.log("Updating videos", videos.length);
+
   // Set up IntersectionObserver to detect visible video
   useEffect(() => {
     const handleIntersect = (entries) => {
-      entries.forEach((entry) => {
+      entries.forEach(async (entry) => {
         if (entry.target === loadingRef.current && entry.isIntersecting) {
           if (lastVideoBeforeLoading.current) {
-            console.log("Should scroll back");
+            // console.log("Should scroll back");
             setTimeout(() => {
-              console.log("SCROLLING BACK");
+              // console.log("SCROLLING BACK");
               lastVideoBeforeLoading.current.scrollIntoView({
                 behavior: "smooth",
                 block: "start",
               });
-            }, 150);
+            }, 50);
           }
 
           if (isFetchingNextBatchOfVideos.current) {
@@ -312,11 +381,15 @@ const Home = () => {
 
           isFetchingNextBatchOfVideos.current = true;
 
-          paginationIndex.current += 1;
-          const startIndex = paginationIndex.current * 10;
-          const endIndex = startIndex + 10;
+          // paginationIndex.current += 1;
+          // const startIndex = paginationIndex.current * 10;
+          // const endIndex = startIndex + 10;
 
-          const newVideos = _initial_videos.slice(startIndex, endIndex);
+          await getVideoFeedBatch(paginationIndex.current);
+          paginationIndex.current += 1;
+          isFetchingNextBatchOfVideos.current = false;
+
+          // const newVideos = _initial_videos.slice(startIndex, endIndex);
 
           // setTimeout(() => {
           //   // do this only on mobile
@@ -344,16 +417,18 @@ const Home = () => {
       threshold: 0.7, // 70% visible,
     });
 
-    if (loadingRef.current) {
-      observer.current.observe(loadingRef.current);
-      console.log("Observing loadingref");
-    }
-
     return () => {
       observer.current?.disconnect();
       // clearTimeout(observerTimeout);
     };
   }, []);
+
+  useEffect(() => {
+    if (loadingRef.current) {
+      observer.current.observe(loadingRef.current);
+      // console.log("Observing loadingref");
+    }
+  }, [videos]);
 
   // Manage video playback
   useEffect(() => {
