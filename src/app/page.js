@@ -9,11 +9,14 @@ import {
   Spinner,
   AspectRatio,
   Skeleton,
+  HStack,
 } from "@chakra-ui/react";
 import { useRef, useEffect, useState, useMemo } from "react";
 import { FiVolume2, FiVolumeX, FiUser, FiLogOut } from "react-icons/fi";
 import { RiArrowUpDoubleLine } from "react-icons/ri";
 import { FaAngleDoubleDown } from "react-icons/fa";
+import { RiColorFilterFill } from "react-icons/ri";
+import { RiCircleFill } from "react-icons/ri";
 const PRELOAD_RANGE = 3;
 const BATCH_SIZE = 10;
 
@@ -34,11 +37,15 @@ const VideoCard = ({
   handleToggleUserIcons,
   showUserIcons,
   index,
+  handleSetSelectedFilter,
+  selectedFilter,
 }) => {
   const videoRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
   const [startShowIcons, setStartShowIcons] = useState(false);
   const iconContainerRef = useRef(null);
+  const filterContainerRef = useRef(null);
+
   // const [showUserIcons, setShowUserIcons] = useState(false);
 
   const scrollToNext = () => {
@@ -92,7 +99,9 @@ const VideoCard = ({
         position="relative"
         // border="solid 1px purple"
         height={{ base: "100%", sm: "auto" }}
-        onClick={(e) => handleToggleUserIcons(e, iconContainerRef)}
+        onClick={(e) =>
+          handleToggleUserIcons(e, iconContainerRef, filterContainerRef)
+        }
       >
         <AspectRatio
           height={{ base: "100%", sm: "auto" }}
@@ -111,7 +120,11 @@ const VideoCard = ({
             />
             <video
               ref={videoRef}
-              style={{ objectFit: "cover", display: "block" }}
+              style={{
+                objectFit: "cover",
+                display: "block",
+                filter: selectedFilter, //
+              }}
               src={src}
               height="100%"
               width="100%"
@@ -124,6 +137,66 @@ const VideoCard = ({
             />
           </>
         </AspectRatio>
+        {false && (
+          <HStack
+            ref={filterContainerRef}
+            borderRadius="full"
+            zIndex="20"
+            bottom="200px"
+            // left="40px"
+            right="20px"
+            position="absolute"
+            bg="rgba(0, 0, 0, 0.3)"
+          >
+            <Button
+              p={0}
+              m={0}
+              bg="transparent"
+              _hover={{ bg: "transparent" }}
+              _active={{ bg: "transparent" }}
+              variant="ghost"
+            >
+              <Icon
+                // animation="fade-out 1s infinite"
+                as={RiCircleFill}
+                boxSize={6}
+                color="rgba(255, 255, 255, 0.3)"
+              />
+            </Button>
+            <Button
+              p={0}
+              m={0}
+              bg="transparent"
+              _hover={{ bg: "transparent" }}
+              _active={{ bg: "transparent" }}
+              variant="ghost"
+              onClick={() => handleSetSelectedFilter("saturate(50%)")}
+            >
+              <Icon
+                // animation="fade-out 1s infinite"
+                as={RiCircleFill}
+                boxSize={6}
+                color="rgba(255, 255, 255, 0.3)"
+              />
+            </Button>
+            <Button
+              p={0}
+              m={0}
+              bg="transparent"
+              _hover={{ bg: "transparent" }}
+              _active={{ bg: "transparent" }}
+              variant="ghost"
+              onClick={() => handleSetSelectedFilter("grayscale(100%)")}
+            >
+              <Icon
+                // animation="fade-out 1s infinite"
+                as={RiCircleFill}
+                boxSize={6}
+                color="rgba(255, 255, 255, 0.3)"
+              />
+            </Button>
+          </HStack>
+        )}
         {shouldShowSwipeDownIcons && startShowIcons && (
           <Box
             cursor={"pointer"}
@@ -189,6 +262,15 @@ const VideoCard = ({
               variant="ghost"
             >
               <Icon as={FiUser} boxSize={5} color="rgba(255, 255, 255, 0.5)" />
+            </Button>
+
+            <Button
+              _hover={{ bg: "transparent" }}
+              _active={{ bg: "transparent" }}
+              variant="ghost"
+              onClick={() => handleSetSelectedFilter("saturate(50%)")}
+            >
+              <Icon as={RiColorFilterFill} color="rgba(255, 255, 255, 0.5)" />
             </Button>
           </VStack>
         )}
@@ -265,6 +347,16 @@ const VideoFeed = ({
   activeIndex,
   loadingRef,
 }) => {
+  const [selectedFilter, setSelectedFilter] = useState();
+
+  const handleSetSelectedFilter = (filter) => {
+    if (filter === selectedFilter) {
+      setSelectedFilter(null);
+    } else {
+      setSelectedFilter(filter);
+    }
+  };
+
   if (videos.length === 0) {
     return <InitialLoadingCard />;
   }
@@ -285,6 +377,8 @@ const VideoFeed = ({
             isMuted={isMuted}
             onToggleMute={toggleMute}
             registerRef={(el) => (videoRefs.current[index] = el)}
+            handleSetSelectedFilter={handleSetSelectedFilter}
+            selectedFilter={selectedFilter}
           />
         );
       })}
@@ -309,8 +403,11 @@ const Home = () => {
 
   const toggleMute = () => setIsMuted((prev) => !prev);
 
-  const handleToggleUserIcons = (e, iconContainerRef) => {
-    if (iconContainerRef.current?.contains(e.target)) {
+  const handleToggleUserIcons = (e, iconContainerRef, filtercontainerRef) => {
+    if (
+      iconContainerRef.current?.contains(e.target) ||
+      filtercontainerRef.current?.contains(e.target)
+    ) {
       return;
     }
 
