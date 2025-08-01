@@ -17,6 +17,8 @@ import { RiArrowUpDoubleLine } from "react-icons/ri";
 import { FaAngleDoubleDown } from "react-icons/fa";
 import { RiColorFilterFill } from "react-icons/ri";
 import { RiCircleFill } from "react-icons/ri";
+import { RiFilter3Line } from "react-icons/ri";
+import { RiShare2Fill } from "react-icons/ri";
 const PRELOAD_RANGE = 3;
 const BATCH_SIZE = 10;
 
@@ -45,8 +47,7 @@ const VideoCard = ({
   const [startShowIcons, setStartShowIcons] = useState(false);
   const iconContainerRef = useRef(null);
   const filterContainerRef = useRef(null);
-
-  // const [showUserIcons, setShowUserIcons] = useState(false);
+  const [shouldShowOptions, setShouldShowOptions] = useState(false);
 
   const scrollToNext = () => {
     const next = videoRefs?.current?.[activeIndex + 1];
@@ -180,6 +181,7 @@ const VideoCard = ({
             borderRadius="full"
             bg="rgba(0, 0, 0, 0.3)"
             zIndex="10"
+            gap={0}
           >
             <Button
               onClick={onToggleMute}
@@ -197,21 +199,60 @@ const VideoCard = ({
               />
             </Button>
 
-            <Button
-              _hover={{ bg: "transparent" }}
-              _active={{ bg: "transparent" }}
-              variant="ghost"
+            <VStack
+              // alignItems="center"
+              justifyContent={"center"}
+              transition="0.3s ease"
+              // border="1px solid red"
+              // display={shouldShowOptions ? "flex" : "none"}
+              height={shouldShowOptions ? "155px" : "0px"}
+              overflow="hidden"
             >
-              <Icon as={FiUser} boxSize={5} color="rgba(255, 255, 255, 0.5)" />
-            </Button>
+              {shouldShowOptions && (
+                <>
+                  <Button
+                    _hover={{ bg: "transparent" }}
+                    _active={{ bg: "transparent" }}
+                    variant="ghost"
+                  >
+                    <Icon
+                      as={FiUser}
+                      boxSize={5}
+                      color="rgba(255, 255, 255, 0.5)"
+                    />
+                  </Button>
+
+                  <Button
+                    _hover={{ bg: "transparent" }}
+                    _active={{ bg: "transparent" }}
+                    variant="ghost"
+                    onClick={() => handleSetSelectedFilter("saturate(50%)")}
+                  >
+                    <Icon
+                      as={RiColorFilterFill}
+                      color="rgba(255, 255, 255, 0.5)"
+                    />
+                  </Button>
+
+                  <Button
+                    _hover={{ bg: "transparent" }}
+                    _active={{ bg: "transparent" }}
+                    variant="ghost"
+                    onClick={() => handleSetSelectedFilter("saturate(50%)")}
+                  >
+                    <Icon as={RiShare2Fill} color="rgba(255, 255, 255, 0.5)" />
+                  </Button>
+                </>
+              )}
+            </VStack>
 
             <Button
               _hover={{ bg: "transparent" }}
               _active={{ bg: "transparent" }}
               variant="ghost"
-              onClick={() => handleSetSelectedFilter("saturate(50%)")}
+              onClick={() => setShouldShowOptions((prev) => !prev)}
             >
-              <Icon as={RiColorFilterFill} color="rgba(255, 255, 255, 0.5)" />
+              <Icon as={RiFilter3Line} color="rgba(255, 255, 255, 0.5)" />
             </Button>
           </VStack>
         )}
