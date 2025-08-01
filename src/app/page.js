@@ -137,66 +137,7 @@ const VideoCard = ({
             />
           </>
         </AspectRatio>
-        {false && (
-          <HStack
-            ref={filterContainerRef}
-            borderRadius="full"
-            zIndex="20"
-            bottom="200px"
-            // left="40px"
-            right="20px"
-            position="absolute"
-            bg="rgba(0, 0, 0, 0.3)"
-          >
-            <Button
-              p={0}
-              m={0}
-              bg="transparent"
-              _hover={{ bg: "transparent" }}
-              _active={{ bg: "transparent" }}
-              variant="ghost"
-            >
-              <Icon
-                // animation="fade-out 1s infinite"
-                as={RiCircleFill}
-                boxSize={6}
-                color="rgba(255, 255, 255, 0.3)"
-              />
-            </Button>
-            <Button
-              p={0}
-              m={0}
-              bg="transparent"
-              _hover={{ bg: "transparent" }}
-              _active={{ bg: "transparent" }}
-              variant="ghost"
-              onClick={() => handleSetSelectedFilter("saturate(50%)")}
-            >
-              <Icon
-                // animation="fade-out 1s infinite"
-                as={RiCircleFill}
-                boxSize={6}
-                color="rgba(255, 255, 255, 0.3)"
-              />
-            </Button>
-            <Button
-              p={0}
-              m={0}
-              bg="transparent"
-              _hover={{ bg: "transparent" }}
-              _active={{ bg: "transparent" }}
-              variant="ghost"
-              onClick={() => handleSetSelectedFilter("grayscale(100%)")}
-            >
-              <Icon
-                // animation="fade-out 1s infinite"
-                as={RiCircleFill}
-                boxSize={6}
-                color="rgba(255, 255, 255, 0.3)"
-              />
-            </Button>
-          </HStack>
-        )}
+
         {shouldShowSwipeDownIcons && startShowIcons && (
           <Box
             cursor={"pointer"}
