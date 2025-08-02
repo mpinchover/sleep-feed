@@ -19,6 +19,8 @@ import { RiColorFilterFill } from "react-icons/ri";
 import { RiCircleFill } from "react-icons/ri";
 import { RiFilter3Line } from "react-icons/ri";
 import { RiShare2Fill } from "react-icons/ri";
+import { RiBookmarkFill } from "react-icons/ri";
+
 const PRELOAD_RANGE = 3;
 const BATCH_SIZE = 10;
 
@@ -205,7 +207,7 @@ const VideoCard = ({
               transition="0.3s ease"
               // border="1px solid red"
               // display={shouldShowOptions ? "flex" : "none"}
-              height={shouldShowOptions ? "155px" : "0px"}
+              height={shouldShowOptions ? "190px" : "0px"}
               overflow="hidden"
             >
               {shouldShowOptions && (
@@ -230,7 +232,11 @@ const VideoCard = ({
                   >
                     <Icon
                       as={RiColorFilterFill}
-                      color="rgba(255, 255, 255, 0.5)"
+                      color={
+                        selectedFilter === "saturate(50%)"
+                          ? "white"
+                          : "rgba(255, 255, 255, 0.5)"
+                      }
                     />
                   </Button>
 
@@ -241,6 +247,18 @@ const VideoCard = ({
                     onClick={() => handleSetSelectedFilter("saturate(50%)")}
                   >
                     <Icon as={RiShare2Fill} color="rgba(255, 255, 255, 0.5)" />
+                  </Button>
+                  {/** only if they are logged in  */}
+                  <Button
+                    _hover={{ bg: "transparent" }}
+                    _active={{ bg: "transparent" }}
+                    variant="ghost"
+                    onClick={() => handleSetSelectedFilter("saturate(50%)")}
+                  >
+                    <Icon
+                      as={RiBookmarkFill}
+                      color="rgba(255, 255, 255, 0.5)"
+                    />
                   </Button>
                 </>
               )}
