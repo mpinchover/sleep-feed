@@ -45,6 +45,7 @@ const VideoCard = ({
   handleSetSelectedFilter,
   selectedFilter,
   isBookmarked,
+  videoUUID,
 }) => {
   const videoRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -94,12 +95,26 @@ const VideoCard = ({
   };
 
   const handleShare = () => {
-    // copy to clipboard
-    toaster.create({
-      title: "Copied link",
-      duration: 1000,
-      type: "info",
-    });
+    const linkToVideo = `localhost/feed/${videoUUID}`;
+
+    // Copy to clipboard
+    navigator.clipboard
+      .writeText(linkToVideo)
+      .then(() => {
+        toaster.create({
+          title: "Copied link",
+          duration: 1000,
+          type: "info",
+        });
+      })
+      .catch((err) => {
+        console.error("Failed to copy:", err);
+        toaster.create({
+          title: "Failed to copy link",
+          duration: 1000,
+          type: "error",
+        });
+      });
   };
   // if (activeIndex === index) console.log("Loading video ", src);
 
@@ -226,7 +241,7 @@ const VideoCard = ({
               transition="0.3s ease"
               // border="1px solid red"
               // display={shouldShowOptions ? "flex" : "none"}
-              height={shouldShowOptions ? "190px" : "0px"}
+              height={shouldShowOptions ? "155px" : "0px"}
               overflow="hidden"
             >
               {shouldShowOptions && (
@@ -268,7 +283,7 @@ const VideoCard = ({
                     <Icon as={RiShare2Fill} color="rgba(255, 255, 255, 0.5)" />
                   </Button>
                   {/** only if they are logged in  */}
-                  <Button
+                  {/* <Button
                     _hover={{ bg: "transparent" }}
                     _active={{ bg: "transparent" }}
                     variant="ghost"
@@ -278,7 +293,7 @@ const VideoCard = ({
                       as={RiBookmarkFill}
                       color="rgba(255, 255, 255, 0.5)"
                     />
-                  </Button>
+                  </Button> */}
                 </>
               )}
             </VStack>
@@ -392,6 +407,7 @@ const VideoFeed = ({
             videoRefs={videoRefs}
             shouldShowSwipeDownIcons={index === 0}
             key={video.uuid}
+            videoUUID={video.uuid}
             src={video.src}
             isMuted={isMuted}
             onToggleMute={toggleMute}
