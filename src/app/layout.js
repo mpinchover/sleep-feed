@@ -6,6 +6,7 @@ import { Provider } from "@/components/ui/provider";
 //   defaultConfig,
 //   defineConfig,
 // } from "@chakra-ui/react";
+import { Toaster, toaster } from "@/components/ui/toaster";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,7 +35,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning style={styling}>
       <body style={styling}>
-        <Provider> {children}</Provider>
+        <Provider>
+          <Toaster /> {children}
+        </Provider>
       </body>
     </html>
   );

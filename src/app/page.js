@@ -20,6 +20,7 @@ import { RiCircleFill } from "react-icons/ri";
 import { RiFilter3Line } from "react-icons/ri";
 import { RiShare2Fill } from "react-icons/ri";
 import { RiBookmarkFill } from "react-icons/ri";
+import { Toaster, toaster } from "@/components/ui/toaster";
 
 const PRELOAD_RANGE = 3;
 const BATCH_SIZE = 10;
@@ -43,6 +44,7 @@ const VideoCard = ({
   index,
   handleSetSelectedFilter,
   selectedFilter,
+  isBookmarked,
 }) => {
   const videoRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -82,6 +84,23 @@ const VideoCard = ({
     return Math.abs(index - activeIndex) < PRELOAD_RANGE ? "auto" : "none";
   };
 
+  const handleBookmark = () => {
+    toaster.create({
+      title: "Saved",
+      // description: "Toast Description",
+      duration: 1000,
+      type: "info",
+    });
+  };
+
+  const handleShare = () => {
+    // copy to clipboard
+    toaster.create({
+      title: "Copied link",
+      duration: 1000,
+      type: "info",
+    });
+  };
   // if (activeIndex === index) console.log("Loading video ", src);
 
   return (
@@ -244,7 +263,7 @@ const VideoCard = ({
                     _hover={{ bg: "transparent" }}
                     _active={{ bg: "transparent" }}
                     variant="ghost"
-                    onClick={() => handleSetSelectedFilter("saturate(50%)")}
+                    onClick={handleShare}
                   >
                     <Icon as={RiShare2Fill} color="rgba(255, 255, 255, 0.5)" />
                   </Button>
@@ -253,7 +272,7 @@ const VideoCard = ({
                     _hover={{ bg: "transparent" }}
                     _active={{ bg: "transparent" }}
                     variant="ghost"
-                    onClick={() => handleSetSelectedFilter("saturate(50%)")}
+                    onClick={() => handleBookmark()}
                   >
                     <Icon
                       as={RiBookmarkFill}
