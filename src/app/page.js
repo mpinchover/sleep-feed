@@ -552,10 +552,11 @@ const Home = () => {
 
           isFetchingNextBatchOfVideos.current = true;
 
-          if (!user) {
-            setShouldShowLogin(true);
-            return;
-          }
+          // enable this for login
+          // if (!user) {
+          //   setShouldShowLogin(true);
+          //   return;
+          // }
 
           await getVideoFeedBatch(paginationIndex.current);
           paginationIndex.current += 1;
