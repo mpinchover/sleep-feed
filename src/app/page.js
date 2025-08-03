@@ -10,6 +10,7 @@ import {
   AspectRatio,
   Skeleton,
   HStack,
+  Heading,
 } from "@chakra-ui/react";
 import { useRef, useEffect, useState, useMemo } from "react";
 import { FiVolume2, FiVolumeX, FiUser, FiLogOut } from "react-icons/fi";
@@ -21,6 +22,8 @@ import { RiFilter3Line } from "react-icons/ri";
 import { RiShare2Fill } from "react-icons/ri";
 import { RiBookmarkFill } from "react-icons/ri";
 import { Toaster, toaster } from "@/components/ui/toaster";
+import { getAuth } from "firebase/auth";
+import { Tabs } from "@chakra-ui/react";
 
 const PRELOAD_RANGE = 3;
 const BATCH_SIZE = 10;
@@ -30,6 +33,43 @@ const isMobile =
   /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
 import initial_videos from "./fake-video-cards";
+
+const LoginPopup = () => {
+  return (
+    <VStack
+      position="fixed"
+      top="70px"
+      left="50%"
+      transform="translate(-50%, -0%)"
+      defaultValue="members"
+      zIndex={10}
+      // backgroundColor="rgba(255, 255, 255, 0.5)"
+      borderRadius="md"
+      color="white"
+      width="300px"
+      paddingY="20px"
+      gap={4}
+    >
+      <Heading>Log in</Heading>
+      <Button
+        borderRadius={"full"}
+        border="1px solid white"
+        variant={"ghost"}
+        width="100%"
+      >
+        Sign in with Google
+      </Button>
+      <Button
+        borderRadius={"full"}
+        border="1px solid white"
+        variant={"ghost"}
+        width="100%"
+      >
+        Sign in with Apple
+      </Button>
+    </VStack>
+  );
+};
 
 const VideoCard = ({
   src,
@@ -46,6 +86,7 @@ const VideoCard = ({
   selectedFilter,
   isBookmarked,
   videoUUID,
+  shouldShowLogin,
 }) => {
   const videoRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -118,6 +159,13 @@ const VideoCard = ({
   };
   // if (activeIndex === index) console.log("Loading video ", src);
 
+  const videoFilters = [selectedFilter];
+  if (shouldShowLogin) {
+    videoFilters.push("brightness(30%)");
+  }
+
+  const formattedVideoFilters = videoFilters.join(" ");
+
   return (
     <Flex
       justifyContent="center"
@@ -160,7 +208,8 @@ const VideoCard = ({
               style={{
                 objectFit: "cover",
                 display: "block",
-                filter: selectedFilter, //
+                // filter: selectedFilter, //
+                filter: formattedVideoFilters,
               }}
               src={src}
               height="100%"
@@ -380,6 +429,7 @@ const VideoFeed = ({
   videoRefs,
   activeIndex,
   loadingRef,
+  shouldShowLogin,
 }) => {
   const [selectedFilter, setSelectedFilter] = useState();
 
@@ -396,10 +446,12 @@ const VideoFeed = ({
   }
 
   return (
-    <>
+    <Box position="relative">
+      {shouldShowLogin && <LoginPopup />}
       {videos.map((video, index) => {
         return (
           <VideoCard
+            shouldShowLogin={shouldShowLogin}
             index={index}
             activeIndex={activeIndex}
             handleToggleUserIcons={handleToggleUserIcons}
@@ -418,7 +470,7 @@ const VideoFeed = ({
         );
       })}
       <LoadingCard registerRef={(el) => (loadingRef.current = el)} />
-    </>
+    </Box>
   );
 };
 
@@ -433,6 +485,10 @@ const Home = () => {
   const lastVideoBeforeLoading = useRef(null);
   const isFetchingNextBatchOfVideos = useRef(false);
   const [showUserIcons, setShowUserIcons] = useState(true);
+  const [shouldShowLogin, setShouldShowLogin] = useState(false);
+
+  const auth = getAuth();
+  const user = auth.currentUser;
 
   const paginationIndex = useRef(0);
 
@@ -471,7 +527,7 @@ const Home = () => {
     paginationIndex.current = 1;
   }, []);
 
-  console.log("Updating videos", videos.length);
+  // console.log("Updating videos", videos.length);
 
   // Set up IntersectionObserver to detect visible video
   useEffect(() => {
@@ -496,6 +552,11 @@ const Home = () => {
 
           isFetchingNextBatchOfVideos.current = true;
 
+          if (!user) {
+            setShouldShowLogin(true);
+            return;
+          }
+
           await getVideoFeedBatch(paginationIndex.current);
           paginationIndex.current += 1;
           isFetchingNextBatchOfVideos.current = false;
@@ -519,7 +580,7 @@ const Home = () => {
       observer.current?.disconnect();
       // clearTimeout(observerTimeout);
     };
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     if (loadingRef.current) {
@@ -610,6 +671,7 @@ const Home = () => {
       position="relative"
     >
       <VideoFeed
+        shouldShowLogin={shouldShowLogin}
         loadingRef={loadingRef}
         toggleMute={toggleMute}
         isMuted={isMuted}
