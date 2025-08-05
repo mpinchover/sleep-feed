@@ -87,6 +87,7 @@ const VideoCard = ({
   isBookmarked,
   videoUUID,
   shouldShowLogin,
+  setShouldShowLogin,
 }) => {
   const videoRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -299,6 +300,7 @@ const VideoCard = ({
                     _hover={{ bg: "transparent" }}
                     _active={{ bg: "transparent" }}
                     variant="ghost"
+                    onClick={() => setShouldShowLogin((prev) => !prev)}
                   >
                     <Icon
                       as={FiUser}
@@ -430,6 +432,7 @@ const VideoFeed = ({
   activeIndex,
   loadingRef,
   shouldShowLogin,
+  setShouldShowLogin,
 }) => {
   const [selectedFilter, setSelectedFilter] = useState();
 
@@ -451,6 +454,7 @@ const VideoFeed = ({
       {videos.map((video, index) => {
         return (
           <VideoCard
+            setShouldShowLogin={setShouldShowLogin}
             shouldShowLogin={shouldShowLogin}
             index={index}
             activeIndex={activeIndex}
@@ -566,13 +570,14 @@ const Home = () => {
           // enable this for login
           // if (!user) {
           //   setShouldShowLogin(true);
-          //   return;
+          // } else {
+          //   await getVideoFeedBatch(paginationIndex.current);
+          //   paginationIndex.current += 1;
           // }
-
           await getVideoFeedBatch(paginationIndex.current);
           paginationIndex.current += 1;
-          isFetchingNextBatchOfVideos.current = false;
 
+          isFetchingNextBatchOfVideos.current = false;
           return;
         }
 
@@ -686,6 +691,7 @@ const Home = () => {
     >
       <VideoFeed
         shouldShowLogin={shouldShowLogin}
+        setShouldShowLogin={setShouldShowLogin}
         loadingRef={loadingRef}
         toggleMute={toggleMute}
         isMuted={isMuted}
