@@ -700,6 +700,8 @@ const Home = () => {
         }
       } else {
         video.pause();
+        video.currentTime = 0;
+        video.pause();
       }
 
       // document.addEventListener("visibilitychange", handleVisibilityChange);
