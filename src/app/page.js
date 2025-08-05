@@ -491,6 +491,8 @@ const Home = () => {
   const user = auth.currentUser;
 
   const paginationIndex = useRef(0);
+  const isScrollLockedRef = useRef(false);
+  const scrollContainerRef = useRef(null);
 
   const toggleMute = () => setIsMuted((prev) => !prev);
 
@@ -533,17 +535,38 @@ const Home = () => {
   useEffect(() => {
     const handleIntersect = (entries) => {
       entries.forEach(async (entry) => {
+        // if (entry.isIntersecting) {
+        //   // const index = videoRefs.current.indexOf(entry.target);
+        //   // setActiveIndex(index);
+        //   // lastVideoBeforeLoading.current = entry.target;
+
+        //   // ✅ Unlock scroll once we're back on a valid card
+
+        //   if (entry.target !== loadingRef.current) {
+        //     console.log("UNLOCKING SCROLL");
+        //     if (isScrollLocked) {
+        //       setIsScrollLocked(false);
+        //     }
+        //   }
+        // }
+
         if (entry.target === loadingRef.current && entry.isIntersecting) {
           if (lastVideoBeforeLoading.current) {
             const curVideosLen = videos.length;
+            const lastCur = lastVideoBeforeLoading.current;
             setTimeout(() => {
-              if (curVideosLen === videos.length) {
-                lastVideoBeforeLoading.current.scrollIntoView({
-                  behavior: "smooth",
-                  block: "start",
-                });
-              }
-            }, 350);
+              // if (curVideosLen === videos.length) {
+              lastCur.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+              });
+
+              // ✅ Lock scroll after bouncing back
+              console.log("UNLOCKING");
+              isScrollLockedRef.current = false;
+            }, 100);
+            console.log("LOCKING");
+            isScrollLockedRef.current = true;
           }
 
           if (isFetchingNextBatchOfVideos.current) {
@@ -662,8 +685,9 @@ const Home = () => {
 
   return (
     <Box
+      ref={scrollContainerRef}
       height="100dvh"
-      overflowY="scroll"
+      overflowY={isScrollLockedRef.current ? "hidden" : "scroll"}
       scrollSnapType="y mandatory"
       overscrollBehavior="contain"
       sx={{
