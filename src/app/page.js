@@ -534,6 +534,43 @@ const Home = () => {
     paginationIndex.current = 1;
   }, []);
 
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible") {
+        const activeVideo = videoRefs.current[activeIndex];
+        if (activeVideo) {
+          const isStuck =
+            activeVideo.paused ||
+            activeVideo.currentTime === 0 ||
+            activeVideo.readyState < 2;
+
+          if (isStuck) {
+            console.log("Attempting to recover stuck video...");
+
+            activeVideo.load();
+
+            setTimeout(() => {
+              const playPromise = activeVideo.play();
+              if (playPromise !== undefined) {
+                playPromise.catch((e) => {
+                  console.warn(
+                    "Failed to resume video after reload:",
+                    e.message
+                  );
+                });
+              }
+            }, 200);
+          }
+        }
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, [activeIndex]);
+
   // console.log("Updating videos", videos.length);
 
   // Set up IntersectionObserver to detect visible video
@@ -605,35 +642,35 @@ const Home = () => {
     }
   }, [videos]);
 
-  const handleVisibilityChange = () => {
-    if (document.visibilityState === "visible") {
-      const activeVideo = videoRefs.current[activeIndex];
-      if (activeVideo) {
-        // If the video is paused or has not progressed
-        const isStuck =
-          activeVideo.paused ||
-          activeVideo.currentTime === 0 ||
-          activeVideo.readyState < 2;
+  // const handleVisibilityChange = () => {
+  //   if (document.visibilityState === "visible") {
+  //     const activeVideo = videoRefs.current[activeIndex];
+  //     if (activeVideo) {
+  //       // If the video is paused or has not progressed
+  //       const isStuck =
+  //         activeVideo.paused ||
+  //         activeVideo.currentTime === 0 ||
+  //         activeVideo.readyState < 2;
 
-        if (isStuck) {
-          console.log("Attempting to recover stuck video...");
+  //       if (isStuck) {
+  //         console.log("Attempting to recover stuck video...");
 
-          // Reload the video (optional, but helps with bugged states)
-          activeVideo.load();
+  //         // Reload the video (optional, but helps with bugged states)
+  //         activeVideo.load();
 
-          // Wait a tick then try to play
-          setTimeout(() => {
-            const playPromise = activeVideo.play();
-            if (playPromise !== undefined) {
-              playPromise.catch((e) => {
-                console.warn("Failed to resume video after reload:", e.message);
-              });
-            }
-          }, 200); // slight delay helps after reload
-        }
-      }
-    }
-  };
+  //         // Wait a tick then try to play
+  //         setTimeout(() => {
+  //           const playPromise = activeVideo.play();
+  //           if (playPromise !== undefined) {
+  //             playPromise.catch((e) => {
+  //               console.warn("Failed to resume video after reload:", e.message);
+  //             });
+  //           }
+  //         }, 200); // slight delay helps after reload
+  //       }
+  //     }
+  //   }
+  // };
 
   // Manage video playback
   useEffect(() => {
@@ -665,13 +702,13 @@ const Home = () => {
         video.pause();
       }
 
-      document.addEventListener("visibilitychange", handleVisibilityChange);
+      // document.addEventListener("visibilitychange", handleVisibilityChange);
 
       return () => {
-        document.removeEventListener(
-          "visibilitychange",
-          handleVisibilityChange
-        );
+        // document.removeEventListener(
+        //   "visibilitychange",
+        //   handleVisibilityChange
+        // );
       };
     });
   }, [activeIndex, isMuted, videos]);
