@@ -1,33 +1,72 @@
-import { Box, VStack, Flex, Heading, Tabs, SimpleGrid } from "@chakra-ui/react";
+"use client";
+import {
+  Box,
+  VStack,
+  Flex,
+  Heading,
+  Tabs,
+  SimpleGrid,
+  Button,
+  Icon,
+} from "@chakra-ui/react";
+import { RiCloseLargeLine } from "react-icons/ri";
 import saved_videos from "../fake-video-cards";
+import { useState } from "react";
 
 const bookmarkedVideos = saved_videos.slice(10, 20);
-const VideoCardPreview = ({ src }) => {
+
+const VideoCardPreview = ({ src, handleDeleteBookmark }) => {
   return (
-    <Box overflow="hidden" aspectRatio={1} width="100%">
+    <Box
+      position="relative"
+      overflow="hidden"
+      width="100%"
+      sx={{ aspectRatio: "1 / 1" }} // Chakra's sx for custom aspect ratio
+    >
       <video
         style={{
           objectFit: "cover",
-          display: "block",
+          width: "100%",
+          height: "100%",
+          pointerEvents: "none", // never blocks the icon
         }}
         autoPlay
         muted
         loop
         playsInline
-        height="100%"
-        width="100%"
         src={src}
+      />
+
+      <Icon
+        top="10px"
+        right="10px"
+        position="absolute"
+        zIndex="10"
+        // cursor="pointer"
+        onClick={handleDeleteBookmark}
+        // pointerEvents="auto" // explicitly clickable
+
+        // cursor="pointer"
+        as={RiCloseLargeLine}
+        boxSize={3}
+        // onClick={handleDeleteBookmark}
+
+        color="rgba(255, 255, 255, 0.9)"
       />
     </Box>
   );
 };
 
-const BookmarkedVideos = () => {
+const BookmarkedVideos = ({ handleDeleteBookmark }) => {
   return (
-    <Box height="100%" overflowY="auto">
+    <Box scrollbarWidth="none" height="100%" overflowY="auto">
       <SimpleGrid columns={2} spacing={2}>
         {bookmarkedVideos.map(({ src }, i) => (
-          <VideoCardPreview src={src} key={i} />
+          <VideoCardPreview
+            handleDeleteBookmark={handleDeleteBookmark}
+            src={src}
+            key={i}
+          />
         ))}
       </SimpleGrid>
     </Box>
@@ -35,6 +74,10 @@ const BookmarkedVideos = () => {
 };
 
 const Account = () => {
+  const handleDeleteBookmark = () => {
+    console.log("Delete bookmark");
+  };
+
   return (
     <Flex justifyContent="center" backgroundColor="black" height="100dvh">
       <VStack width={{ base: "100%", sm: "350px" }} height="100%" spacing={0}>
@@ -71,7 +114,7 @@ const Account = () => {
               display: "flex", // so child can flex
             }}
           >
-            <BookmarkedVideos />
+            <BookmarkedVideos handleDeleteBookmark={handleDeleteBookmark} />
           </Tabs.Content>
 
           <Tabs.Content value="projects">Manage your projects</Tabs.Content>
