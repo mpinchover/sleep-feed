@@ -46,7 +46,7 @@ const VideoFeed = ({
             showUserIcons={showUserIcons}
             videoRefs={videoRefs}
             shouldShowSwipeDownIcons={index === 0}
-            key={video.uuid}
+            key={index}
             videoUUID={video.uuid}
             src={video.src}
             isMuted={isMuted}

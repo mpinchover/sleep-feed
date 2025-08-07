@@ -1,29 +1,7 @@
 "use client";
-import {
-  Box,
-  Flex,
-  Button,
-  Icon,
-  VStack,
-  Text,
-  Spinner,
-  AspectRatio,
-  Skeleton,
-  HStack,
-  Heading,
-} from "@chakra-ui/react";
-import { useRef, useEffect, useState, useMemo } from "react";
-import { FiVolume2, FiVolumeX, FiUser, FiLogOut } from "react-icons/fi";
-import { RiArrowUpDoubleLine } from "react-icons/ri";
-import { FaAngleDoubleDown } from "react-icons/fa";
-import { RiColorFilterFill } from "react-icons/ri";
-import { RiCircleFill } from "react-icons/ri";
-import { RiFilter3Line } from "react-icons/ri";
-import { RiShare2Fill } from "react-icons/ri";
-import { RiBookmarkFill } from "react-icons/ri";
-import { Toaster, toaster } from "@/components/ui/toaster";
+import { Box } from "@chakra-ui/react";
+import { useRef, useEffect, useState } from "react";
 import { getAuth } from "firebase/auth";
-import { Tabs } from "@chakra-ui/react";
 import VideoFeed from "../components/feed/videofeed";
 
 const PRELOAD_RANGE = 3;
@@ -35,13 +13,12 @@ const isMobile =
 
 import initial_videos from "./fake-video-cards";
 
-
-
 const Home = () => {
   const [isMuted, setIsMuted] = useState(true);
   const [activeIndex, setActiveIndex] = useState(0);
   const videoRefs = useRef([]);
   const observer = useRef(null);
+
   const loadingRef = useRef(null);
 
   const [videos, setVideos] = useState([]);
@@ -54,7 +31,6 @@ const Home = () => {
   const user = auth.currentUser;
 
   const paginationIndex = useRef(0);
-  const isScrollLockedRef = useRef(false);
   const [isScrollLocked, setIsScrollLocked] = useState(false);
   const scrollContainerRef = useRef(null);
 
@@ -141,19 +117,13 @@ const Home = () => {
             const curVideosLen = videos.length;
             const lastCur = lastVideoBeforeLoading.current;
             setTimeout(() => {
-              // if (curVideosLen === videos.length) {
               lastCur.scrollIntoView({
                 behavior: "smooth",
                 block: "start",
               });
 
-              // ✅ Lock scroll after bouncing back
-              // console.log("UNLOCKING");
-              // isScrollLockedRef.current = false;
               setIsScrollLocked(false);
             }, 250);
-            // console.log("LOCKING");
-            // isScrollLockedRef.current = true;
             setIsScrollLocked(true);
           }
 
@@ -191,7 +161,6 @@ const Home = () => {
 
     return () => {
       observer.current?.disconnect();
-      // clearTimeout(observerTimeout);
     };
   }, [user]);
 
@@ -200,36 +169,6 @@ const Home = () => {
       observer.current.observe(loadingRef.current);
     }
   }, [videos]);
-
-  // const handleVisibilityChange = () => {
-  //   if (document.visibilityState === "visible") {
-  //     const activeVideo = videoRefs.current[activeIndex];
-  //     if (activeVideo) {
-  //       // If the video is paused or has not progressed
-  //       const isStuck =
-  //         activeVideo.paused ||
-  //         activeVideo.currentTime === 0 ||
-  //         activeVideo.readyState < 2;
-
-  //       if (isStuck) {
-  //         console.log("Attempting to recover stuck video...");
-
-  //         // Reload the video (optional, but helps with bugged states)
-  //         activeVideo.load();
-
-  //         // Wait a tick then try to play
-  //         setTimeout(() => {
-  //           const playPromise = activeVideo.play();
-  //           if (playPromise !== undefined) {
-  //             playPromise.catch((e) => {
-  //               console.warn("Failed to resume video after reload:", e.message);
-  //             });
-  //           }
-  //         }, 200); // slight delay helps after reload
-  //       }
-  //     }
-  //   }
-  // };
 
   // Manage video playback
   useEffect(() => {
@@ -263,18 +202,10 @@ const Home = () => {
         video.pause();
       }
 
-      // document.addEventListener("visibilitychange", handleVisibilityChange);
-
-      return () => {
-        // document.removeEventListener(
-        //   "visibilitychange",
-        //   handleVisibilityChange
-        // );
-      };
+      return () => {};
     });
   }, [activeIndex, isMuted, videos]);
 
-  // console.log("isScrollLockedRef", isScrollLockedRef.current);
   return (
     <Box
       ref={scrollContainerRef}
