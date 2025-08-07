@@ -155,13 +155,18 @@ const Account = () => {
         <Heading position="relative" py="20px" width="100%" textAlign="center">
           Account
           <Button
+            // border="solid 1px red"
+            padding="0px"
+            p="0px"
+            minWidth={"0px"}
+            minHeight="0px"
+            gap={0}
             onClick={() => router.push("/")}
             position="absolute"
             left={{ base: "10px", sm: "0px" }}
             top="50%"
             transform="translate(0,-50%)"
             variant="ghost"
-            p={0}
             m={0}
             bg="transparent"
             _hover={{ bg: "transparent" }}
