@@ -18,6 +18,7 @@ import saved_videos from "../fake-video-cards";
 import { useEffect, useRef, useState } from "react";
 import { RiArrowLeftLine } from "react-icons/ri";
 import { useRouter } from "next/navigation";
+import { RiHeartFill, RiHeartLine } from "react-icons/ri";
 
 const savedVideos = saved_videos.slice(10, 20);
 import VideoFeed from "@/components/feed/videofeed";
@@ -38,6 +39,7 @@ const AccountSettings = () => {
 };
 
 const VideoCardPreview = ({ src, handleDeleteBookmark, videoRef }) => {
+  const [isBookmarked, setIsBookmarked] = useState(true);
   return (
     <Box
       position="relative"
@@ -67,16 +69,18 @@ const VideoCardPreview = ({ src, handleDeleteBookmark, videoRef }) => {
         right="10px"
         position="absolute"
         zIndex="10"
-        // cursor="pointer"
-        onClick={handleDeleteBookmark}
+        cursor="pointer"
+        animation={"fade-in 0.5s"}
+        onClick={() => setIsBookmarked((prev) => !prev)}
+        // onClick={handleDeleteBookmark}
         // pointerEvents="auto" // explicitly clickable
 
         // cursor="pointer"
-        as={RiCloseLargeLine}
-        boxSize={3}
+        as={isBookmarked ? RiHeartFill : RiHeartLine}
+        boxSize={5}
         // onClick={handleDeleteBookmark}
 
-        color="rgba(255, 255, 255, 0.9)"
+        color="white"
       />
     </Box>
   );
