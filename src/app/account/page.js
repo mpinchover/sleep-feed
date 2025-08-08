@@ -40,45 +40,66 @@ const AccountSettings = () => {
 
 const VideoCardPreview = ({ src, handleDeleteBookmark, videoRef }) => {
   const [isBookmarked, setIsBookmarked] = useState(true);
+  const [isReady, setIsReady] = useState(false);
+
   return (
     <Box
-      position="relative"
-      //   overflow="hidden"
       width="100%"
-      height="100%"
-      sx={{ aspectRatio: "1 / 1" }} // Chakra's sx for custom aspect ratio
+      aspectRatio={9 / 16}
+      border="solid 1px"
+      borderColor="gray.900"
+      position="relative"
+      overflow="hidden"
     >
+      {/* Skeleton always renders behind the video */}
+      <Skeleton
+        position="absolute"
+        top={0}
+        left={0}
+        width="100%"
+        height="100%"
+        borderRadius="none"
+        startColor="pink.500"
+        endColor="orange.500"
+        zIndex={0}
+      />
+
+      {/* Video sits on top */}
       <video
-        ref={videoRef} // ✅ attach the ref here
+        ref={videoRef}
         style={{
-          zIndex: "10",
           objectFit: "cover",
           width: "100%",
           height: "100%",
-          pointerEvents: "none", // never blocks the icon
+          pointerEvents: "none",
+          zIndex: 1,
+          position: "absolute",
+          top: 0,
+          left: 0,
+
+          transition: "opacity 0.4s ease-in-out",
         }}
         muted
         loop
+        playsInline
         src={src}
+        onLoadedData={() => {
+          setIsReady(true);
+        }}
       />
 
+      {/* Icon overlay */}
       <Icon
+        as={isBookmarked ? RiHeartFill : RiHeartLine}
+        animation="fade-in 0.5s"
+        position="absolute"
         top="10px"
         right="10px"
-        position="absolute"
-        zIndex="10"
-        cursor="pointer"
-        animation={"fade-in 0.5s"}
-        onClick={() => setIsBookmarked((prev) => !prev)}
-        // onClick={handleDeleteBookmark}
-        // pointerEvents="auto" // explicitly clickable
-
-        // cursor="pointer"
-        as={isBookmarked ? RiHeartFill : RiHeartLine}
+        zIndex="2"
         boxSize={5}
-        // onClick={handleDeleteBookmark}
-
         color="white"
+        cursor="pointer"
+        onClick={() => setIsBookmarked((prev) => !prev)}
       />
     </Box>
   );
@@ -130,8 +151,8 @@ const BookmarkedVideos = ({ handleDeleteBookmark }) => {
   }, [videos]);
 
   return (
-    <Box scrollbarWidth="none" height="100%" overflowY="auto">
-      <SimpleGrid columns={2} spacing={2}>
+    <Box width="100%" scrollbarWidth="none" height="100%" overflowY="auto">
+      <SimpleGrid width="100%" columns={2} spacing={2}>
         {videos.map(({ src }, i) => (
           <VideoCardPreview
             videoRef={(el) => (videoRefs.current[i] = el)}
