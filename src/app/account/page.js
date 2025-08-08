@@ -93,7 +93,7 @@ const VideoCardPreview = ({ src, handleDeleteBookmark, videoRef }) => {
         as={isBookmarked ? RiHeartFill : RiHeartLine}
         animation="fade-in 0.5s"
         position="absolute"
-        top="10px"
+        bottom="10px"
         right="10px"
         zIndex="2"
         boxSize={5}
