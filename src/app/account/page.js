@@ -57,10 +57,8 @@ const VideoCardPreview = ({ src, handleDeleteBookmark, videoRef }) => {
           height: "100%",
           pointerEvents: "none", // never blocks the icon
         }}
-        autoPlay
         muted
         loop
-        playsInline
         src={src}
       />
 
