@@ -178,7 +178,6 @@ const VideoCard = ({
             position="absolute"
             bottom="30px"
             left="50%"
-            // right="30px"
             transform="translate(-50%, -0%)"
             bg="rgba(0, 0, 0, 0.3)"
             padding="8px"
@@ -232,11 +231,8 @@ const VideoCard = ({
             </Button>
 
             <VStack
-              // alignItems="center"
               justifyContent={"center"}
               transition="0.3s ease"
-              // border="1px solid red"
-              // display={shouldShowOptions ? "flex" : "none"}
               height={shouldShowOptions ? "155px" : "0px"}
               overflow="hidden"
             >
