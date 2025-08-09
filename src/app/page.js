@@ -6,15 +6,10 @@ import VideoFeed from "../components/feed/videofeed";
 import LoginPopup from "@/components/feed/login-popup";
 const BATCH_SIZE = 10;
 
-const isMobile =
-  typeof window !== "undefined" &&
-  /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-
 import initial_videos from "./fake-video-cards";
 
 const Home = () => {
   const [videos, setVideos] = useState([]);
-  const [isMuted, setIsMuted] = useState(true);
   const [shouldShowLogin, setShouldShowLogin] = useState(false);
 
   const paginationIndex = useRef(0);
@@ -29,19 +24,19 @@ const Home = () => {
         const end = Math.min(initial_videos.length, start + BATCH_SIZE);
         const batchOfVideos = initial_videos.slice(start, end);
 
-        if (isMobile) {
-          setIsMuted(true);
-        }
-
-        setVideos((prev) => [...prev, ...batchOfVideos]);
-        resolve();
+        resolve(batchOfVideos);
       }, 1500);
     });
   };
 
-  useEffect(() => {
-    getVideoFeedBatch(0);
+  const getInitialBatchOfVideos = async () => {
+    const batch = await getVideoFeedBatch(0);
+    setVideos(batch);
     paginationIndex.current = 1;
+  };
+
+  useEffect(() => {
+    getInitialBatchOfVideos();
   }, []);
 
   return (
@@ -51,10 +46,9 @@ const Home = () => {
         shouldShowLogin={shouldShowLogin}
         setShouldShowLogin={setShouldShowLogin}
         user={user}
-        setIsMuted={setIsMuted}
-        isMuted={isMuted}
         getVideoFeedBatch={getVideoFeedBatch}
         videos={videos}
+        setVideos={setVideos}
         paginationIndex={paginationIndex}
       />
     </Box>

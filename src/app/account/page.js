@@ -38,12 +38,18 @@ const AccountSettings = () => {
   );
 };
 
-const VideoCardPreview = ({ src, handleDeleteBookmark, videoRef }) => {
+const VideoCardPreview = ({
+  src,
+  handleDeleteBookmark,
+  videoRef,
+  setBookmarkActiveIndex,
+}) => {
   const [isBookmarked, setIsBookmarked] = useState(true);
   const [isReady, setIsReady] = useState(false);
 
   return (
     <Box
+      onClick={setBookmarkActiveIndex}
       width="100%"
       aspectRatio={9 / 16}
       border="solid 1px"
@@ -105,10 +111,14 @@ const VideoCardPreview = ({ src, handleDeleteBookmark, videoRef }) => {
   );
 };
 
-const BookmarkedVideos = ({ handleDeleteBookmark }) => {
-  const videoRefs = useRef([]);
+const BookmarkedVideos = ({
+  handleDeleteBookmark,
+  setStartBookmarkIndex,
+  videos,
+  setVideos,
+}) => {
   const observer = useRef(null);
-  const [videos, setVideos] = useState(savedVideos);
+  const videoRefs = useRef([]);
 
   // set up intersection for videos
   useEffect(() => {
@@ -150,11 +160,16 @@ const BookmarkedVideos = ({ handleDeleteBookmark }) => {
     });
   }, [videos]);
 
+  const openVideoFeed = (activeIndex) => {
+    setStartBookmarkIndex(activeIndex);
+  };
+
   return (
     <Box width="100%" scrollbarWidth="none" height="100%" overflowY="auto">
       <SimpleGrid width="100%" columns={2} spacing={2}>
-        {videos.map(({ src }, i) => (
+        {videos?.map(({ src }, i) => (
           <VideoCardPreview
+            setBookmarkActiveIndex={() => setStartBookmarkIndex(i)}
             videoRef={(el) => (videoRefs.current[i] = el)}
             handleDeleteBookmark={handleDeleteBookmark}
             src={src}
@@ -167,10 +182,32 @@ const BookmarkedVideos = ({ handleDeleteBookmark }) => {
 };
 
 const Account = () => {
+  const [startBookmarkIndex, setStartBookmarkIndex] = useState(null);
+  const [videos, setVideos] = useState(savedVideos);
+  const paginationIndex = useRef(0);
+
   const router = useRouter();
+
   const handleDeleteBookmark = () => {
     console.log("Delete bookmark");
   };
+
+  const getVideoFeedBatch = () => {
+    setVideos(savedVideos);
+  };
+
+  if (startBookmarkIndex != null) {
+    return (
+      <VideoFeed
+        setStartBookmarkIndex={setStartBookmarkIndex}
+        startBookmarkIndex={startBookmarkIndex}
+        getVideoFeedBatch={getVideoFeedBatch}
+        videos={videos}
+        setVideos={setVideos}
+        paginationIndex={paginationIndex}
+      />
+    );
+  }
 
   return (
     <Flex justifyContent="center" backgroundColor="black" height="100dvh">
@@ -228,7 +265,11 @@ const Account = () => {
               display: "flex", // so child can flex
             }}
           >
-            <BookmarkedVideos handleDeleteBookmark={handleDeleteBookmark} />
+            <BookmarkedVideos
+              videos={videos}
+              setStartBookmarkIndex={setStartBookmarkIndex}
+              handleDeleteBookmark={handleDeleteBookmark}
+            />
           </Tabs.Content>
 
           <Tabs.Content value="projects">
