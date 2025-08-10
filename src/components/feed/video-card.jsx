@@ -69,11 +69,6 @@ const VideoCard = ({
     };
   }, [registerRef]);
 
-  useEffect(() => {
-    if (videoRef.current) {
-    }
-  }, []);
-
   const shouldPreload = () => {
     return Math.abs(index - activeIndex) < PRELOAD_RANGE ? "auto" : "none";
   };

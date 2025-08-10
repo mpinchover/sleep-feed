@@ -66,6 +66,9 @@ const VideoFeed = ({
     }
 
     setShowUserIcons((prev) => !prev);
+    if (setShouldShowLogin) {
+      setShouldShowLogin(false);
+    }
   };
 
   useEffect(() => {
@@ -227,7 +230,6 @@ const VideoFeed = ({
     const onKey = (e) => {
       if (startBookmarkIndex == null) return;
       if (e.key === "Escape") {
-        console.log("Escape pressed");
         setStartBookmarkIndex(null);
       }
     };
