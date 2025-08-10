@@ -256,6 +256,7 @@ const VideoFeed = ({
       {videos.map((video, index) => {
         return (
           <VideoCard
+            startBookmarkIndex={startBookmarkIndex}
             setShouldShowLogin={setShouldShowLogin}
             shouldShowLogin={shouldShowLogin}
             index={index}

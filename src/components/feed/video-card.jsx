@@ -13,6 +13,7 @@ import { RiFilter3Line, RiColorFilterFill } from "react-icons/ri";
 import { RiShare2Fill } from "react-icons/ri";
 import { RiArrowUpDoubleLine } from "react-icons/ri";
 import { useEffect, useState, useRef } from "react";
+import { RiHeartFill, RiHeartLine } from "react-icons/ri";
 
 import { Toaster, toaster } from "@/components/ui/toaster";
 const PRELOAD_RANGE = 3;
@@ -30,17 +31,21 @@ const VideoCard = ({
   index,
   handleSetSelectedFilter,
   selectedFilter,
-  isBookmarked,
+  startBookmarkIndex,
   videoUUID,
   shouldShowLogin,
   setShouldShowLogin,
 }) => {
+  const isFavoritedFeed =
+    startBookmarkIndex !== null && startBookmarkIndex !== undefined;
+
   const videoRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
   const [startShowIcons, setStartShowIcons] = useState(false);
   const iconContainerRef = useRef(null);
   const filterContainerRef = useRef(null);
   const [shouldShowOptions, setShouldShowOptions] = useState(false);
+  const [isFavorited, setIsFavorited] = useState(isFavoritedFeed);
 
   const scrollToNext = () => {
     const next = videoRefs?.current?.[activeIndex + 1];
@@ -110,6 +115,17 @@ const VideoCard = ({
   if (shouldShowLogin) {
     videoFilters.push("brightness(30%)");
   }
+
+  const renderUserOrHearIcons = () => {
+    if (!isFavoritedFeed) {
+      return <Icon as={FiUser} boxSize={5} color="rgba(255, 255, 255, 0.5)" />;
+    }
+
+    if (isFavorited) {
+      return <Icon as={RiHeartFill} boxSize={5} color="white" />;
+    }
+    return <Icon as={RiHeartLine} boxSize={5} color="white" />;
+  };
 
   const formattedVideoFilters = videoFilters.join(" ");
 
@@ -247,14 +263,15 @@ const VideoCard = ({
                     variant="ghost"
                     onClick={(e) => {
                       e.currentTarget.blur();
-                      setShouldShowLogin((prev) => !prev);
+                      if (!isFavoritedFeed) {
+                        setShouldShowLogin((prev) => !prev);
+                        return;
+                      }
+
+                      setIsFavorited((prev) => !prev);
                     }}
                   >
-                    <Icon
-                      as={FiUser}
-                      boxSize={5}
-                      color="rgba(255, 255, 255, 0.5)"
-                    />
+                    {renderUserOrHearIcons()}
                   </Button>
 
                   <Button
