@@ -193,7 +193,8 @@ const Account = () => {
   };
 
   const getVideoFeedBatch = () => {
-    setVideos(savedVideos);
+    return savedVideos;
+    // setVideos(savedVideos);
   };
 
   if (startBookmarkIndex != null) {
@@ -215,7 +216,6 @@ const Account = () => {
         <Heading position="relative" py="20px" width="100%" textAlign="center">
           Account
           <Button
-            // border="solid 1px red"
             padding="0px"
             p="0px"
             minWidth={"0px"}

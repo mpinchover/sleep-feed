@@ -215,7 +215,10 @@ const VideoCard = ({
             gap={0}
           >
             <Button
-              onClick={onToggleMute}
+              onClick={(e) => {
+                e.currentTarget.blur();
+                onToggleMute();
+              }}
               variant="ghost"
               p={0}
               m={0}
@@ -242,7 +245,10 @@ const VideoCard = ({
                     _hover={{ bg: "transparent" }}
                     _active={{ bg: "transparent" }}
                     variant="ghost"
-                    onClick={() => setShouldShowLogin((prev) => !prev)}
+                    onClick={(e) => {
+                      e.currentTarget.blur();
+                      setShouldShowLogin((prev) => !prev);
+                    }}
                   >
                     <Icon
                       as={FiUser}
@@ -255,7 +261,10 @@ const VideoCard = ({
                     _hover={{ bg: "transparent" }}
                     _active={{ bg: "transparent" }}
                     variant="ghost"
-                    onClick={() => handleSetSelectedFilter("saturate(50%)")}
+                    onClick={(e) => {
+                      e.currentTarget.blur();
+                      handleSetSelectedFilter("saturate(50%)");
+                    }}
                   >
                     <Icon
                       as={RiColorFilterFill}
@@ -271,7 +280,10 @@ const VideoCard = ({
                     _hover={{ bg: "transparent" }}
                     _active={{ bg: "transparent" }}
                     variant="ghost"
-                    onClick={handleShare}
+                    onClick={(e) => {
+                      e.currentTarget.blur();
+                      handleShare();
+                    }}
                   >
                     <Icon as={RiShare2Fill} color="rgba(255, 255, 255, 0.5)" />
                   </Button>

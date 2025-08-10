@@ -37,6 +37,17 @@ const Home = () => {
 
   useEffect(() => {
     getInitialBatchOfVideos();
+
+    const onKey = (e) => {
+      if (e.key === "Escape") {
+        setShouldShowLogin(false);
+      }
+    };
+
+    window.addEventListener("keydown", onKey);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+    };
   }, []);
 
   return (
