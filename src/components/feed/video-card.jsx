@@ -88,7 +88,8 @@ const VideoCard = ({
   };
 
   const handleShare = () => {
-    const linkToVideo = `localhost/feed/${videoUUID}`;
+    const baseUrl = window.location.origin;
+    const linkToVideo = `${baseUrl}/feed/${videoUUID}`;
 
     // Copy to clipboard
     navigator.clipboard
@@ -109,7 +110,6 @@ const VideoCard = ({
         });
       });
   };
-  // if (activeIndex === index) console.log("Loading video ", src);
 
   const videoFilters = [selectedFilter];
   if (shouldShowLogin) {
