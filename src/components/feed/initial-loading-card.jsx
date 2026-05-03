@@ -1,43 +1,31 @@
 "use client";
-import { Flex, Box, AspectRatio, Skeleton } from "@chakra-ui/react";
-// import { useEffect, useState, useRef } from "react";
+import { Box, Skeleton, Flex } from "@chakra-ui/react";
+
+const FRAME_W = "min(100vw, calc(100dvh * 9 / 16))";
+const FRAME_H = "min(100dvh, calc(100vw * 16 / 9))";
 
 const InitialLoadingCard = () => {
   return (
     <Flex
-      justifyContent="center"
-      alignItems="center"
-      flexDirection="column"
       height="100dvh"
+      width="100%"
+      maxW="100vw"
+      alignItems="center"
+      justifyContent="center"
+      overflow="hidden"
+      position="relative"
       scrollSnapAlign="start"
       scrollSnapStop="always"
-      position="relative"
     >
-      <Box
-        borderRadius={{ base: "none", sm: "10px" }}
-        // width="350px"
-        width={{ base: "100%", sm: "350px" }}
-        overflow="hidden"
-        position="relative"
-        // border="solid 1px purple"
-        height={{ base: "100%", sm: "auto" }}
-        // onClick={(e) => handleToggleUserIcons(e, iconContainerRef)}
-      >
-        <AspectRatio
-          height={{ base: "100%", sm: "auto" }}
-          // border="solid 1px red"
-          ratio={9 / 16}
-          width="100%"
-        >
-          <Skeleton
-            css={{
-              "--start-color": "colors.pink.500",
-              "--end-color": "colors.orange.500",
-            }}
-            height="100%"
-            width="100%"
-          />
-        </AspectRatio>
+      <Box position="relative" w={FRAME_W} h={FRAME_H} maxW="100%" maxH="100%">
+        <Skeleton
+          position="absolute"
+          inset={0}
+          css={{
+            "--start-color": "colors.pink.500",
+            "--end-color": "colors.orange.500",
+          }}
+        />
       </Box>
     </Flex>
   );

@@ -1,14 +1,11 @@
 "use client";
-import {
-  Icon,
-  Skeleton,
-  AspectRatio,
-  Flex,
-  Box,
-} from "@chakra-ui/react";
+import { Icon, Skeleton, Box, Flex } from "@chakra-ui/react";
 import { RiArrowUpDoubleLine } from "react-icons/ri";
 import { useEffect, useState, useRef } from "react";
 const PRELOAD_RANGE = 3;
+/** Portrait 9:16 — frame fits in viewport without cropping video top/bottom; prefer full dvh height when vw allows. */
+const FRAME_W = "min(100vw, calc(100dvh * 9 / 16))";
+const FRAME_H = "min(100dvh, calc(100vw * 16 / 9))";
 
 const VideoCard = ({
   src,
@@ -61,63 +58,59 @@ const VideoCard = ({
 
   return (
     <Flex
-      justifyContent="center"
-      alignItems="center"
-      flexDirection="column"
       height="100dvh"
+      width="100%"
+      maxW="100vw"
+      alignItems="center"
+      justifyContent="center"
+      overflow="hidden"
+      position="relative"
       scrollSnapAlign="start"
       scrollSnapStop="always"
-      position="relative"
+      onClick={() => handleToggleUserIcons()}
     >
       <Box
-        borderRadius={{ base: "none", sm: "10px" }}
-        // width="350px"
-        width={{ base: "100%", sm: "350px" }}
-        overflow="hidden"
         position="relative"
-        // border="solid 1px purple"
-        height={{ base: "100%", sm: "auto" }}
-        onClick={() => handleToggleUserIcons()}
+        w={FRAME_W}
+        h={FRAME_H}
+        maxW="100%"
+        maxH="100%"
+        overflow="hidden"
       >
-        <AspectRatio
-          height={{ base: "100%", sm: "auto" }}
-          // border="solid 1px red"
-          ratio={9 / 16}
-          width="100%"
-        >
-          <>
-            <Skeleton
-              css={{
-                "--start-color": "colors.pink.500",
-                "--end-color": "colors.orange.500",
-              }}
-              height="100%"
-              width="100%"
-            />
-            <video
-              ref={videoRef}
-              style={{
-                objectFit: "cover",
-                display: "block",
-                // filter: selectedFilter, //
-                filter: formattedVideoFilters,
-              }}
-              src={src}
-              height="100%"
-              width="100%"
-              muted={isMuted}
-              loop
-              playsInline
-              preload={shouldPreload()}
-              onError={(e) => console.error("Video failed to load", e)}
-              onPlaying={() => setIsLoading(false)} // ← More reliable than onLoadedData
-            />
-          </>
-        </AspectRatio>
+        <Skeleton
+          position="absolute"
+          inset={0}
+          css={{
+            "--start-color": "colors.pink.500",
+            "--end-color": "colors.orange.500",
+          }}
+          zIndex={0}
+        />
+        <video
+          ref={videoRef}
+          src={src}
+          muted={isMuted}
+          loop
+          playsInline
+          preload={shouldPreload()}
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "contain",
+            objectPosition: "center",
+            display: "block",
+            filter: formattedVideoFilters,
+            zIndex: 1,
+          }}
+          onError={(e) => console.error("Video failed to load", e)}
+          onPlaying={() => setIsLoading(false)}
+        />
 
         {shouldShowSwipeDownIcons && startShowIcons && (
           <Box
-            cursor={"pointer"}
+            cursor="pointer"
             onClick={scrollToNext}
             position="absolute"
             bottom="30px"
@@ -126,7 +119,7 @@ const VideoCard = ({
             bg="rgba(0, 0, 0, 0.3)"
             padding="8px"
             borderRadius="full"
-            zIndex="20"
+            zIndex={20}
             display="flex"
             flexDirection="column"
             alignItems="center"
