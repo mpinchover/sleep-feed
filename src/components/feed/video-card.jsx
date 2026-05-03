@@ -5,47 +5,26 @@ import {
   AspectRatio,
   Flex,
   Box,
-  VStack,
-  Button,
 } from "@chakra-ui/react";
-import { FiVolume2, FiVolumeX, FiUser, FiLogOut } from "react-icons/fi";
-import { RiFilter3Line, RiColorFilterFill } from "react-icons/ri";
-import { RiShare2Fill } from "react-icons/ri";
 import { RiArrowUpDoubleLine } from "react-icons/ri";
 import { useEffect, useState, useRef } from "react";
-import { RiHeartFill, RiHeartLine } from "react-icons/ri";
-
-import { Toaster, toaster } from "@/components/ui/toaster";
 const PRELOAD_RANGE = 3;
 
 const VideoCard = ({
   src,
   isMuted,
-  onToggleMute,
   registerRef,
   shouldShowSwipeDownIcons,
   videoRefs,
   activeIndex,
   handleToggleUserIcons,
-  showUserIcons,
   index,
-  handleSetSelectedFilter,
   selectedFilter,
-  startBookmarkIndex,
-  videoUUID,
   shouldShowLogin,
-  setShouldShowLogin,
 }) => {
-  const isFavoritedFeed =
-    startBookmarkIndex !== null && startBookmarkIndex !== undefined;
-
   const videoRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
   const [startShowIcons, setStartShowIcons] = useState(false);
-  const iconContainerRef = useRef(null);
-  const filterContainerRef = useRef(null);
-  const [shouldShowOptions, setShouldShowOptions] = useState(false);
-  const [isFavorited, setIsFavorited] = useState(isFavoritedFeed);
 
   const scrollToNext = () => {
     const next = videoRefs?.current?.[activeIndex + 1];
@@ -73,54 +52,10 @@ const VideoCard = ({
     return Math.abs(index - activeIndex) < PRELOAD_RANGE ? "auto" : "none";
   };
 
-  const handleBookmark = () => {
-    toaster.create({
-      title: "Saved",
-      // description: "Toast Description",
-      duration: 1000,
-      type: "info",
-    });
-  };
-
-  const handleShare = () => {
-    const baseUrl = window.location.origin;
-    const linkToVideo = `${baseUrl}/feed/${videoUUID}`;
-
-    // Copy to clipboard
-    navigator.clipboard
-      .writeText(linkToVideo)
-      .then(() => {
-        toaster.create({
-          title: "Copied link",
-          duration: 1000,
-          type: "info",
-        });
-      })
-      .catch((err) => {
-        console.error("Failed to copy:", err);
-        toaster.create({
-          title: "Failed to copy link",
-          duration: 1000,
-          type: "error",
-        });
-      });
-  };
-
   const videoFilters = [selectedFilter];
   if (shouldShowLogin) {
     videoFilters.push("brightness(30%)");
   }
-
-  const renderUserOrHearIcons = () => {
-    if (!isFavoritedFeed) {
-      return <Icon as={FiUser} boxSize={5} color="rgba(255, 255, 255, 0.5)" />;
-    }
-
-    if (isFavorited) {
-      return <Icon as={RiHeartFill} boxSize={5} color="white" />;
-    }
-    return <Icon as={RiHeartLine} boxSize={5} color="white" />;
-  };
 
   const formattedVideoFilters = videoFilters.join(" ");
 
@@ -142,9 +77,7 @@ const VideoCard = ({
         position="relative"
         // border="solid 1px purple"
         height={{ base: "100%", sm: "auto" }}
-        onClick={(e) =>
-          handleToggleUserIcons(e, iconContainerRef, filterContainerRef)
-        }
+        onClick={() => handleToggleUserIcons()}
       >
         <AspectRatio
           height={{ base: "100%", sm: "auto" }}
@@ -212,118 +145,6 @@ const VideoCard = ({
               color="rgba(255, 255, 255, 0.3)"
             />
           </Box>
-        )}
-        {showUserIcons && (
-          <VStack
-            ref={iconContainerRef}
-            position="absolute"
-            bottom="30px"
-            right="20px"
-            padding="6px"
-            borderRadius="full"
-            bg="rgba(0, 0, 0, 0.3)"
-            zIndex="10"
-            gap={0}
-          >
-            <Button
-              onClick={(e) => {
-                e.currentTarget.blur();
-                onToggleMute();
-              }}
-              variant="ghost"
-              p={0}
-              m={0}
-              bg="transparent"
-              _hover={{ bg: "transparent" }}
-              _active={{ bg: "transparent" }}
-            >
-              <Icon
-                as={isMuted ? FiVolumeX : FiVolume2}
-                color="rgba(255, 255, 255, 0.5)"
-                fontSize="10px"
-              />
-            </Button>
-
-            <VStack
-              justifyContent={"center"}
-              transition="0.3s ease"
-              height={shouldShowOptions ? "155px" : "0px"}
-              overflow="hidden"
-            >
-              {shouldShowOptions && (
-                <>
-                  <Button
-                    _hover={{ bg: "transparent" }}
-                    _active={{ bg: "transparent" }}
-                    variant="ghost"
-                    onClick={(e) => {
-                      e.currentTarget.blur();
-                      if (!isFavoritedFeed) {
-                        setShouldShowLogin((prev) => !prev);
-                        return;
-                      }
-
-                      setIsFavorited((prev) => !prev);
-                    }}
-                  >
-                    {renderUserOrHearIcons()}
-                  </Button>
-
-                  <Button
-                    _hover={{ bg: "transparent" }}
-                    _active={{ bg: "transparent" }}
-                    variant="ghost"
-                    onClick={(e) => {
-                      e.currentTarget.blur();
-                      handleSetSelectedFilter("saturate(50%)");
-                    }}
-                  >
-                    <Icon
-                      as={RiColorFilterFill}
-                      color={
-                        selectedFilter === "saturate(50%)"
-                          ? "white"
-                          : "rgba(255, 255, 255, 0.5)"
-                      }
-                    />
-                  </Button>
-
-                  <Button
-                    _hover={{ bg: "transparent" }}
-                    _active={{ bg: "transparent" }}
-                    variant="ghost"
-                    onClick={(e) => {
-                      e.currentTarget.blur();
-                      handleShare();
-                    }}
-                  >
-                    <Icon as={RiShare2Fill} color="rgba(255, 255, 255, 0.5)" />
-                  </Button>
-                  {/** only if they are logged in  */}
-                  {/* <Button
-                    _hover={{ bg: "transparent" }}
-                    _active={{ bg: "transparent" }}
-                    variant="ghost"
-                    onClick={() => handleBookmark()}
-                  >
-                    <Icon
-                      as={RiBookmarkFill}
-                      color="rgba(255, 255, 255, 0.5)"
-                    />
-                  </Button> */}
-                </>
-              )}
-            </VStack>
-
-            <Button
-              _hover={{ bg: "transparent" }}
-              _active={{ bg: "transparent" }}
-              variant="ghost"
-              onClick={() => setShouldShowOptions((prev) => !prev)}
-            >
-              <Icon as={RiFilter3Line} color="rgba(255, 255, 255, 0.5)" />
-            </Button>
-          </VStack>
         )}
       </Box>
     </Flex>

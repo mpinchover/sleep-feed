@@ -1,6 +1,19 @@
 "use client";
-import { Box } from "@chakra-ui/react";
-import { useState, useRef, useEffect } from "react";
+import {
+  Box,
+  VStack,
+  Button,
+  Icon,
+} from "@chakra-ui/react";
+import { FiVolume2, FiVolumeX, FiUser } from "react-icons/fi";
+import {
+  RiFilter3Line,
+  RiColorFilterFill,
+  RiShare2Fill,
+} from "react-icons/ri";
+import { RiHeartFill, RiHeartLine } from "react-icons/ri";
+import { useState, useRef, useEffect, useCallback } from "react";
+import { toaster } from "@/components/ui/toaster";
 import LoadingCard from "./loading-card";
 import InitialLoadingCard from "./initial-loading-card";
 import VideoCard from "./video-card";
@@ -26,6 +39,8 @@ const VideoFeed = ({
     startBookmarkIndex ? startBookmarkIndex : 0
   );
   const [showUserIcons, setShowUserIcons] = useState(true);
+  const [shouldShowOptions, setShouldShowOptions] = useState(false);
+  const [favoritedByUuid, setFavoritedByUuid] = useState({});
   const [isScrollLocked, setIsScrollLocked] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
 
@@ -57,18 +72,55 @@ const VideoFeed = ({
 
   const toggleMute = () => setIsMuted((prev) => !prev);
 
-  const handleToggleUserIcons = (e, iconContainerRef, filtercontainerRef) => {
-    if (
-      iconContainerRef.current?.contains(e.target) ||
-      filtercontainerRef.current?.contains(e.target)
-    ) {
-      return;
-    }
-
+  const handleToggleUserIcons = () => {
     setShowUserIcons((prev) => !prev);
     if (setShouldShowLogin) {
       setShouldShowLogin(false);
     }
+  };
+
+  const isFavoritedFeed =
+    startBookmarkIndex !== null && startBookmarkIndex !== undefined;
+  const activeVideo = videos[activeIndex];
+  const activeUuid = activeVideo?.uuid;
+
+  const isFavorited =
+    activeUuid != null &&
+    (favoritedByUuid[activeUuid] !== undefined
+      ? favoritedByUuid[activeUuid]
+      : isFavoritedFeed);
+
+  const handleShare = useCallback(() => {
+    if (!activeUuid) return;
+    const baseUrl = window.location.origin;
+    const linkToVideo = `${baseUrl}/feed/${activeUuid}`;
+    navigator.clipboard
+      .writeText(linkToVideo)
+      .then(() => {
+        toaster.create({
+          title: "Copied link",
+          duration: 1000,
+          type: "info",
+        });
+      })
+      .catch((err) => {
+        console.error("Failed to copy:", err);
+        toaster.create({
+          title: "Failed to copy link",
+          duration: 1000,
+          type: "error",
+        });
+      });
+  }, [activeUuid]);
+
+  const renderUserOrHeartIcons = () => {
+    if (!isFavoritedFeed) {
+      return <Icon as={FiUser} boxSize={5} color="rgba(255, 255, 255, 0.5)" />;
+    }
+    if (isFavorited) {
+      return <Icon as={RiHeartFill} boxSize={5} color="white" />;
+    }
+    return <Icon as={RiHeartLine} boxSize={5} color="white" />;
   };
 
   useEffect(() => {
@@ -258,27 +310,126 @@ const VideoFeed = ({
       {videos.map((video, index) => {
         return (
           <VideoCard
-            startBookmarkIndex={startBookmarkIndex}
-            setShouldShowLogin={setShouldShowLogin}
             shouldShowLogin={shouldShowLogin}
             index={index}
             activeIndex={activeIndex}
             handleToggleUserIcons={handleToggleUserIcons}
-            showUserIcons={showUserIcons}
             videoRefs={videoRefs}
             shouldShowSwipeDownIcons={index === 0}
             key={index}
-            videoUUID={video.uuid}
             src={video.src}
             isMuted={isMuted}
-            onToggleMute={toggleMute}
             registerRef={(el) => (videoRefs.current[index] = el)}
-            handleSetSelectedFilter={handleSetSelectedFilter}
             selectedFilter={selectedFilter}
           />
         );
       })}
       <LoadingCard registerRef={(el) => (loadingRef.current = el)} />
+      {showUserIcons && (
+        <VStack
+          position="fixed"
+          bottom="calc(30px + env(safe-area-inset-bottom, 0px))"
+          right="calc(20px + env(safe-area-inset-right, 0px))"
+          padding="6px"
+          borderRadius="full"
+          bg="rgba(0, 0, 0, 0.3)"
+          zIndex={25}
+          gap={0}
+          pointerEvents="auto"
+        >
+          <Button
+            onClick={(e) => {
+              e.currentTarget.blur();
+              toggleMute();
+            }}
+            variant="ghost"
+            p={0}
+            m={0}
+            bg="transparent"
+            _hover={{ bg: "transparent" }}
+            _active={{ bg: "transparent" }}
+          >
+            <Icon
+              as={isMuted ? FiVolumeX : FiVolume2}
+              color="rgba(255, 255, 255, 0.5)"
+              fontSize="10px"
+            />
+          </Button>
+
+          <VStack
+            justifyContent="center"
+            transition="0.3s ease"
+            height={shouldShowOptions ? "155px" : "0px"}
+            overflow="hidden"
+          >
+            {shouldShowOptions && (
+              <>
+                <Button
+                  _hover={{ bg: "transparent" }}
+                  _active={{ bg: "transparent" }}
+                  variant="ghost"
+                  onClick={(e) => {
+                    e.currentTarget.blur();
+                    if (!isFavoritedFeed) {
+                      setShouldShowLogin((prev) => !prev);
+                      return;
+                    }
+                    if (!activeUuid) return;
+                    setFavoritedByUuid((prev) => {
+                      const prior = prev[activeUuid];
+                      const base = isFavoritedFeed;
+                      const nextVal = !(prior !== undefined ? prior : base);
+                      return { ...prev, [activeUuid]: nextVal };
+                    });
+                  }}
+                >
+                  {renderUserOrHeartIcons()}
+                </Button>
+
+                <Button
+                  _hover={{ bg: "transparent" }}
+                  _active={{ bg: "transparent" }}
+                  variant="ghost"
+                  onClick={(e) => {
+                    e.currentTarget.blur();
+                    handleSetSelectedFilter("saturate(50%)");
+                  }}
+                >
+                  <Icon
+                    as={RiColorFilterFill}
+                    color={
+                      selectedFilter === "saturate(50%)"
+                        ? "white"
+                        : "rgba(255, 255, 255, 0.5)"
+                    }
+                  />
+                </Button>
+
+                <Button
+                  _hover={{ bg: "transparent" }}
+                  _active={{ bg: "transparent" }}
+                  variant="ghost"
+                  onClick={(e) => {
+                    e.currentTarget.blur();
+                    handleShare();
+                  }}
+                >
+                  <Icon as={RiShare2Fill} color="rgba(255, 255, 255, 0.5)" />
+                </Button>
+              </>
+            )}
+          </VStack>
+
+          <Button
+            _hover={{ bg: "transparent" }}
+            _active={{ bg: "transparent" }}
+            variant="ghost"
+            onClick={() => setShouldShowOptions((prev) => !prev)}
+          >
+            <Icon as={RiFilter3Line} color="rgba(255, 255, 255, 0.5)" />
+          </Button>
+        </VStack>
+      )}
     </Box>
   );
 };
