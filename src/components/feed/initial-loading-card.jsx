@@ -10,14 +10,21 @@ const InitialLoadingCard = () => {
       height="100dvh"
       width="100%"
       maxW="100vw"
-      alignItems="center"
-      justifyContent="center"
+      alignItems={{ base: "stretch", sm: "center" }}
+      justifyContent={{ base: "flex-start", sm: "center" }}
       overflow="hidden"
       position="relative"
       scrollSnapAlign="start"
       scrollSnapStop="always"
     >
-      <Box position="relative" w={FRAME_W} h={FRAME_H} maxW="100%" maxH="100%">
+      <Box
+        position="relative"
+        w={{ base: "100%", sm: FRAME_W }}
+        h={{ base: "100dvh", sm: FRAME_H }}
+        maxW="100%"
+        maxH="100%"
+        flexShrink={0}
+      >
         <Skeleton
           position="absolute"
           inset={0}

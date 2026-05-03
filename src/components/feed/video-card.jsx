@@ -61,8 +61,8 @@ const VideoCard = ({
       height="100dvh"
       width="100%"
       maxW="100vw"
-      alignItems="center"
-      justifyContent="center"
+      alignItems={{ base: "stretch", sm: "center" }}
+      justifyContent={{ base: "flex-start", sm: "center" }}
       overflow="hidden"
       position="relative"
       scrollSnapAlign="start"
@@ -71,11 +71,29 @@ const VideoCard = ({
     >
       <Box
         position="relative"
-        w={FRAME_W}
-        h={FRAME_H}
+        w={{ base: "100%", sm: FRAME_W }}
+        h={{ base: "100dvh", sm: FRAME_H }}
         maxW="100%"
         maxH="100%"
         overflow="hidden"
+        flexShrink={0}
+        css={{
+          "& > video": {
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            objectPosition: "center",
+            display: "block",
+            zIndex: 1,
+          },
+          "@media screen and (min-width: 480px)": {
+            "& > video": {
+              objectFit: "contain",
+            },
+          },
+        }}
       >
         <Skeleton
           position="absolute"
@@ -94,15 +112,7 @@ const VideoCard = ({
           playsInline
           preload={shouldPreload()}
           style={{
-            position: "absolute",
-            inset: 0,
-            width: "100%",
-            height: "100%",
-            objectFit: "contain",
-            objectPosition: "center",
-            display: "block",
             filter: formattedVideoFilters,
-            zIndex: 1,
           }}
           onError={(e) => console.error("Video failed to load", e)}
           onPlaying={() => setIsLoading(false)}
