@@ -39,7 +39,7 @@ export default function RootLayout({ children }) {
     >
       <body style={styling}>
         <AuthProvider>
-          <Provider>
+          <Provider forcedTheme="dark">
             <Toaster /> {children}
           </Provider>
         </AuthProvider>
