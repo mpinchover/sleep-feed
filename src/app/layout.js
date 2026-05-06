@@ -17,8 +17,8 @@ const quicksand = Quicksand({
 });
 
 export const metadata = {
-  title: "Voyager",
-  description: "Voyager",
+  title: "Callysto",
+  description: "Callysto",
 };
 
 const styling = {
