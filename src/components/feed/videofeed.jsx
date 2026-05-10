@@ -18,7 +18,8 @@ import LoadingCard from "./loading-card";
 import InitialLoadingCard from "./initial-loading-card";
 import VideoCard from "./video-card";
 
-const PRELOAD_RANGE = 3;
+/** Next N clips after the active one: buffer early so snap-scroll lands on ready media (mobile). */
+const EAGER_AHEAD_COUNT = 3;
 const isMobile =
   typeof window !== "undefined" &&
   /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
@@ -51,6 +52,10 @@ const VideoFeed = ({
   const observer = useRef(null);
   const scrollContainerRef = useRef(null);
   const bookmarkHasJumped = useRef(false);
+  const activeIndexRef = useRef(activeIndex);
+  activeIndexRef.current = activeIndex;
+  const isMutedRef = useRef(isMuted);
+  isMutedRef.current = isMuted;
 
   const _getVideoFeedBatch = async (page) => {
     const nextBatch = await getVideoFeedBatch(page);
@@ -70,7 +75,22 @@ const VideoFeed = ({
     }
   };
 
-  const toggleMute = () => setIsMuted((prev) => !prev);
+  const toggleMute = useCallback(() => {
+    setIsMuted((prev) => {
+      const next = !prev;
+      const v = videoRefs.current[activeIndexRef.current];
+      if (v) {
+        v.muted = next;
+        const p = v.play();
+        if (p !== undefined) {
+          p.catch((e) => {
+            console.warn("Play after mute toggle:", e.message);
+          });
+        }
+      }
+      return next;
+    });
+  }, []);
 
   const handleToggleUserIcons = () => {
     setShowUserIcons((prev) => !prev);
@@ -124,41 +144,49 @@ const VideoFeed = ({
   };
 
   useEffect(() => {
-    const handleVisibilityChange = () => {
+    const resumeActiveVideoAfterInterrupt = () => {
+      const activeVideo = videoRefs.current[activeIndexRef.current];
+      if (!activeVideo) return;
+
+      const muted = isMutedRef.current;
+      activeVideo.muted = muted;
+
+      const needsReload =
+        activeVideo.paused || activeVideo.readyState < 2;
+
+      if (needsReload) {
+        activeVideo.load();
+        setTimeout(() => {
+          const el = videoRefs.current[activeIndexRef.current];
+          if (!el) return;
+          el.muted = isMutedRef.current;
+          el.play()?.catch((e) => {
+            console.warn("Resume after reload:", e.message);
+          });
+        }, 200);
+        return;
+      }
+
+      activeVideo.play()?.catch((e) => {
+        console.warn("Resume playback (audio pipeline):", e.message);
+      });
+    };
+
+    const onVisibility = () => {
       if (document.visibilityState === "visible") {
-        const activeVideo = videoRefs.current[activeIndex];
-        if (activeVideo) {
-          const isStuck =
-            activeVideo.paused ||
-            activeVideo.currentTime === 0 ||
-            activeVideo.readyState < 2;
-
-          if (isStuck) {
-            console.log("Attempting to recover stuck video...");
-
-            activeVideo.load();
-
-            setTimeout(() => {
-              const playPromise = activeVideo.play();
-              if (playPromise !== undefined) {
-                playPromise.catch((e) => {
-                  console.warn(
-                    "Failed to resume video after reload:",
-                    e.message
-                  );
-                });
-              }
-            }, 200);
-          }
-        }
+        resumeActiveVideoAfterInterrupt();
       }
     };
 
-    document.addEventListener("visibilitychange", handleVisibilityChange);
+    const onPageShow = () => resumeActiveVideoAfterInterrupt();
+
+    document.addEventListener("visibilitychange", onVisibility);
+    window.addEventListener("pageshow", onPageShow);
     return () => {
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      document.removeEventListener("visibilitychange", onVisibility);
+      window.removeEventListener("pageshow", onPageShow);
     };
-  }, [activeIndex]);
+  }, []);
 
   // console.log("Updating videos", videos.length);
 
@@ -235,11 +263,10 @@ const VideoFeed = ({
 
       observer.current.observe(video);
 
-      // sliding window loading video
-      if (
-        video.readyState < 2 &&
-        Math.abs(index - activeIndex) < PRELOAD_RANGE
-      ) {
+      const isActive = index === activeIndex;
+      const isEagerAhead =
+        index > activeIndex && index <= activeIndex + EAGER_AHEAD_COUNT;
+      if (video.readyState < 2 && (isActive || isEagerAhead)) {
         video.load();
       }
 
@@ -310,6 +337,11 @@ const VideoFeed = ({
       position="relative"
     >
       {videos.map((video, index) => {
+        const preload =
+          index === activeIndex ||
+          (index > activeIndex && index <= activeIndex + EAGER_AHEAD_COUNT)
+            ? "auto"
+            : "none";
         return (
           <VideoCard
             shouldShowLogin={shouldShowLogin}
@@ -321,6 +353,7 @@ const VideoFeed = ({
             key={index}
             src={video.src}
             isMuted={isMuted}
+            preload={preload}
             registerRef={(el) => (videoRefs.current[index] = el)}
             selectedFilter={selectedFilter}
           />

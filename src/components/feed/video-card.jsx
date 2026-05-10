@@ -2,7 +2,6 @@
 import { Icon, Skeleton, Box, Flex } from "@chakra-ui/react";
 import { RiArrowUpDoubleLine } from "react-icons/ri";
 import { useEffect, useState, useRef } from "react";
-const PRELOAD_RANGE = 3;
 /** Portrait 9:16 — frame fits in viewport without cropping video top/bottom; prefer full dvh height when vw allows. */
 const FRAME_W = "min(100vw, calc(100dvh * 9 / 16))";
 const FRAME_H = "min(100dvh, calc(100vw * 16 / 9))";
@@ -10,6 +9,7 @@ const FRAME_H = "min(100dvh, calc(100vw * 16 / 9))";
 const VideoCard = ({
   src,
   isMuted,
+  preload = "none",
   registerRef,
   shouldShowSwipeDownIcons,
   videoRefs,
@@ -44,10 +44,6 @@ const VideoCard = ({
       clearTimeout(setElapsedTime);
     };
   }, [registerRef]);
-
-  const shouldPreload = () => {
-    return Math.abs(index - activeIndex) < PRELOAD_RANGE ? "auto" : "none";
-  };
 
   const videoFilters = [selectedFilter];
   if (shouldShowLogin) {
@@ -110,7 +106,7 @@ const VideoCard = ({
           muted={isMuted}
           loop
           playsInline
-          preload={shouldPreload()}
+          preload={preload}
           style={{
             filter: formattedVideoFilters,
           }}
