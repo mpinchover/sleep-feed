@@ -251,6 +251,8 @@ const VideoFeed = ({
 
   // Manage video playback
   useEffect(() => {
+    const cleanups = [];
+
     videoRefs.current.forEach((video, index) => {
       if (!video) {
         return;
@@ -266,13 +268,25 @@ const VideoFeed = ({
       }
 
       if (index === activeIndex) {
-        video.muted = isMuted;
-
-        const playPromise = video.play();
-        if (playPromise !== undefined) {
-          playPromise.catch((e) => {
+        const startPlayback = () => {
+          if (videoRefs.current[activeIndexRef.current] !== video) return;
+          video.muted = isMutedRef.current;
+          video.play()?.catch((e) => {
             console.warn("Play interrupted:", e.message);
           });
+        };
+
+        video.muted = isMutedRef.current;
+
+        // load() resets the decoder; synchronous play() right after races on mobile,
+        // so wait for canplay when the pipeline is not ready yet.
+        if (video.readyState >= 2) {
+          startPlayback();
+        } else {
+          video.addEventListener("canplay", startPlayback, { once: true });
+          cleanups.push(() =>
+            video.removeEventListener("canplay", startPlayback)
+          );
         }
       } else {
         video.pause();
@@ -282,6 +296,10 @@ const VideoFeed = ({
 
       return () => {};
     });
+
+    return () => {
+      cleanups.forEach((fn) => fn());
+    };
   }, [activeIndex, isMuted, videos]);
 
   useEffect(() => {
@@ -341,7 +359,7 @@ const VideoFeed = ({
           <VideoCard
             shouldShowLogin={shouldShowLogin}
             handleToggleUserIcons={handleToggleUserIcons}
-            key={index}
+            key={video.uuid ?? index}
             src={video.src}
             isMuted={isMuted}
             preload={preload}
