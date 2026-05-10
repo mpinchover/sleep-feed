@@ -47,7 +47,6 @@ const VideoFeed = ({
 
   const videoRefs = useRef([]);
   const loadingRef = useRef(null);
-  const lastVideoBeforeLoading = useRef(null);
   const isFetchingNextBatchOfVideos = useRef(false);
   const observer = useRef(null);
   const scrollContainerRef = useRef(null);
@@ -64,7 +63,16 @@ const VideoFeed = ({
       setIsMuted(true);
     }
 
-    setVideos((prev) => [...prev, ...nextBatch]);
+    // Replace the existing list with the incoming batch so the user cannot
+    // scroll back to cards from previous batches. Reset scroll + active index
+    // to land on the first card of the new batch.
+    videoRefs.current = [];
+    setVideos(nextBatch);
+    setActiveIndex(0);
+    bookmarkHasJumped.current = true;
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTop = 0;
+    }
   };
 
   const handleSetSelectedFilter = (filter) => {
@@ -195,25 +203,12 @@ const VideoFeed = ({
     const handleIntersect = (entries) => {
       entries.forEach(async (entry) => {
         if (entry.target === loadingRef.current && entry.isIntersecting) {
-          if (lastVideoBeforeLoading.current) {
-            const curVideosLen = videos.length;
-            const lastCur = lastVideoBeforeLoading.current;
-            setTimeout(() => {
-              lastCur.scrollIntoView({
-                behavior: "smooth",
-                block: "start",
-              });
-
-              setIsScrollLocked(false);
-            }, 250);
-            setIsScrollLocked(true);
-          }
-
           if (isFetchingNextBatchOfVideos.current) {
             return;
           }
 
           isFetchingNextBatchOfVideos.current = true;
+          setIsScrollLocked(true);
 
           try {
             // enable this for login
@@ -227,6 +222,7 @@ const VideoFeed = ({
             paginationIndex.current += 1;
           } finally {
             isFetchingNextBatchOfVideos.current = false;
+            setIsScrollLocked(false);
           }
           return;
         }
@@ -234,7 +230,6 @@ const VideoFeed = ({
         const index = videoRefs.current.indexOf(entry.target);
         if (entry.isIntersecting) {
           setActiveIndex(index);
-          lastVideoBeforeLoading.current = entry.target;
         }
       });
     };
