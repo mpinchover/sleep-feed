@@ -7,34 +7,59 @@ import { getAuth } from "firebase/auth";
 import VideoFeed from "@/components/feed/videofeed";
 import LoginPopup from "@/components/feed/login-popup";
 
-import initial_videos from "../fake-video-cards.json";
-
-const BATCH_SIZE = 10;
+const VIDEOS_ENDPOINT =
+  "https://lunar-server-286518526012.us-central1.run.app/videos";
 
 const EtcPage = () => {
   const [videos, setVideos] = useState([]);
   const [shouldShowLogin, setShouldShowLogin] = useState(false);
 
   const paginationIndex = useRef(0);
+  /** Highest Firestore `index` from the last loaded batch; sent as `last_index` for the next request. */
+  const lastServerIndexRef = useRef(null);
 
   const auth = getAuth();
   const user = auth.currentUser;
 
-  const getVideoFeedBatch = (page) => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        const start = page * BATCH_SIZE;
-        const end = Math.min(initial_videos.length, start + BATCH_SIZE);
-        const batchOfVideos = initial_videos.slice(start, end);
+  const getVideoFeedBatch = async () => {
+    const url = new URL(VIDEOS_ENDPOINT);
+    if (lastServerIndexRef.current != null) {
+      url.searchParams.set("last_index", String(lastServerIndexRef.current));
+    }
 
-        resolve(batchOfVideos);
-      }, 1500);
-    });
+    const res = await fetch(url.toString());
+    if (!res.ok) {
+      throw new Error(`Videos request failed: ${res.status}`);
+    }
+
+    const data = await res.json();
+    const raw = Array.isArray(data.videos) ? data.videos : [];
+
+    const batch = raw.map((v) => ({
+      src: v.media_url,
+      uuid: v.id,
+      card_type: "video",
+    }));
+
+    const indices = raw
+      .map((v) => v.index)
+      .filter((n) => typeof n === "number" && Number.isFinite(n));
+    if (indices.length > 0) {
+      lastServerIndexRef.current = Math.max(...indices);
+    }
+
+    return batch;
   };
 
   const getInitialBatchOfVideos = async () => {
-    const batch = await getVideoFeedBatch(0);
-    setVideos(batch);
+    lastServerIndexRef.current = null;
+    try {
+      const batch = await getVideoFeedBatch();
+      setVideos(batch);
+    } catch (e) {
+      console.error(e);
+      setVideos([]);
+    }
     paginationIndex.current = 1;
   };
 

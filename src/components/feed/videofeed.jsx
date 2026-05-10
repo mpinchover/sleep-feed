@@ -187,17 +187,19 @@ const VideoFeed = ({
 
           isFetchingNextBatchOfVideos.current = true;
 
-          // enable this for login
-          // if (!user) {
-          //   setShouldShowLogin(true);
-          // } else {
-          //   await getVideoFeedBatch(paginationIndex.current);
-          //   paginationIndex.current += 1;
-          // }
-          await _getVideoFeedBatch(paginationIndex.current);
-          paginationIndex.current += 1;
-
-          isFetchingNextBatchOfVideos.current = false;
+          try {
+            // enable this for login
+            // if (!user) {
+            //   setShouldShowLogin(true);
+            // } else {
+            //   await getVideoFeedBatch(paginationIndex.current);
+            //   paginationIndex.current += 1;
+            // }
+            await _getVideoFeedBatch(paginationIndex.current);
+            paginationIndex.current += 1;
+          } finally {
+            isFetchingNextBatchOfVideos.current = false;
+          }
           return;
         }
 
