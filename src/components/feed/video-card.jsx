@@ -1,7 +1,6 @@
 "use client";
-import { Icon, Skeleton, Box, Flex } from "@chakra-ui/react";
-import { RiArrowUpDoubleLine } from "react-icons/ri";
-import { useEffect, useState, useRef } from "react";
+import { Skeleton, Box, Flex } from "@chakra-ui/react";
+import { useEffect, useRef } from "react";
 /** Portrait 9:16 — frame fits in viewport without cropping video top/bottom; prefer full dvh height when vw allows. */
 const FRAME_W = "min(100vw, calc(100dvh * 9 / 16))";
 const FRAME_H = "min(100dvh, calc(100vw * 16 / 9))";
@@ -11,38 +10,16 @@ const VideoCard = ({
   isMuted,
   preload = "none",
   registerRef,
-  shouldShowSwipeDownIcons,
-  videoRefs,
-  activeIndex,
   handleToggleUserIcons,
-  index,
   selectedFilter,
   shouldShowLogin,
 }) => {
   const videoRef = useRef(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [startShowIcons, setStartShowIcons] = useState(false);
 
-  const scrollToNext = () => {
-    const next = videoRefs?.current?.[activeIndex + 1];
-    if (next) {
-      next.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  };
-
-  // Register the video ref with parent
   useEffect(() => {
     if (registerRef && videoRef.current) {
       registerRef(videoRef.current);
     }
-
-    const setElapsedTime = setTimeout(() => {
-      setStartShowIcons(true);
-    }, 4000);
-
-    return () => {
-      clearTimeout(setElapsedTime);
-    };
   }, [registerRef]);
 
   const videoFilters = [selectedFilter];
@@ -111,40 +88,7 @@ const VideoCard = ({
             filter: formattedVideoFilters,
           }}
           onError={(e) => console.error("Video failed to load", e)}
-          onPlaying={() => setIsLoading(false)}
         />
-
-        {shouldShowSwipeDownIcons && startShowIcons && (
-          <Box
-            cursor="pointer"
-            onClick={scrollToNext}
-            position="absolute"
-            bottom="30px"
-            left="50%"
-            transform="translate(-50%, -0%)"
-            bg="rgba(0, 0, 0, 0.3)"
-            padding="8px"
-            borderRadius="full"
-            zIndex={20}
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-          >
-            <Icon
-              animation="fade-in 1s infinite"
-              as={RiArrowUpDoubleLine}
-              boxSize={12}
-              color="rgba(255, 255, 255, 0.7)"
-              mb={1}
-            />
-            <Icon
-              animation="fade-out 1s infinite"
-              as={RiArrowUpDoubleLine}
-              boxSize={12}
-              color="rgba(255, 255, 255, 0.3)"
-            />
-          </Box>
-        )}
       </Box>
     </Flex>
   );

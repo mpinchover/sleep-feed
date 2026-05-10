@@ -340,11 +340,7 @@ const VideoFeed = ({
         return (
           <VideoCard
             shouldShowLogin={shouldShowLogin}
-            index={index}
-            activeIndex={activeIndex}
             handleToggleUserIcons={handleToggleUserIcons}
-            videoRefs={videoRefs}
-            shouldShowSwipeDownIcons={index === 0}
             key={index}
             src={video.src}
             isMuted={isMuted}
