@@ -21,9 +21,11 @@ const EtcPage = () => {
   const auth = getAuth();
   const user = auth.currentUser;
 
-  const getVideoFeedBatch = async () => {
+  const getVideoFeedBatch = async ({ initial = false } = {}) => {
     const url = new URL(VIDEOS_ENDPOINT);
-    if (lastServerIndexRef.current != null) {
+    if (initial) {
+      url.searchParams.set("initial", "true");
+    } else if (lastServerIndexRef.current != null) {
       url.searchParams.set("last_index", String(lastServerIndexRef.current));
     }
 
@@ -54,7 +56,7 @@ const EtcPage = () => {
   const getInitialBatchOfVideos = async () => {
     lastServerIndexRef.current = null;
     try {
-      const batch = await getVideoFeedBatch();
+      const batch = await getVideoFeedBatch({ initial: true });
       setVideos(batch);
     } catch (e) {
       console.error(e);

@@ -57,7 +57,7 @@ const VideoFeed = ({
   isMutedRef.current = isMuted;
 
   const _getVideoFeedBatch = async (page) => {
-    const nextBatch = await getVideoFeedBatch(page);
+    const nextBatch = await getVideoFeedBatch();
 
     if (isMobile) {
       setIsMuted(true);
