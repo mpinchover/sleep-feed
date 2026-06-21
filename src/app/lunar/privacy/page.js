@@ -10,6 +10,7 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
+import NextLink from "next/link";
 
 const CONTACT_EMAIL = "hello@callystoapp.com";
 
@@ -38,14 +39,16 @@ export default function LunarPrivacyPage() {
         bg="blackAlpha.300"
       >
         <Container maxW="container.md">
-          <Text
-            fontSize="lg"
-            fontWeight="semibold"
-            letterSpacing="tight"
-            textTransform="lowercase"
-          >
-            lunar
-          </Text>
+          <Link as={NextLink} href="/lunar" _hover={{ textDecoration: "none" }}>
+            <Text
+              fontSize="lg"
+              fontWeight="semibold"
+              letterSpacing="tight"
+              textTransform="lowercase"
+            >
+              lunar
+            </Text>
+          </Link>
         </Container>
       </Box>
 
