@@ -3,6 +3,7 @@
 import {
   Box,
   Container,
+  Flex,
   Heading,
   Link,
   Text,
@@ -48,14 +49,34 @@ export default function LunarPage() {
         bg="blackAlpha.300"
       >
         <Container maxW="container.lg">
-          <Text
-            fontSize="lg"
-            fontWeight="semibold"
-            letterSpacing="tight"
-            textTransform="lowercase"
-          >
-            lunar
-          </Text>
+          <Flex align="center" justify="space-between" gap={4}>
+            <Text
+              fontSize="lg"
+              fontWeight="semibold"
+              letterSpacing="tight"
+              textTransform="lowercase"
+            >
+              lunar
+            </Text>
+            <Link
+              href="https://apps.apple.com/us/app/callysto-lunar/id6772614608"
+              target="_blank"
+              rel="noopener noreferrer"
+              fontSize="sm"
+              fontWeight="medium"
+              color="fg"
+              px={4}
+              py={2}
+              rounded="full"
+              borderWidth="1px"
+              borderColor="whiteAlpha.300"
+              bg="whiteAlpha.100"
+              _hover={{ bg: "whiteAlpha.200", textDecoration: "none" }}
+              whiteSpace="nowrap"
+            >
+              Download on the App Store
+            </Link>
+          </Flex>
         </Container>
       </Box>
 
